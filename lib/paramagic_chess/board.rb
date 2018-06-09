@@ -2,11 +2,11 @@ module ParamagicChess
   class Board
     attr_accessor :board
 
-    def initialize(size: 8)
-      @board = create_board(size)
+    def initialize
+      @board = create_board
     end
 
-    def create_board(size)
+    def create_board
       board = {}
 
       (a..h).each do |letter|
