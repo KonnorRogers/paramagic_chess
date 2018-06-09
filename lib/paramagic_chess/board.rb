@@ -14,6 +14,8 @@ module ParamagicChess
           board["#{letter}#{num}"] = Tile.new
         end
       end
+
+      board
     end
   end
 end
