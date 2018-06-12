@@ -4,18 +4,25 @@ module ParamagicChess
 
     def initialize
       @board = create_board
+      # @board.set_background
     end
+
+    private
 
     def create_board
       board = {}
 
       ('a'..'h').each do |letter|
-        (1..9).each do |num|
-          board["#{letter}#{num}"] = Tile.new
+        (1..8).each do |num|
+          position = "#{letter}#{num}".to_sym
+          board[position] = Tile.new(position: position)
         end
       end
 
       board
     end
+
+    # def set_background
+    # end
   end
 end

@@ -1,10 +1,11 @@
 module ParamagicChess
   class Tile
-    attr_accessor :background, :piece
+    attr_accessor :background, :piece, :position
 
-    def initialize(piece: nil, background: nil)
+    def initialize(piece: nil, background: nil, position:)
       @piece = piece
       @background = background
+      @position = position
     end
 
     def contains_piece?
