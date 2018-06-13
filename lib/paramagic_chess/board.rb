@@ -4,7 +4,6 @@ module ParamagicChess
 
     def initialize
       @board = create_board
-      # @board.set_background
     end
 
     private
@@ -19,10 +18,18 @@ module ParamagicChess
         end
       end
 
+      change_tile_background(board: board)
       board
     end
 
-    # def set_background
-    # end
+    def change_tile_background(board:)
+      index = 0
+      board.each do |_key, value|
+        value.background = :black if index.odd?
+        value.background = :white if index.even?
+
+        index += 1
+      end
+    end
   end
 end

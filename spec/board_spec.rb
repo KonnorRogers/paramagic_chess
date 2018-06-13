@@ -18,6 +18,11 @@ module ParamagicChess
       it 'sets the position of the tile to be a num + letter value' do
         expect(board.board[:h8].position).to eq :h8
       end
+
+      it 'sets the backgrounds appropriately' do
+        expect(board.board[:a1].background).to eq :white
+        expect(board.board[:a2].background).to eq :black
+      end
     end
   end
 end

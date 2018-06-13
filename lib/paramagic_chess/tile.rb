@@ -12,5 +12,10 @@ module ParamagicChess
       return false if @piece.nil?
       true
     end
+
+    def to_s
+      return '' if @background == :white
+      return '' if @background == :black
+    end
   end
 end
