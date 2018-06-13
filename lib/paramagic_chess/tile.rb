@@ -14,8 +14,8 @@ module ParamagicChess
     end
 
     def to_s
-      return '' if @background == :white
-      return '' if @background == :black
+      return "\u25fc" if @background == :white && @piece.nil?
+      return "\u25fb" if @background == :black && @piece.nil?
     end
   end
 end

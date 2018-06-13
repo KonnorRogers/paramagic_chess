@@ -6,6 +6,15 @@ module ParamagicChess
       @board = create_board
     end
 
+    def print_board
+      index = 0
+      @board.each do |_key, value|
+        print value.to_s
+        index += 1
+        puts '' if index % 8 == 0 && index != 0
+      end
+    end
+
     private
 
     def create_board
