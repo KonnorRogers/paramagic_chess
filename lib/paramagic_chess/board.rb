@@ -7,12 +7,16 @@ module ParamagicChess
     end
 
     def print_board
+      system 'clear'
       index = 0
       @board.each do |_key, value|
+        print "\n\t\t" if index % 8 == 0
         print value.to_s
         index += 1
-        puts '' if index % 8 == 0 && index != 0
+
       end
+
+      puts ''
     end
 
     private
@@ -33,11 +37,17 @@ module ParamagicChess
 
     def change_tile_background(board:)
       index = 0
+      swap = 0
+
       board.each do |_key, value|
-        value.background = :black if index.odd?
-        value.background = :white if index.even?
+        value.background = :black if index.odd? && swap.even?
+        value.background = :white if index.even? && swap.even?
+
+        value.background = :black if index.even? && swap.odd?
+        value.background = :white if index.odd? && swap.odd?
 
         index += 1
+        swap += 1 if index % 8 == 0
       end
     end
   end

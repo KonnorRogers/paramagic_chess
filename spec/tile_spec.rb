@@ -34,14 +34,14 @@ module ParamagicChess
 
         # puts tile
         # expect(tile.to_s).to eq "\e[40m"
-        expect(tile.to_s).to eq "\u25fb"
+        expect(tile.to_s).to eq "\u25fb "
       end
 
       it 'creates a white box if no piece occupies the space' do
         tile.background = :white
         # puts tile
         # expect(tile.to_s).to eq "\e[47m"
-        expect(tile.to_s).to eq "\u25fc"
+        expect(tile.to_s).to eq "\u25fc "
       end
     end
   end
