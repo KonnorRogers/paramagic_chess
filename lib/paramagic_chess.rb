@@ -6,3 +6,7 @@ require 'paramagic_chess/board'
 module ParamagicChess
   # Your code goes here...
 end
+
+
+game = ParamagicChess::Board.new
+game.print_board

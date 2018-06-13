@@ -9,11 +9,13 @@ module ParamagicChess
     def print_board
       system 'clear'
       index = 0
+      print "\t  A B C D E F G H"
+
       @board.each do |_key, value|
-        print "\n\t\t" if index % 8 == 0
+        print "\n\t" if index % 8 == 0
+        print "#{(index / 8) + 1} " if index % 8 == 0
         print value.to_s
         index += 1
-
       end
 
       puts ''
