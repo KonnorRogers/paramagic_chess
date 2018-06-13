@@ -1,5 +1,5 @@
 require "paramagic_chess/version"
-require 'paramagic_chess/piece'
+require 'paramagic_chess/pieces/piece'
 require 'paramagic_chess/tile'
 require 'paramagic_chess/board'
 
