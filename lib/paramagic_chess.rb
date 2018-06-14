@@ -1,18 +1,10 @@
-# file = "paramagic_chess"
-# pieces = file + "/pieces"
+# Expands the path of this particular file
+lib_path = File.expand_path(File.dirname(__FILE__))
 
-# require "#{file}/version"
-# require "#{pieces}/piece"
-# require "#{file}/tile"
-# require "#{file}/board"
+# Once expanded, it then finds the contents in the directory & iterates through 
+# The double ** followed by /* allows constant traversal down of directory
+Dir[lib_path + "/paramagic_chess/**/*.rb"].each { |file| puts file }
 
-Dir.entries('lib/paramagic_chess').each { |file| require_relative file if file =~ /\*.rb/ }
-Dir.entries('lib/paramagic_chess/pieces').each { |file| require_relative file }
-
-# Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
-
-
-# Dir["../paramagic_chess/pieces/*.rb"].each { |file| require_relative file }
 
 module ParamagicChess
   # Your code goes here...
