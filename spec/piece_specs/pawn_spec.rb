@@ -10,6 +10,10 @@ module ParamagicChess
       it 'Will raise an arg error if no position given' do
         expect{ Pawn.new }.to raise_error ArgumentError
       end
+      
+      it 'sets the @type to :pawn' do
+        expect(pawn.type).to eq :pawn
+      end
     end 
   end
 end
