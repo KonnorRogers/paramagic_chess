@@ -1,8 +1,8 @@
 module ParamagicChess
-  class Pawn < Piece
+  class Bishop < Piece
     def initialize(pos:)
       super
-      @type = :pawn
+      @type = :bishop
     end
   end
 end
