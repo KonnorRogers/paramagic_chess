@@ -1,6 +1,6 @@
 # Initial require for the classes that inherit piece to be able to inherit
 # Piece IE: Rook < Piece
-# require "paramagic_chess/pieces/piece"
+require "paramagic_chess/pieces/piece"
 
 # Expands the path of this particular file
 lib_path = File.expand_path(File.dirname(__FILE__))
