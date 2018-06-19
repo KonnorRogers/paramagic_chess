@@ -24,5 +24,22 @@ module ParamagicChess
         expect(board.board[:a2].background).to eq :black
       end
     end
+
+    context '#place_pieces (private method)' do
+      it 'Sets all 32 pieces on the board' do
+        pieces = board.board.select { |_k, v| v.contains_piece? }
+        expect(pieces.size).to eq 32
+      end
+
+      it 'Sets 16 white pieces' do
+        pieces = board.board.select { |_k, v| v.contains_piece? && v.piece.side == :white }
+        expect(pieces.size).to eq 16
+      end
+
+      it 'Sets 16 black pieces' do
+        pieces = board.board.select { |_k, v| v.contains_piece? && v.piece.side == :black }
+        expect(pieces.size).to eq 16
+      end
+    end
   end
 end

@@ -1,6 +1,7 @@
 module ParamagicChess
   class Piece
-    attr_reader :x, :y, :pos, :type, :side, :moved
+    attr_accessor :side
+    attr_reader :x, :y, :pos, :type, :moved
 
     def initialize(pos:, side: nil, moved: false)
       check_position(pos)

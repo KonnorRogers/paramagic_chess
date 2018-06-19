@@ -13,5 +13,5 @@ Dir[lib_path + "/paramagic_chess/**/*.rb"].each { |file| require file }
 module ParamagicChess
   # Your code goes here...
 end
-# game = ParamagicChess::Board.new
-# game.print_board
+game = ParamagicChess::Board.new
+game.print_board
