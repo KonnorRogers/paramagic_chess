@@ -4,7 +4,7 @@ module ParamagicChess
       super
       @type = :bishop
     end
-    
+
     def to_s
       return "\u2657" if @side == :white
       return"\u265d" if @side == :black
