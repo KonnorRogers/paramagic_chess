@@ -12,6 +12,15 @@ Dir[lib_path + "/paramagic_chess/**/*.rb"].each { |file| require file }
 
 module ParamagicChess
   # Your code goes here...
+  def self.create_char_to_num_hash
+    hash = {}
+    ('a'..'h').each_with_index do |letter, index|
+      hash[letter.to_sym] = index
+    end
+    hash
+  end
+  
+  CHAR_TO_NUM = create_char_to_num_hash
 end
 game = ParamagicChess::Board.new
 game.print_board
