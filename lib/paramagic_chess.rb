@@ -8,8 +8,6 @@ lib_path = File.expand_path(File.dirname(__FILE__))
 # The double ** followed by /* allows constant traversal down of directory
 Dir[lib_path + "/paramagic_chess/**/*.rb"].each { |file| require file }
 
-
-
 module ParamagicChess
   # Your code goes here...
   def self.create_char_to_num_hash
@@ -19,7 +17,7 @@ module ParamagicChess
     end
     hash
   end
-  
+
   CHAR_TO_NUM = create_char_to_num_hash
 end
 game = ParamagicChess::Board.new
