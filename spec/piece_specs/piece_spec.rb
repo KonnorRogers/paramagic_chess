@@ -38,5 +38,15 @@ module ParamagicChess
         expect(Piece.new(pos: :a1).moved?).to eq false
       end
     end
+
+    context '#move_to(pos:)' do
+      it 'returns :a10 is not a valid position' do
+        expect(piece.move_to(pos: :a10)).to eq 'a10 is an invalid move. Try again.'
+      end
+
+      it 'returns :i1 is not a valid position' do
+        expect(piece.move_to(pos: :i1)).to eq 'i1 is an invalid move. Try again.'
+      end
+    end
   end
 end

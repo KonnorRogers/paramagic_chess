@@ -19,6 +19,8 @@ module ParamagicChess
   end
 
   CHAR_TO_NUM = create_char_to_num_hash
+  COORD_MAX = 8
+  COORD_MIN = 1
 end
 game = ParamagicChess::Board.new
 game.print_board
