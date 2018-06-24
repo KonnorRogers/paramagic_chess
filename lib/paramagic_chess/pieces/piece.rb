@@ -1,6 +1,6 @@
 module ParamagicChess
   class Piece
-    attr_accessor :side
+    attr_accessor :side, :possible_moves
     attr_reader :x, :y, :pos, :type, :moved
 
     def initialize(pos:, side: nil, moved: false)
@@ -10,6 +10,7 @@ module ParamagicChess
       @pos = pos
       @side = side
       @moved = moved
+      @possible_moves = {}
     end
 
     def check_position(pos)

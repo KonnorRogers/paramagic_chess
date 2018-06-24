@@ -19,6 +19,10 @@ module ParamagicChess
       it 'initializes w/ 2 keyword arguments given' do
         expect { Piece.new(pos: :a1, side: :black) }.to_not raise_error
       end
+
+      it 'creates a hash for possible moves' do
+        expect(Piece.new(pos: :a1).possible_moves).to be_an_instance_of Hash
+      end
     end
 
     context '#moved?' do
