@@ -53,16 +53,19 @@ module ParamagicChess
     end
 
     def change_to_white
+      # `1-2 is white side
       @board.each { |key, tile| tile.piece.side = :white if tile.contains_piece? && key[1].to_i <= 2 }
     end
 
     def change_to_black
+      # 7-8 is black side
       @board.each { |key, tile| tile.piece.side = :black if tile.contains_piece? && key[1].to_i >= 7 }
     end
 
     def place_pawns
       @board.each do |key, tile|
         num = key[1].to_i
+        # Only selects 2nd and 7th row
         next unless num == 2 || num == 7
 
         tile.piece = Pawn.new(pos: key)
