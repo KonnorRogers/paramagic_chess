@@ -20,8 +20,8 @@ module ParamagicChess
         expect { Piece.new(pos: :a1, side: :black) }.to_not raise_error
       end
 
-      it 'creates a hash for possible moves' do
-        expect(Piece.new(pos: :a1).possible_moves).to be_an_instance_of Hash
+      it 'creates an array for possible moves' do
+        expect(Piece.new(pos: :a1).possible_moves).to be_an_instance_of Array
       end
     end
 
@@ -46,6 +46,23 @@ module ParamagicChess
 
       it 'returns :i1 is not a valid position' do
         expect(piece.move_to(pos: :i1)).to eq 'i1 is an invalid move. Try again.'
+      end
+      
+      it 'sets the position of the piece to the :d2' do
+        piece.move_to(pos: :d2)
+        expect(piece.pos).to eq :d2
+      end
+      
+      it 'updates the x & y coords to the :d & 2' do
+        piece.move_to(pos: :d2)
+        expect(piece.x).to eq :d
+        expect(piece.y).to eq 2
+      end
+      
+      it 'updates @moved to true' do
+        expect(piece.moved).to eq false
+        piece.move_to(pos: :d2)
+        expect(piece.moved).to eq true
       end
     end
   end

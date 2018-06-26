@@ -11,4 +11,9 @@ RSpec.describe ParamagicChess do
     expect(ParamagicChess::CHAR_TO_NUM).to be_an_instance_of Hash
     expect(ParamagicChess::CHAR_TO_NUM[:c]).to eq 2 
   end
+  
+  it 'has a NUM_TO_CHAR hash' do
+    expect(ParamagicChess::NUM_TO_CHAR).to be_an_instance_of Hash
+    expect(ParamagicChess::NUM_TO_CHAR[3]).to eq :c
+  end
 end

@@ -17,11 +17,26 @@ module ParamagicChess
     end
     hash
   end
+  
+  def self.create_num_to_char_hash
+    hash = {
+      1 => :a,
+      2 => :b,
+      3 => :c,
+      4 => :d,
+      5 => :e,
+      6 => :f,
+      7 => :g,
+      8 => :h
+    }
+  end
 
   CHAR_TO_NUM = create_char_to_num_hash
+  NUM_TO_CHAR = create_num_to_char_hash
   COORD_MAX = 8
   COORD_MIN = 1
 end
+
 game = ParamagicChess::Board.new
 game.print_board
 

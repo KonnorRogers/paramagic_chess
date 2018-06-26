@@ -31,5 +31,9 @@ module ParamagicChess
         expect(pawn.to_s).to eq 'Side not set'
       end
     end
+    
+    context '#move_to(pos:)' do
+      # black_pawn.pos = 
+    end
   end
 end
