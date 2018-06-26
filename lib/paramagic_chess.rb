@@ -13,13 +13,13 @@ module ParamagicChess
   def self.create_char_to_num_hash
     hash = {}
     ('a'..'h').each_with_index do |letter, index|
-      hash[letter.to_sym] = index
+      hash[letter.to_sym] = index + 1
     end
     hash
   end
   
   def self.create_num_to_char_hash
-    hash = {
+    {
       1 => :a,
       2 => :b,
       3 => :c,
@@ -30,11 +30,18 @@ module ParamagicChess
       8 => :h
     }
   end
+  
+  def self.to_num(symbol)
+    CHAR_TO_NUM[symbol]
+  end
+    
+  def self.to_symbol(num)
+    NUM_TO_CHAR[num]
+  end
 
   CHAR_TO_NUM = create_char_to_num_hash
   NUM_TO_CHAR = create_num_to_char_hash
-  COORD_MAX = 8
-  COORD_MIN = 1
+  
 end
 
 game = ParamagicChess::Board.new

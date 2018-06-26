@@ -6,6 +6,10 @@ module ParamagicChess
       @board = create_board
       place_all_pieces
     end
+    
+    def max_index
+      8
+    end
 
     def print_board
       system 'clear'

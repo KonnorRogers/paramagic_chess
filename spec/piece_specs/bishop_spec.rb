@@ -9,10 +9,6 @@ module ParamagicChess
         expect(bishop).to be_an_instance_of Bishop
       end
       
-      it 'Will raise an arg error if no position given' do
-        expect{ Bishop.new }.to raise_error ArgumentError
-      end
-      
       it 'sets the @type to :bishop' do
         expect(bishop.type).to eq :bishop
       end

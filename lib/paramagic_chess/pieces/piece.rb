@@ -3,7 +3,7 @@ module ParamagicChess
     attr_accessor :side, :possible_moves
     attr_reader :x, :y, :pos, :type, :moved
 
-    def initialize(pos:, side: nil, moved: false)
+    def initialize(pos: nil, side: nil, moved: false)
       check_position(pos)
       @x = pos[0].to_sym
       @y = y_coord(pos: pos)
@@ -16,24 +16,15 @@ module ParamagicChess
     def y_coord(pos:)
       pos.to_s.split(/[a-z]/)[1].to_i
     end
-    
-    def self.to_num
-      CHAR_TO_NUM[self]
-    end
-    
-    def self.sym
-      NUM_TO_CHAR[self]
-    end
-    
-    def 
 
-    def move_to(pos:)
+    def move_to(pos:, board: Board.new)
       return "#{pos} is an invalid move. Try again." unless valid_move?(pos: pos)
 
       @pos = pos
       @x = pos[0].to_sym
       @y = y_coord(pos: pos)
       @moved = true if @moved == false
+      board.board[pos].piece = self
       # Super method to be called, so as not to rewrite for every class
       # Update possible moves is up to the class
     end
@@ -50,10 +41,10 @@ module ParamagicChess
       @moved
     end
     
-    def valid_move?(pos:)
+    def valid_move?(pos:, board: Board.new)
       y = y_coord(pos: pos)
       return false unless CHAR_TO_NUM.key?(pos[0].to_sym)
-      return false if y > COORD_MAX || y < COORD_MIN
+      return false if y > board.max_index || y < 0
 
       true
     end

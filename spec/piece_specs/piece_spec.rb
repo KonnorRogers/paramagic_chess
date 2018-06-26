@@ -3,14 +3,6 @@ module ParamagicChess
     let(:piece) { Piece.new(pos: :a2) }
 
     context '#initialize' do
-      it 'raises an error with no arguments given' do
-        expect { Piece.new }.to raise_error ArgumentError
-      end
-
-      it 'Raises an error if the position is not on the board' do
-        expect { Piece.new(pos: :i2) }.to raise_error ArgumentError
-        expect { Piece.new(pos: :h9) }.to raise_error ArgumentError
-      end
 
       it 'initializes w/ 1 arguments given' do
         expect(piece).to be_an_instance_of Piece
@@ -39,7 +31,7 @@ module ParamagicChess
       end
     end
 
-    context '#move_to(pos:)' do
+    context '#move_to(pos:, board:)' do
       it 'returns :a10 is not a valid position' do
         expect(piece.move_to(pos: :a10)).to eq 'a10 is an invalid move. Try again.'
       end
@@ -64,6 +56,10 @@ module ParamagicChess
         piece.move_to(pos: :d2)
         expect(piece.moved).to eq true
       end
+      
+      # it 'updates the board piece' do
+      #   knight = Knight.new
+      # end
     end
   end
 end

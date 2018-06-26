@@ -9,10 +9,6 @@ module ParamagicChess
         expect(king).to be_an_instance_of King
       end
       
-      it 'Will raise an arg error if no position given' do
-        expect{ King.new }.to raise_error ArgumentError
-      end
-      
       it 'sets the @type to :king' do
         expect(king.type).to eq :king
       end

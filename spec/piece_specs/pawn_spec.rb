@@ -9,10 +9,6 @@ module ParamagicChess
         expect(pawn).to be_an_instance_of Pawn
       end
       
-      it 'Will raise an arg error if no position given' do
-        expect{ Pawn.new }.to raise_error ArgumentError
-      end
-      
       it 'sets the @type to :pawn' do
         expect(pawn.type).to eq :pawn
       end
@@ -32,7 +28,7 @@ module ParamagicChess
       end
     end
     
-    context '#move_to(pos:)' do
+    context '#move_to(pos:, board:)' do
       # black_pawn.pos = 
     end
   end

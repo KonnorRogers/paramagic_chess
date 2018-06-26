@@ -12,6 +12,16 @@ module ParamagicChess
       return false if @piece.nil?
       true
     end
+    
+    def contains_white_piece?
+      return true if @piece.side == :white
+      false
+    end
+    
+    def contains_black_piece?
+      return true if @piece.side == :black
+      false
+    end
 
     def to_s
       return "\e[47m   \e[0m" if @background == :white && @piece.nil?
