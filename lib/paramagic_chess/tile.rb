@@ -14,11 +14,13 @@ module ParamagicChess
     end
 
     def contains_blue_piece?
+      return false if @piece.nil?
       return true if @piece.side == :blue
       false
     end
 
     def contains_red_piece?
+      return false if @piece.nil?
       return true if @piece.side == :red
       false
     end

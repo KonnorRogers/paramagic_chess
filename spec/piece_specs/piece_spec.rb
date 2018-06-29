@@ -16,6 +16,12 @@ module ParamagicChess
         expect(Piece.new(pos: :a1).possible_moves).to be_an_instance_of Array
       end
     end
+    
+    context '#to_pos(x:, y:)' do
+      it 'turns an x & y value into a valid position' do
+        expect(piece.to_pos(x: piece.x, y: piece.y)).to eq :a2
+      end
+    end
 
     context '#moved?' do
       it 'returns true if @moved is true' do

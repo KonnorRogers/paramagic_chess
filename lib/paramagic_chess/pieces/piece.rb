@@ -16,6 +16,10 @@ module ParamagicChess
       @y = y_coord(pos: pos)
       @pos = pos
     end
+    
+    def to_pos(x:, y:)
+      (x.to_s + y.to_s).to_sym
+    end
 
     # creates an integer of the y value
     def y_coord(pos:)
@@ -40,9 +44,10 @@ module ParamagicChess
     def moved?
       @moved
     end
-
+    
     def valid_move?(pos:, board: Board.new)
       y = y_coord(pos: pos)
+      # Checks if the x coord is in the char_to_num index
       return false unless CHAR_TO_NUM.key?(pos[0].to_sym)
       return false if y > Board::MAX_INDEX || y < Board::MIN_INDEX
 

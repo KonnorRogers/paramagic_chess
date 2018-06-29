@@ -9,7 +9,7 @@ lib_path = File.expand_path(File.dirname(__FILE__))
 Dir[lib_path + "/paramagic_chess/**/*.rb"].each { |file| require file }
 
 module ParamagicChess
-  # Your code goes here...
+  
   def self.create_char_to_num_hash
     hash = {}
     ('a'..'h').each_with_index do |letter, index|
