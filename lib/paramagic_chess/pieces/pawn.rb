@@ -6,6 +6,7 @@ module ParamagicChess
     end
 
     def to_s
+      # returns the unicode character shaded in the color
       pawn = "\u265f"
       return pawn.blue if @side == :blue
       return pawn.red if @side == :red
@@ -13,17 +14,16 @@ module ParamagicChess
     end
     
     def update_red_moves(board: Board.new)
-      # x = @x
-      # y = @y
-      # x_num = CHAR_TO_NUM[@x]
+      # reset possible moves
+      @possible_moves = []
       
+      # red pawns can only move -1 on the y axis
       @possible_moves << to_pos(x: @x, y: @y - 1)
       @possible_moves << to_pos(x: @x, y: @y - 2) if moved? == false
       
-      blue_diagonals = blue_diagonals(board: board)
-      
-      @possible_moves << blue_diagonals unless blue_diagonals.empty?
-      
+      # checks if any enemy blue pieces at the diagonals
+      possible_diagonals = blue_diagonals(board: board)
+      @possible_moves << possible_diagonals unless blue_diagonals.empty?
     end
     
     def blue_diagonals(board: Board.new)
@@ -35,7 +35,7 @@ module ParamagicChess
       possible_diagonals << to_pos(x: NUM_TO_CHAR[x_num - 1 ],
                                   y: @y - 1)
       
-      possible_diagonals.select! do |pos| 
+      possible_diagonals.select do |pos| 
         next if board.board[pos].nil?
         board.board[pos].contains_blue_piece?
       end
