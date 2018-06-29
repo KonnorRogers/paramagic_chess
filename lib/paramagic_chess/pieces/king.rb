@@ -1,7 +1,7 @@
 module ParamagicChess
   class King < Piece
 
-    def initialize(pos:, side: nil)
+    def initialize(pos: nil, side: nil, moved: false)
       super
       @type = :king
     end

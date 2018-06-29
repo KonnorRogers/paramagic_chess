@@ -1,6 +1,6 @@
 module ParamagicChess
   class Rook < Piece
-    def initialize(pos: nil, side: :nil)
+    def initialize(pos: nil, side: :nil, moved: false)
       super
       @type = :rook
     end

@@ -1,6 +1,6 @@
 module ParamagicChess
   class Pawn < Piece
-    def initialize(pos: nil, side: nil)
+    def initialize(pos: nil, side: nil, moved: false)
       super
       @type = :pawn
     end
@@ -23,19 +23,23 @@ module ParamagicChess
       
       # checks if any enemy blue pieces at the diagonals
       possible_diagonals = blue_diagonals(board: board)
-      @possible_moves << possible_diagonals unless blue_diagonals.empty?
+      
+      # #concat used to avoid array of array
+      @possible_moves.concat(possible_diagonals) unless possible_diagonals.empty?
     end
     
     def blue_diagonals(board: Board.new)
-      x_num = CHAR_TO_NUM[@x]
+      x = CHAR_TO_NUM[@x]
       
       possible_diagonals = []
-      possible_diagonals << to_pos(x: NUM_TO_CHAR[x_num + 1],
+      # to pos formats it to the :a1 format
+      possible_diagonals << to_pos(x: NUM_TO_CHAR[x + 1],
                                   y: @y - 1)
-      possible_diagonals << to_pos(x: NUM_TO_CHAR[x_num - 1 ],
+      possible_diagonals << to_pos(x: NUM_TO_CHAR[x - 1 ],
                                   y: @y - 1)
       
       possible_diagonals.select do |pos| 
+        # covers possible no method error case due to nil class
         next if board.board[pos].nil?
         board.board[pos].contains_blue_piece?
       end

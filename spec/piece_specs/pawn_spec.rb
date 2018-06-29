@@ -30,11 +30,31 @@ module ParamagicChess
     end
     
     context '#update_red_moves(board:)' do
-      it 'provides the 2 most basic starting moves. a7 to a6 or a5.' do
+      it 'provides the 2 most basic starting moves.  from a7 to a6 or a5.' do
       
         red_pawn.update_red_moves(board: board)
         
         expect(red_pawn.possible_moves).to match_array [:a6, :a5]
+      end
+      
+      it 'allows for movement from :a7 to :b6' do
+        board.board[:b6].piece = Knight.new(pos: :b6, side: :blue)
+        # board.print_board
+        
+        red_pawn.update_red_moves(board: board)
+        expect(red_pawn.possible_moves).to match_array [:a6, :a5, :b6]
+      end
+      
+      it 'allows for movement from :b7 to :a6 & :c6' do
+        board.board[:a6].piece = Knight.new(pos: :a6, side: :blue)
+        board.board[:c6].piece = Pawn.new(pos: :c6, side: :blue)
+        
+        red_pawn.update_position(pos: :b7)
+        board.print_board
+        
+        red_pawn.update_red_moves(board: board)
+        expect(red_pawn.possible_moves).to match_array [:b6, :b5, :c6, :a6]
+        
       end
     end
 

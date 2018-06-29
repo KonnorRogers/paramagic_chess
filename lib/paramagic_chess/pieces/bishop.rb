@@ -1,6 +1,6 @@
 module ParamagicChess
   class Bishop < Piece
-    def initialize(pos: nil, side: nil)
+    def initialize(pos: nil, side: nil, moved: false)
       super
       @type = :bishop
     end
