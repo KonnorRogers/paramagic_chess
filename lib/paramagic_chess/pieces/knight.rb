@@ -6,8 +6,8 @@ module ParamagicChess
     end
 
     def to_s
-      return "\u2658" if @side == :white
-      return "\u265e" if @side == :black
+      return "\e[34m\u265e" if @side == :white
+      return "\e[31m\u265e" if @side == :black
       'Side not set'
     end
   end

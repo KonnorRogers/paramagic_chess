@@ -4,7 +4,6 @@ module ParamagicChess
     attr_reader :x, :y, :pos, :type, :moved
 
     def initialize(pos: nil, side: nil, moved: false)
-      check_position(pos)
       update_position(pos: pos)
       @side = side
       @moved = moved
@@ -36,14 +35,6 @@ module ParamagicChess
       board.board[pos].piece = self
       # Super method to be called, so as not to rewrite for every class
       # Update possible moves is up to the class
-    end
-
-    def check_position(pos)
-      return 'first coordinate must be a - h' unless pos[0] =~ /[a-h]/
-
-      y = y_coord(pos: pos)
-      return 'second coordinate must be 1 - 8' if y < 1 || y > 8
-      true
     end
 
     def moved?
