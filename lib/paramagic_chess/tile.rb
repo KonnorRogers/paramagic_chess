@@ -32,8 +32,8 @@ module ParamagicChess
       # sets white forground on black background
       # return "\e[37;40m #{@piece} \e[0m" if @background == :black
 
-      return "\e[47m #{@piece} \e[0m" if @background == :white
-      return "\e[40m #{@piece} \e[0m" if @background == :black
+      return "\e[47m #{@piece}" if @background == :white
+      return "\e[40m #{@piece}" if @background == :black
 
       return 'Background not set'
     end
