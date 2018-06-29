@@ -1,14 +1,12 @@
 module ParamagicChess
   class Board
     attr_accessor :board
+    MIN_INDEX = 1
+    MAX_INDEX = 8
 
     def initialize
       @board = create_board
       place_all_pieces
-    end
-    
-    def max_index
-      8
     end
 
     def print_board

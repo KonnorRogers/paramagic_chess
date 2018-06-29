@@ -17,7 +17,7 @@ module ParamagicChess
     end
     hash
   end
-  
+
   def self.create_num_to_char_hash
     {
       1 => :a,
@@ -30,18 +30,10 @@ module ParamagicChess
       8 => :h
     }
   end
-  
-  def self.to_num(symbol)
-    CHAR_TO_NUM[symbol]
-  end
-    
-  def self.to_symbol(num)
-    NUM_TO_CHAR[num]
-  end
 
   CHAR_TO_NUM = create_char_to_num_hash
   NUM_TO_CHAR = create_num_to_char_hash
-  
+
 end
 
 game = ParamagicChess::Board.new
