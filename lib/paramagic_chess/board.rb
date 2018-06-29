@@ -1,12 +1,14 @@
 module ParamagicChess
   class Board
-    attr_accessor :board
+    attr_accessor :board, :removed_red_pieces, :removed_blue_pieces
     MIN_INDEX = 1
     MAX_INDEX = 8
 
     def initialize
       @board = create_board
       place_all_pieces
+      @removed_blue_pieces = []
+      @removed_red_pieces = []
     end
 
     def print_board

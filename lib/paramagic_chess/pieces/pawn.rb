@@ -32,12 +32,10 @@ module ParamagicChess
       x = CHAR_TO_NUM[@x]
       
       possible_diagonals = []
-      # to pos formats it to the :a1 format
       possible_diagonals << to_pos(x: NUM_TO_CHAR[x + 1],
                                   y: @y - 1)
       possible_diagonals << to_pos(x: NUM_TO_CHAR[x - 1 ],
                                   y: @y - 1)
-      
       possible_diagonals.select do |pos| 
         # covers possible no method error case due to nil class
         next if board.board[pos].nil?
@@ -46,9 +44,12 @@ module ParamagicChess
     end
 
     def move_to(pos:, board: Board.new)
+      update_red_moves(board: board)
+      unless @possible_moves.include? pos
+        return ":#{pos} is an invalid move. Try again."
+      end
+      
       super
-      
-      
     end
   end
 end

@@ -39,11 +39,11 @@ module ParamagicChess
 
     context '#move_to(pos:, board:)' do
       it 'returns :a10 is not a valid position' do
-        expect(piece.move_to(pos: :a10)).to eq 'a10 is an invalid move. Try again.'
+        expect(piece.move_to(pos: :a10)).to eq ':a10 is an invalid move. Try again.'
       end
 
       it 'returns :i1 is not a valid position' do
-        expect(piece.move_to(pos: :i1)).to eq 'i1 is an invalid move. Try again.'
+        expect(piece.move_to(pos: :i1)).to eq ':i1 is an invalid move. Try again.'
       end
       
       it 'sets the position of the piece to the :d2' do
