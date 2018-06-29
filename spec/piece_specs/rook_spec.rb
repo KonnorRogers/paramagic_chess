@@ -1,8 +1,8 @@
 module ParamagicChess
   RSpec.describe Rook do
     let(:rook) { Rook.new(pos: :a2) }
-    let(:black_rook) { Rook.new(pos: :a2, side: :black) }
-    let(:white_rook) { Rook.new(pos: :a3, side: :white) }
+    let(:red_rook) { Rook.new(pos: :a2, side: :red) }
+    let(:blue_rook) { Rook.new(pos: :a3, side: :blue) }
     
     context '#initialize' do
       it 'creates a rook w/ position given' do
@@ -15,12 +15,12 @@ module ParamagicChess
     end
     
     context 'to_s' do
-      it 'Returns a black rook unicode character' do
-        expect(black_rook.to_s).to eq "\u265c"
+      it 'Returns a red rook unicode character' do
+        expect(red_rook.to_s).to eq "\u265c".red
       end
       
       it 'Returns a white rook unicode character' do
-        expect(white_rook.to_s).to eq "\u2656"
+        expect(blue_rook.to_s).to eq "\u265c".blue
       end
       
       it "Returns 'Side not set' if no side given" do

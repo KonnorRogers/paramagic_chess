@@ -1,8 +1,8 @@
 module ParamagicChess
   RSpec.describe Knight do
     let(:knight) { Knight.new(pos: :a2) }
-    let(:black_knight) { Knight.new(pos: :a1, side: :black) }
-    let(:white_knight) { Knight.new(pos: :a3, side: :white) }
+    let(:red_knight) { Knight.new(pos: :a1, side: :red) }
+    let(:blue_knight) { Knight.new(pos: :a3, side: :blue) }
     
     context '#initialize' do
       it 'creates a bishop w/ position given' do
@@ -15,12 +15,12 @@ module ParamagicChess
     end
     
     context 'to_s' do
-      it 'Returns a black knight unicode character' do
-        expect(black_knight.to_s).to eq "\u265e"
+      it 'Returns a red knight unicode character' do
+        expect(red_knight.to_s).to eq "\u265e".red
       end
       
-      it 'Returns a white knight unicode character' do
-        expect(white_knight.to_s).to eq "\u2658"
+      it 'Returns a blue knight unicode character' do
+        expect(blue_knight.to_s).to eq "\u265e".blue
       end
       
       it "Returns 'Side not set' if no side given" do

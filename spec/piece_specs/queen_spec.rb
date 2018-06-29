@@ -1,8 +1,8 @@
 module ParamagicChess
   RSpec.describe Queen do
     let(:queen) { Queen.new(pos: :a2) }
-    let(:black_queen) { Queen.new(pos: :a3, side: :black) }
-    let(:white_queen) { Queen.new(pos: :a4, side: :white) }
+    let(:red_queen) { Queen.new(pos: :a3, side: :red) }
+    let(:blue_queen) { Queen.new(pos: :a4, side: :blue) }
     
     context '#initialize' do
       it 'creates a queen w/ position given' do
@@ -15,12 +15,12 @@ module ParamagicChess
     end
     
     context 'to_s' do
-      it 'Returns a black bishop unicode character' do
-        expect(black_queen.to_s).to eq "\u265b"
+      it 'Returns a red queen unicode character' do
+        expect(red_queen.to_s).to eq "\u265b".red
       end
       
-      it 'Returns a white queen unicode character' do
-        expect(white_queen.to_s).to eq "\u2655"
+      it 'Returns a blue queen unicode character' do
+        expect(blue_queen.to_s).to eq "\u265b".blue
       end
       
       it "Returns 'Side not set' if no side given" do

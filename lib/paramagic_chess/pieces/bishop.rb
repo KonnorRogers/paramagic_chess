@@ -7,8 +7,8 @@ module ParamagicChess
 
     def to_s
       bishop = "\u265d"
-      return bishop.blue if @side == :white
-      return bishop.red if @side == :black
+      return bishop.blue if @side == :blue
+      return bishop.red if @side == :red
       'Side not set'
     end
   end

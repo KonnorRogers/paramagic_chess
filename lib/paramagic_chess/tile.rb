@@ -13,13 +13,13 @@ module ParamagicChess
       true
     end
 
-    def contains_white_piece?
-      return true if @piece.side == :white
+    def contains_blue_piece?
+      return true if @piece.side == :blue
       false
     end
 
-    def contains_black_piece?
-      return true if @piece.side == :black
+    def contains_red_piece?
+      return true if @piece.side == :red
       false
     end
 
@@ -36,3 +36,4 @@ module ParamagicChess
     end
   end
 end
+

@@ -7,8 +7,8 @@ module ParamagicChess
 
     def to_s
       pawn = "\u265f"
-      return pawn.blue if @side == :white
-      return pawn.red if @side == :black
+      return pawn.blue if @side == :blue
+      return pawn.red if @side == :red
       'Side not set'
     end
 

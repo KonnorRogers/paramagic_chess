@@ -12,7 +12,7 @@ module ParamagicChess
     def print_board
       system 'clear'
       index = 0
-      print "\t    A  B  C  D  E  F  G  H"
+      print "\t    A   B   C   D   E   F   G   H"
 
       @board.each do |_key, value|
         print "\n\t" if index % 8 == 0
@@ -29,8 +29,8 @@ module ParamagicChess
     def place_all_pieces
       place_pieces
       place_pawns
-      change_to_black
-      change_to_white
+      change_to_red
+      change_to_blue
     end
 
     def place_pieces
@@ -54,14 +54,14 @@ module ParamagicChess
       end
     end
 
-    def change_to_white
-      # `1-2 is white side
-      @board.each { |key, tile| tile.piece.side = :white if tile.contains_piece? && key[1].to_i <= 2 }
+    def change_to_blue
+      # `1-2 is blue side
+      @board.each { |key, tile| tile.piece.side = :blue if tile.contains_piece? && key[1].to_i <= 2 }
     end
 
-    def change_to_black
-      # 7-8 is black side
-      @board.each { |key, tile| tile.piece.side = :black if tile.contains_piece? && key[1].to_i >= 7 }
+    def change_to_red
+      # 7-8 is red side
+      @board.each { |key, tile| tile.piece.side = :red if tile.contains_piece? && key[1].to_i >= 7 }
     end
 
     def place_pawns

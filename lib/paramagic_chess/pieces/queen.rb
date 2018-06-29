@@ -7,8 +7,8 @@ module ParamagicChess
 
     def to_s
       queen = "\u265b"
-      return queen.blue if @side == :white
-      return queen.red if @side == :black
+      return queen.blue if @side == :blue
+      return queen.red if @side == :red
 
       'Side not set'
     end

@@ -1,8 +1,8 @@
 module ParamagicChess
   RSpec.describe Pawn do
     let(:pawn) { Pawn.new(pos: :a2) }
-    let(:black_pawn) { Pawn.new(pos: :a1, side: :black) }
-    let(:white_pawn) { Pawn.new(pos: :g3, side: :white) }
+    let(:red_pawn) { Pawn.new(pos: :a1, side: :red) }
+    let(:blue_pawn) { Pawn.new(pos: :g3, side: :blue) }
     let(:board) { Board.new }
 
     context '#initialize' do
@@ -16,12 +16,12 @@ module ParamagicChess
     end
 
     context 'to_s' do
-      it 'Returns a black pawn unicode character' do
-        expect(black_pawn.to_s).to eq "\u265f"
+      it 'Returns a red pawn unicode character' do
+        expect(red_pawn.to_s).to eq "\u265f".red
       end
 
-      it 'Returns a white pawn unicode character' do
-        expect(white_pawn.to_s).to eq "\u2659"
+      it 'Returns a blue pawn unicode character' do
+        expect(blue_pawn.to_s).to eq "\u265f".blue
       end
 
       it "Returns 'Side not set' if no side given" do

@@ -31,13 +31,13 @@ module ParamagicChess
         expect(pieces.size).to eq 32
       end
 
-      it 'Sets 16 white pieces' do
-        pieces = board.board.select { |_k, v| v.contains_piece? && v.piece.side == :white }
+      it 'Sets 16 blue pieces' do
+        pieces = board.board.select { |_k, v| v.contains_piece? && v.piece.side == :blue }
         expect(pieces.size).to eq 16
       end
 
-      it 'Sets 16 black pieces' do
-        pieces = board.board.select { |_k, v| v.contains_piece? && v.piece.side == :black }
+      it 'Sets 16 red pieces' do
+        pieces = board.board.select { |_k, v| v.contains_piece? && v.piece.side == :red }
         expect(pieces.size).to eq 16
       end
     end

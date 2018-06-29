@@ -1,8 +1,8 @@
 module ParamagicChess
   RSpec.describe King do
     let(:king) { King.new(pos: :a2) }
-    let(:black_king) { King.new(pos: :a1, side: :black) }
-    let(:white_king) { King.new(pos: :a3, side: :white) }
+    let(:red_king) { King.new(pos: :a1, side: :red) }
+    let(:blue_king) { King.new(pos: :a3, side: :blue) }
     
     context '#initialize' do
       it 'creates a king w/ position given' do
@@ -15,12 +15,12 @@ module ParamagicChess
     end
     
     context 'to_s' do
-      it 'Returns a black bishop unicode character' do
-        expect(black_king.to_s).to eq "\u265a"
+      it 'Returns a red king unicode character' do
+        expect(red_king.to_s).to eq "\u265a".red
       end
       
-      it 'Returns a white bishop unicode character' do
-        expect(white_king.to_s).to eq "\u2654"
+      it 'Returns a blue king unicode character' do
+        expect(blue_king.to_s).to eq "\u265a".blue
       end
       
       it "Returns 'Side not set' if no side given" do

@@ -32,20 +32,20 @@ module ParamagicChess
       it 'sets background to black if no piece occupies the space' do
         tile.background = :black
 
-        expect(tile.to_s).to eq "\e[40m   \e[0m"
+        expect(tile.to_s).to eq " \u265f ".black.bg_black
       end
 
       it 'sets background to white if no piece occupies the space' do
         tile.background = :white
 
-        expect(tile.to_s).to eq "\e[47m   \e[0m"
+        expect(tile.to_s).to eq " \u265f ".white.bg_white
       end
 
       it 'sets background to black and puts the piece in the middle' do
-        queen = Queen.new(pos: :a1, side: :white)
+        queen = Queen.new(pos: :a1, side: :blue)
         tile = Tile.new(position: :a1, piece: queen, background: :black)
 
-        expect(tile.to_s).to eq "\e[37;40m \u2655 \e[0m"
+        expect(tile.to_s).to eq queen.to_s.bg_black
       end
     end
   end
