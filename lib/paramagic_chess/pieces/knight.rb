@@ -6,8 +6,9 @@ module ParamagicChess
     end
 
     def to_s
-      return "\e[34m\u265e" if @side == :white
-      return "\e[31m\u265e" if @side == :black
+      knight = "\u265e"
+      return knight.blue if @side == :white
+      return knight.red if @side == :black
       'Side not set'
     end
   end

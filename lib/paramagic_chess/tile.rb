@@ -24,16 +24,13 @@ module ParamagicChess
     end
 
     def to_s
-      return "\e[47m   \e[0m" if @background == :white && @piece.nil?
-      return "\e[40m   \e[0m" if @background == :black && @piece.nil?
+      blank_space = " \u265f "
+      return blank_space.white.bg_white if @background == :white && @piece.nil?
+      return blank_space.black.bg_black if @background == :black && @piece.nil?
 
-      # sets black foreground on white background
-      # return "\e[30;47m #{@piece} \e[0m" if @background == :white
-      # sets white forground on black background
-      # return "\e[37;40m #{@piece} \e[0m" if @background == :black
-
-      return "\e[47m #{@piece}" if @background == :white
-      return "\e[40m #{@piece}" if @background == :black
+      
+      return @piece.to_s.bg_white if @background == :white
+      return @piece.to_s.bg_black if @background == :black
 
       return 'Background not set'
     end
