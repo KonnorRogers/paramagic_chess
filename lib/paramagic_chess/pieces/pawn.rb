@@ -17,9 +17,12 @@ module ParamagicChess
       # reset possible moves
       @possible_moves = []
       
+      pos1 = to_pos(x: @x, y: @y - 1)
+      pos2 = to_pos(x: @x, y: @y - 2)
+      
       # red pawns can only move -1 on the y axis
-      @possible_moves << to_pos(x: @x, y: @y - 1)
-      @possible_moves << to_pos(x: @x, y: @y - 2) if moved? == false
+      @possible_moves << pos1 unless board.board[pos1].contains_piece?
+      @possible_moves << pos2 unless moved? == true || board.board[pos1].contains_piece?
       
       # checks if any enemy blue pieces at the diagonals
       possible_diagonals = blue_diagonals(board: board)
