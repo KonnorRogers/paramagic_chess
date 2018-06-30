@@ -62,7 +62,6 @@ module ParamagicChess
         
         red_pawn.update_red_moves(board: board)
         expect(red_pawn.possible_moves).to match_array [:b6, :b5, :c6, :a6]
-        
       end
     end
     
