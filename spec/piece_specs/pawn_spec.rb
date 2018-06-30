@@ -29,9 +29,9 @@ module ParamagicChess
       end
     end
 
-    context '#update_red_moves(board:)' do
+    context '#update_moves(board:)' do
       it 'provides the 2 most basic starting moves.  from a7 to a6 or a5.' do
-        red_pawn.update_red_moves(board: board)
+        red_pawn.update_moves(board: board)
 
         expect(red_pawn.possible_moves).to match_array %i[a6 a5]
       end
@@ -40,7 +40,7 @@ module ParamagicChess
         red_pawn.move_to(pos: :a6, board: board)
         # sets @moved to true
 
-        red_pawn.update_red_moves(board: board)
+        red_pawn.update_moves(board: board)
         expect(red_pawn.possible_moves).to match_array [:a5]
       end
 
@@ -48,7 +48,7 @@ module ParamagicChess
         board.board[:b6].piece = Knight.new(pos: :b6, side: :blue)
         # board.print_board
 
-        red_pawn.update_red_moves(board: board)
+        red_pawn.update_moves(board: board)
         # %i makes all symbols in the array
         expect(red_pawn.possible_moves).to match_array %i[a6 a5 b6]
       end
@@ -60,19 +60,19 @@ module ParamagicChess
         red_pawn.update_position(pos: :b7)
         # board.print_board
 
-        red_pawn.update_red_moves(board: board)
+        red_pawn.update_moves(board: board)
         expect(red_pawn.possible_moves).to match_array %i[b6 b5 c6 a6]
       end
 
       it 'will return an empty array if another red piece is in front of the pawn' do
         board.board[:a6].piece = Pawn.new(pos: :a6, side: :red)
-        red_pawn.update_red_moves(board: board)
+        red_pawn.update_moves(board: board)
         expect(red_pawn.possible_moves).to be_empty
       end
 
       it 'will return an empty array if another blue piece is in front of the pawn' do
         board.board[:a6].piece = Pawn.new(pos: :a6, side: :blue)
-        red_pawn.update_red_moves(board: board)
+        red_pawn.update_moves(board: board)
         expect(red_pawn.possible_moves).to be_empty
       end
     end
