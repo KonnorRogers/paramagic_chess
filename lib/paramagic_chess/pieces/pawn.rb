@@ -33,12 +33,15 @@ module ParamagicChess
       # reset possible moves
       @possible_moves = []
 
-      pos1 = to_pos(x: @x, y: @y - 1)
-      pos2 = to_pos(x: @x, y: @y - 2)
+      pos1 = to_pos(x: @x, y: @y + 1)
+      pos2 = to_pos(x: @x, y: @y + 2)
 
       # red pawns can only move -1 on the y axis
       @possible_moves << pos1 unless board.board[pos1].contains_piece?
-      @possible_moves << pos2 unless moved? == true || board.board[pos1].contains_piece?
+
+      if positions_not_blocked?(pos1: pos1, pos2: pos2, board: board)
+        @possible_moves << pos2 if moved? == false
+      end
 
       # checks if any enemy blue pieces at the diagonals
       possible_diagonals = blue_diagonals(board: board)
@@ -56,7 +59,10 @@ module ParamagicChess
 
       # red pawns can only move -1 on the y axis
       @possible_moves << pos1 unless board.board[pos1].contains_piece?
-      @possible_moves << pos2 unless moved? == true || board.board[pos1].contains_piece?
+
+      if positions_not_blocked?(pos1: pos1, pos2: pos2, board: board)
+        @possible_moves << pos2 if moved? == false
+      end
 
       # checks if any enemy blue pieces at the diagonals
       possible_diagonals = red_diagonals(board: board)
@@ -93,6 +99,12 @@ module ParamagicChess
         next if board.board[pos].nil?
         board.board[pos].contains_blue_piece?
       end
+    end
+
+    def positions_not_blocked?(pos1:, pos2:, board:)
+      return false if board.board[pos1].contains_piece?
+      return false if board.board[pos2].contains_piece?
+      true
     end
   end
 end

@@ -29,7 +29,7 @@ module ParamagicChess
       end
     end
 
-    context '#update_moves(board:)' do
+    context '#update_moves(board:) - red_pawn' do
       it 'provides the 2 most basic starting moves.  from a7 to a6 or a5.' do
         red_pawn.update_moves(board: board)
 
@@ -74,6 +74,25 @@ module ParamagicChess
         board.board[:a6].piece = Pawn.new(pos: :a6, side: :blue)
         red_pawn.update_moves(board: board)
         expect(red_pawn.possible_moves).to be_empty
+      end
+    end
+
+    context '#update_moves(board:) - blue_pawn' do
+      it 'provides basic first 2 moves for a pawn' do
+        blue_pawn.update_moves(board: board)
+        expect(blue_pawn.possible_moves).to match_array %i[a3 a4]
+      end
+
+      it 'will return an empty array if another red piece is in front of the pawn' do
+        board.board[:a3].piece = Pawn.new(pos: :a3, side: :blue)
+        blue_pawn.update_moves(board: board)
+        expect(blue_pawn.possible_moves).to be_empty
+      end
+
+      it 'will return only :a3 if :a4 is taken' do
+        board.board[:a4].piece = Pawn.new(pos: :a4, side: :red)
+        blue_pawn.update_moves(board: board)
+        expect(blue_pawn.possible_moves).to match_array %i[a3]
       end
     end
 
