@@ -8,6 +8,12 @@ module ParamagicChess
       @position = position
     end
 
+    def piece_type
+      return nil if @piece.nil?
+      return nil if @piece.type.nil?
+      @piece.type
+    end
+
     def contains_piece?
       return false if @piece.nil?
       true
@@ -30,7 +36,7 @@ module ParamagicChess
       return blank_space.white.bg_white if @background == :white && @piece.nil?
       return blank_space.black.bg_black if @background == :black && @piece.nil?
 
-      
+
       return @piece.to_s.bg_white if @background == :white
       return @piece.to_s.bg_black if @background == :black
 

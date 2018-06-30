@@ -16,7 +16,7 @@ module ParamagicChess
       @y = y_coord(pos: pos)
       @pos = pos
     end
-    
+
     def to_pos(x:, y:)
       (x.to_s + y.to_s).to_sym
     end
@@ -35,17 +35,19 @@ module ParamagicChess
       return ":#{pos} is an invalid move. Try again." unless valid_move?(pos: pos)
 
       # sets initial spot to nil
-      board.board[self.pos].piece = nil
+      board.board[@pos].piece = nil
       update_position(pos: pos)
       @moved = true if @moved == false
+
       if board.board[pos].contains_piece?
         remove_piece(pos: pos, board: board)
       end
+
       board.board[pos].piece = self
       # Super method to be called, so as not to rewrite for every class
       # Update possible moves is up to the class
     end
-    
+
     def remove_piece(pos:, board:)
       if board.board[pos].contains_red_piece?
         board.removed_red_pieces << board.board[pos].piece
@@ -57,7 +59,7 @@ module ParamagicChess
     def moved?
       @moved
     end
-    
+
     def valid_move?(pos:, board: Board.new)
       y = y_coord(pos: pos)
       # Checks if the x coord is in the char_to_num index
