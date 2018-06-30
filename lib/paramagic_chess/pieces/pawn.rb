@@ -25,13 +25,13 @@ module ParamagicChess
       @possible_moves << pos2 unless moved? == true || board.board[pos1].contains_piece?
 
       # checks if any enemy blue pieces at the diagonals
-      possible_diagonals = blue_diagonals(board: board)
+      possible_diagonals = red_diagonals(board: board)
 
       # #concat used to avoid array of array
       @possible_moves.concat(possible_diagonals) unless possible_diagonals.empty?
     end
 
-    def blue_diagonals(board: Board.new)
+    def red_diagonals(board: Board.new)
       x = CHAR_TO_NUM[@x]
 
       possible_diagonals = []
