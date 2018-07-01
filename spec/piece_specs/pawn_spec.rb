@@ -94,10 +94,19 @@ module ParamagicChess
         blue_pawn.update_moves(board: board)
         expect(blue_pawn.possible_moves).to match_array %i[a3]
       end
-    end
-
-    context '#en_passant(pos:, board:)' do
-      # TODO: later
+      
+      it 'accounts for an en passant case' do
+        pawn_blue = Pawn.new(pos: :b5, side: :blue)
+        board.board[:b5].piece = pawn_blue
+        board.board[:a7].piece.move_to(pos: :a5, board: board)
+        board.board[:c7].piece.move_to(pos: :c5, board: board)
+        
+        board.print_board
+        puts board.board[:c5].piece.double_move?
+        
+        pawn_blue.update_moves(board: board)
+        expect(pawn_blue.possible_moves).to match_array %i{b6 c6 a6}
+      end
     end
 
     context '#move_to(pos:, board:)' do
