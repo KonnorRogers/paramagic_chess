@@ -95,17 +95,42 @@ module ParamagicChess
         expect(blue_pawn.possible_moves).to match_array %i[a3]
       end
       
-      it 'accounts for an en passant case' do
+      it 'accounts for an en passant case on both sides for blue' do
         pawn_blue = Pawn.new(pos: :b5, side: :blue)
         board.board[:b5].piece = pawn_blue
         board.board[:a7].piece.move_to(pos: :a5, board: board)
         board.board[:c7].piece.move_to(pos: :c5, board: board)
         
-        board.print_board
-        puts board.board[:c5].piece.double_move?
-        
         pawn_blue.update_moves(board: board)
         expect(pawn_blue.possible_moves).to match_array %i{b6 c6 a6}
+      end
+      
+      it 'accounts for an en passant on both sides case for red' do
+        pawn_red = Pawn.new(pos: :b4, side: :red)
+        board.board[:b4].piece = pawn_red
+        board.board[:a2].piece.move_to(pos: :a4, board: board)
+        board.board[:c2].piece.move_to(pos: :c4, board: board)
+        
+        pawn_red.update_moves(board: board)
+        expect(pawn_red.possible_moves).to match_array %i{b3 c3 a3}
+      end
+      
+      it 'accounts for only 1 en passant for blue' do
+        pawn_blue = Pawn.new(pos: :b5, side: :blue)
+        board.board[:b5].piece = pawn_blue
+        board.board[:a7].piece.move_to(pos: :a5, board: board)
+        
+        pawn_blue.update_moves(board: board)
+        expect(pawn_blue.possible_moves).to match_array %i{b6 a6}
+      end
+      
+      it 'accounts for only 1 en passant for red' do
+        pawn_red = Pawn.new(pos: :b4, side: :red)
+        board.board[:b4].piece = pawn_red
+        board.board[:a2].piece.move_to(pos: :a4, board: board)
+        
+        pawn_red.update_moves(board: board)
+        expect(pawn_red.possible_moves).to match_array %i{b3 a3}
       end
     end
 

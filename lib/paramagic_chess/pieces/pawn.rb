@@ -143,7 +143,7 @@ module ParamagicChess
 
         next if en_passant.nil?
         next if en_passant[0].nil?
-        if y_coord(pos: en_passant[1]) == y_coord(pos: pos) - 1
+        if y_coord(pos: en_passant[0]) == y_coord(pos: pos) - 1
           @possible_moves << pos if x_coord(pos: en_passant[0]) == x_coord(pos: pos)
         end
 
@@ -152,14 +152,11 @@ module ParamagicChess
           @possible_moves << pos if x_coord(pos: en_passant[1]) == x_coord(pos: pos)
         end
       end
-      
-      p @possible_moves
     end
 
     def red_diagonals(board:)
       x = CHAR_TO_NUM[@x]
       en_passant = red_en_passant(board: board)
-      # en_passant
 
       possible_diagonals = []
       diagonal1 = to_pos(x: NUM_TO_CHAR[x + 1], y: @y - 1)
@@ -174,10 +171,14 @@ module ParamagicChess
 
         next if en_passant.nil?
         next if en_passant[0].nil?
-        @possible_moves << pos if y_coord(pos: en_passant[0]) == y_coord(pos: pos) + 1
+        if y_coord(pos: en_passant[0]) == y_coord(pos: pos) + 1
+          @possible_moves << pos if x_coord(pos: en_passant[0]) == x_coord(pos: pos)
+        end
 
         next if en_passant[1].nil?
-        @possible_moves << pos if y_coord(pos: en_passant[1]) == y_coord(pos: pos) + 1
+        if y_coord(pos: en_passant[1]) == y_coord(pos: pos) + 1
+          @possible_moves << pos if x_coord(pos: en_passant[1]) == x_coord(pos: pos)
+        end
       end
     end
 
