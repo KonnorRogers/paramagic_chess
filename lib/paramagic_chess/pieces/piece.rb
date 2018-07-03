@@ -1,7 +1,7 @@
 module ParamagicChess
   class Piece
-    attr_accessor :side, :possible_moves
-    attr_reader :x, :y, :pos, :type, :moved
+    attr_accessor :side, :possible_moves, :type
+    attr_reader :x, :y, :pos, :moved
 
     def initialize(pos: nil, side: nil, moved: false)
       update_position(pos: pos)
@@ -12,6 +12,7 @@ module ParamagicChess
 
     # updates position, x & y values
     def update_position(pos:)
+      return nil if pos.nil?
       @x = pos[0].to_sym
       @y = y_coord(pos: pos)
       @pos = pos
@@ -31,17 +32,16 @@ module ParamagicChess
       pos[0].to_sym
     end
 
-    def move_to(pos:, board: Board.new)
+    def move_to(pos:, board: Board.new, input: nil)
       return ":#{pos} is an invalid move. Try again." unless valid_move?(pos: pos)
 
       # sets initial spot to nil
       board.board[@pos].piece = nil
       update_position(pos: pos)
       @moved = true if @moved == false
-
-      if board.board[pos].contains_piece?
-        remove_piece(pos: pos, board: board)
-      end
+      
+      remove_piece(pos: pos, board: board) if board.board[pos].contains_red_piece? && @side == :blue
+      remove_piece(pos: pos, board: board) if board.board[pos].contains_blue_piece? && @side == :red
 
       board.board[pos].piece = self
       # Super method to be called, so as not to rewrite for every class
@@ -54,6 +54,8 @@ module ParamagicChess
       elsif board.board[pos].contains_blue_piece?
         board.removed_blue_pieces << board.board[pos].piece
       end
+      
+      board.board[pos].piece = nil
     end
 
     def moved?

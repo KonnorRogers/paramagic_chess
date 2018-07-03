@@ -33,6 +33,12 @@ module ParamagicChess
 
   CHAR_TO_NUM = create_char_to_num_hash
   NUM_TO_CHAR = create_num_to_char_hash
+  PROMOTION_LIST = {
+    bishop: Bishop.new,
+    knight: Knight.new,
+    queen: Queen.new,
+    rook: Rook.new
+  }
 
 end
 

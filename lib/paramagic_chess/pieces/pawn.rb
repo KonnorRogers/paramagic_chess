@@ -14,26 +14,26 @@ module ParamagicChess
       'Side not set'
     end
 
-    def update_moves(board:)
+    def update_moves(board:, input: nil)
       update_red_moves(board: board) if @side == :red
       update_blue_moves(board: board) if @side == :blue
     end
 
-    def move_to(pos:, board: Board.new)
+    def move_to(pos:, board: Board.new, input: nil)
       start_position = @pos
       update_moves(board: board)
       unless @possible_moves.include? pos
         return ":#{pos} is an invalid move. Try again."
       end
 
-      
       super
 
-      if @side == :red
-        @double_move = red_moved_twice?(start: start_position, end_pos: pos)
-      else
-        @double_move = blue_moved_twice?(start: start_position, end_pos: pos)
+      if elgible_for_promotion?
+        promote_to(pos: pos, input: input, board: board)
       end
+
+      @double_move = red_moved_twice?(start: start_position, end_pos: pos) if @side == :red
+      @double_move = blue_moved_twice?(start: start_position, end_pos: pos) if @side == :blue
     end
 
     def double_move?
@@ -41,8 +41,22 @@ module ParamagicChess
     end
 
     private
+    
+    def elgible_for_promotion?
+      return true if @side == :red && @y == 1
+      return true if @side == :blue && @y == 8
+      false
+    end
+    
+    def promote_to(pos:, board:, input: gets.chomp.to_sym)
+      return "#{input} is not a promotable piece. Try again." unless PROMOTION_LIST.include? input
+      promotion_piece = PROMOTION_LIST[input]
+      promotion_piece.update_position(pos: pos)
+      promotion_piece.side = @side
 
-    # works
+      board.board[pos].piece = promotion_piece
+    end
+
     def horizontal_pawns(board:)
       positions_with_pawn = []
       x = CHAR_TO_NUM[@x]
@@ -53,11 +67,9 @@ module ParamagicChess
       positions_with_pawn << pos1 if !board.board[pos1].nil? && board.board[pos1].piece_type == :pawn
       positions_with_pawn << pos2 if !board.board[pos2].nil? && board.board[pos2].piece_type == :pawn
 
-      # p positions_with_pawn
       positions_with_pawn
     end
     
-    # needs work
     def blue_en_passant(board:)
       horizontal_pawns = horizontal_pawns(board: board)
       return nil if horizontal_pawns.empty?
@@ -68,8 +80,7 @@ module ParamagicChess
       
       horizontal_pawns
     end
-
-    # needs work
+    
     def red_en_passant(board:)
       horizontal_pawns = horizontal_pawns(board: board)
       return nil if horizontal_pawns.empty?
@@ -129,7 +140,6 @@ module ParamagicChess
       x = CHAR_TO_NUM[@x]
       en_passant = blue_en_passant(board: board)
 
-      p en_passant
       possible_diagonals = []
       diagonal1 = to_pos(x: NUM_TO_CHAR[x + 1], y: @y + 1)
       diagonal2 = to_pos(x: NUM_TO_CHAR[x - 1], y: @y + 1)
@@ -184,7 +194,7 @@ module ParamagicChess
 
     def positions_not_blocked?(pos1:, pos2:, board:)
       return false if board.board[pos1].contains_piece?
-      return false if board.board[pos2].contains_piece?
+      return false if board.board[pos2].nil? || board.board[pos2].contains_piece?
       true
     end
   end

@@ -16,4 +16,9 @@ RSpec.describe ParamagicChess do
     expect(ParamagicChess::NUM_TO_CHAR).to be_an_instance_of Hash
     expect(ParamagicChess::NUM_TO_CHAR[3]).to eq :c
   end
+  
+  it 'has a PROMOTION_LIST hash' do
+    expect(ParamagicChess::PROMOTION_LIST).to be_an_instance_of Hash
+    expect(ParamagicChess::PROMOTION_LIST[:knight]).to be_an_instance_of ParamagicChess::Knight
+  end
 end
