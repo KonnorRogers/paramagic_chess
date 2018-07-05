@@ -9,7 +9,7 @@ lib_path = File.expand_path(File.dirname(__FILE__))
 Dir[lib_path + "/paramagic_chess/**/*.rb"].each { |file| require file }
 
 module ParamagicChess
-  
+
   def self.create_char_to_num_hash
     hash = {}
     ('a'..'h').each_with_index do |letter, index|
@@ -42,8 +42,8 @@ module ParamagicChess
 
 end
 
-game = ParamagicChess::Board.new
-game.print_board
+# game = ParamagicChess::Board.new
+# game.print_board
 
 # game.board[:d4] = ParamagicChess::Queen.new(pos: :d4, side: :white)
 # game.print_board

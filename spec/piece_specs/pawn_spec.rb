@@ -92,41 +92,41 @@ module ParamagicChess
         blue_pawn.update_moves(board: board)
         expect(blue_pawn.possible_moves).to match_array %i[a3]
       end
-      
+
       it 'accounts for an en passant case on both sides for blue' do
         pawn_blue = Pawn.new(pos: :b5, side: :blue)
         board.board[:b5].piece = pawn_blue
         board.board[:a7].piece.move_to(pos: :a5, board: board)
         board.board[:c7].piece.move_to(pos: :c5, board: board)
-        
+
         pawn_blue.update_moves(board: board)
         expect(pawn_blue.possible_moves).to match_array %i{b6 c6 a6}
       end
-      
+
       it 'accounts for an en passant on both sides case for red' do
         pawn_red = Pawn.new(pos: :b4, side: :red)
         board.board[:b4].piece = pawn_red
         board.board[:a2].piece.move_to(pos: :a4, board: board)
         board.board[:c2].piece.move_to(pos: :c4, board: board)
-        
+
         pawn_red.update_moves(board: board)
         expect(pawn_red.possible_moves).to match_array %i{b3 c3 a3}
       end
-      
+
       it 'accounts for only 1 en passant for blue' do
         pawn_blue = Pawn.new(pos: :b5, side: :blue)
         board.board[:b5].piece = pawn_blue
         board.board[:a7].piece.move_to(pos: :a5, board: board)
-        
+
         pawn_blue.update_moves(board: board)
         expect(pawn_blue.possible_moves).to match_array %i{b6 a6}
       end
-      
+
       it 'accounts for only 1 en passant for red' do
         pawn_red = Pawn.new(pos: :b4, side: :red)
         board.board[:b4].piece = pawn_red
         board.board[:a2].piece.move_to(pos: :a4, board: board)
-        
+
         pawn_red.update_moves(board: board)
         expect(pawn_red.possible_moves).to match_array %i{b3 a3}
       end
@@ -144,7 +144,7 @@ module ParamagicChess
         knight_b6 = Knight.new(pos: :b6, side: :blue)
         board.board[:b6].piece = knight_b6
         red_pawn.move_to(pos: :b6, board: board)
-    
+
 
         expect(red_pawn.pos).to eq :b6
         expect(board.board[:b6].piece).to eq red_pawn
@@ -157,12 +157,12 @@ module ParamagicChess
         expect(board.board[:a7].piece.type).to eq :pawn
         expect(error).to eq ':b6 is an invalid move. Try again.'
       end
-      
+
       it 'Allows the ability to promote' do
         board.board[:b1].piece = nil
-        
+
         red_pawn.move_to(pos: :a5, board: board)
-        
+
         red_pawn.move_to(pos: :a4, board: board)
         red_pawn.move_to(pos: :a3, board: board)
         red_pawn.move_to(pos: :b2, board: board)
@@ -170,18 +170,27 @@ module ParamagicChess
         # board.print_board
         expect(board.board[:b1].piece).to be_an_instance_of Knight
       end
-      
+
       it 'Allows the ability to promote' do
         board.board[:b8].piece = nil
-        
+
         blue_pawn.move_to(pos: :a4, board: board)
-        
+
         blue_pawn.move_to(pos: :a5, board: board)
         blue_pawn.move_to(pos: :a6, board: board)
         blue_pawn.move_to(pos: :b7, board: board)
         blue_pawn.move_to(pos: :b8, board: board, input: :knight)
         board.print_board
         expect(board.board[:b1].piece).to be_an_instance_of Knight
+      end
+
+      it 'Works with en_passant' do
+        red_pawn.move_to(pos: :a5, board: board)
+        red_pawn.move_to(pos: :a4, board: board)
+        board.board[:b2].piece.move_to(pos: :b4, board: board)
+        red_pawn.move_to(pos: :b3, board: board)
+        board.print_board
+        expect(board.board[:b4].piece).to eq nil
       end
     end
   end

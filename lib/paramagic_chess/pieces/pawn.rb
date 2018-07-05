@@ -21,6 +21,9 @@ module ParamagicChess
 
     def move_to(pos:, board: Board.new, input: nil)
       start_position = @pos
+      red = red_en_passant(board: board) if @side == :red
+      blue = blue_en_passant(board: board) if @side == :blue
+
       update_moves(board: board)
       unless @possible_moves.include? pos
         return ":#{pos} is an invalid move. Try again."
@@ -28,9 +31,15 @@ module ParamagicChess
 
       super
 
-      if elgible_for_promotion?
-        promote_to(pos: pos, input: input, board: board)
+      if @side == :red && red
+        pos_plus_one = to_pos(x: x_coord(pos: pos), y: (y_coord(pos: pos) + 1))
+        remove_piece(pos: pos_plus_one, board: board)
+      elsif @side == :blue && blue
+        pos_minus_one = to_pos(x: x_coord(pos: pos), y: (y_coord(pos: pos) - 1))
+        remove_piece(pos: pos_minus_one, board: board)
       end
+
+      promote_to(pos: pos, input: input, board: board) if elgible_for_promotion?
 
       @double_move = red_moved_twice?(start: start_position, end_pos: pos) if @side == :red
       @double_move = blue_moved_twice?(start: start_position, end_pos: pos) if @side == :blue
@@ -41,13 +50,13 @@ module ParamagicChess
     end
 
     private
-    
+
     def elgible_for_promotion?
       return true if @side == :red && @y == 1
       return true if @side == :blue && @y == 8
       false
     end
-    
+
     def promote_to(pos:, board:, input: gets.chomp.to_sym)
       return "#{input} is not a promotable piece. Try again." unless PROMOTION_LIST.include? input
       promotion_piece = PROMOTION_LIST[input]
@@ -69,26 +78,26 @@ module ParamagicChess
 
       positions_with_pawn
     end
-    
+
     def blue_en_passant(board:)
       horizontal_pawns = horizontal_pawns(board: board)
       return nil if horizontal_pawns.empty?
-      
+
       horizontal_pawns.select! do |pos|
         board.board[pos].piece.double_move? && board.board[pos].piece.side == :red
       end
-      
+
       horizontal_pawns
     end
-    
+
     def red_en_passant(board:)
       horizontal_pawns = horizontal_pawns(board: board)
       return nil if horizontal_pawns.empty?
-      
+
       horizontal_pawns.select! do |pos|
         board.board[pos].piece.double_move? && board.board[pos].piece.side == :blue
       end
-      
+
       horizontal_pawns
     end
 
@@ -96,7 +105,7 @@ module ParamagicChess
       return true if y_coord(pos: start) == y_coord(pos: end_pos) + 2
       false
     end
-    
+
     def blue_moved_twice?(start:, end_pos:)
       return true if y_coord(pos: start) == y_coord(pos: end_pos) - 2
       false
@@ -146,7 +155,7 @@ module ParamagicChess
 
       possible_diagonals << diagonal1
       possible_diagonals << diagonal2
-      
+
       possible_diagonals.each do |pos|
         next if board.board[pos].nil?
         @possible_moves << pos if board.board[pos].contains_red_piece?
