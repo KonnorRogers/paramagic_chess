@@ -14,7 +14,7 @@ module ParamagicChess
       'Side not set'
     end
 
-    def update_moves(board:, input: nil)
+    def update_moves(board:)
       update_red_moves(board: board) if @side == :red
       update_blue_moves(board: board) if @side == :blue
     end

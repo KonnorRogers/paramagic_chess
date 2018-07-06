@@ -180,7 +180,7 @@ module ParamagicChess
         blue_pawn.move_to(pos: :a6, board: board)
         blue_pawn.move_to(pos: :b7, board: board)
         blue_pawn.move_to(pos: :b8, board: board, input: :knight)
-        board.print_board
+        # board.print_board
         expect(board.board[:b1].piece).to be_an_instance_of Knight
       end
 
@@ -189,7 +189,6 @@ module ParamagicChess
         red_pawn.move_to(pos: :a4, board: board)
         board.board[:b2].piece.move_to(pos: :b4, board: board)
         red_pawn.move_to(pos: :b3, board: board)
-        board.print_board
         expect(board.board[:b4].piece).to eq nil
       end
     end
