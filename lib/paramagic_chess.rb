@@ -44,6 +44,9 @@ end
 
 game = ParamagicChess::Board.new
 game.print_board
+game.board[:c8].piece.update_moves(board: game)
+p game.board[:c8].piece.possible_moves
+
 
 # game.board[:d4] = ParamagicChess::Queen.new(pos: :d4, side: :white)
 # game.print_board

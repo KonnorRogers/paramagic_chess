@@ -1,8 +1,11 @@
 module ParamagicChess
   class Bishop < Piece
+    # MOVE_SET = Moves::Diagonal.new
+    
     def initialize(pos: nil, side: nil, moved: false)
       super
       @type = :bishop
+      @move_set = Moves::Diagonal.new
     end
 
     def to_s
@@ -19,72 +22,8 @@ module ParamagicChess
     end
     
     def update_moves(board:)
-      update_blue_moves(board: board) if @side == :blue
-      update_red_moves(board: board) if @side == :red
-    end
-    
-    private
-    
-    def update_blue_moves(board:)
       @possible_moves = []
-    end
-    
-    def update_red_moves(board:)
-      @possible_moves = []
-    end
-    
-    # will display moves for up if red, down if blue
-    def right_r_up_b_down(board:)
-      array = []
-      1.upto(8) do |index|
-        pos = to_pos(x: NUM_TO_CHAR[@x + index], y: @y + index)
-        return array if blocked_by_team?(pos: pos, board: board)
-        array << pos
-        return array if blocked_by_enemy?(pos: pos, board: board)
-      end
-    end
-    
-    def right_r_down_b_up(board:)
-      array = []
-      1.upto(8) do |index|
-        pos = to_pos(x: NUM_TO_CHAR[@x + index], y: @y - index)
-        return array if blocked_by_team?(pos: pos, board: board)
-        array << pos
-        return array if blocked_by_enemy?(pos: pos, board: board)
-      end
-    end
-    
-    def left_r_up_b_down(board:)
-      array = []
-      1.upto(8) do |index|
-        pos = to_pos(x: NUM_TO_CHAR[@x - index], y: @y + index)
-        return array if blocked_by_team?(pos: pos, board: board)
-        array << pos
-        return array if blocked_by_enemy?(pos: pos, board: board)
-      end
-    end
-    
-    def left_r_down_b_up(board:)
-      array = []
-      1.upto(8) do |index|
-        pos = to_pos(x: NUM_TO_CHAR[@x - index], y: @y - index)
-        return array if blocked_by_team?(pos: pos, board: board)
-        array << pos
-        return array if blocked_by_enemy?(pos: pos, board: board)
-      end
-    end
-    
-    
-    def blocked_by_team?(board:, pos:)
-      return true if board.board[pos].contains_red_piece? && @side == :red
-      return true if board.board[pos].contains_blue_piece? && @side == :blue
-      false
-    end
-    
-    def blocked_by_enemy?(board:, pos:)
-      return true if board.board[pos].contains_red_piece? && @side == :blue
-      return true if board.board[pos].contains_blue_piece? && @side == :red
-      false
+      @possible_moves.concat(@move_set.possible_moves(board: board, piece: self))
     end
   end
 end

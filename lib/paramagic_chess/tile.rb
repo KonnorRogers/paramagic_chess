@@ -13,6 +13,10 @@ module ParamagicChess
       return nil if @piece.type.nil?
       @piece.type
     end
+    
+    def side
+      @piece.side
+    end
 
     def contains_piece?
       return false if @piece.nil?

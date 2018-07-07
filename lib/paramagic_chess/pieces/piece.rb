@@ -1,5 +1,8 @@
+require_relative "../moves.rb"
+
 module ParamagicChess
   class Piece
+    include Moves
     attr_accessor :side, :possible_moves, :type
     attr_reader :x, :y, :pos, :moved
 
