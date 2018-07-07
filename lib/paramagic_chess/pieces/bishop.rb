@@ -33,10 +33,41 @@ module ParamagicChess
       @possible_moves = []
     end
     
-    def red_up_blue_down(board:)
+    # will display moves for up if red, down if blue
+    def right_r_up_b_down(board:)
       array = []
       1.upto(8) do |index|
         pos = to_pos(x: NUM_TO_CHAR[@x + index], y: @y + index)
+        return array if blocked_by_team?(pos: pos, board: board)
+        array << pos
+        return array if blocked_by_enemy?(pos: pos, board: board)
+      end
+    end
+    
+    def right_r_down_b_up(board:)
+      array = []
+      1.upto(8) do |index|
+        pos = to_pos(x: NUM_TO_CHAR[@x + index], y: @y - index)
+        return array if blocked_by_team?(pos: pos, board: board)
+        array << pos
+        return array if blocked_by_enemy?(pos: pos, board: board)
+      end
+    end
+    
+    def left_r_up_b_down(board:)
+      array = []
+      1.upto(8) do |index|
+        pos = to_pos(x: NUM_TO_CHAR[@x - index], y: @y + index)
+        return array if blocked_by_team?(pos: pos, board: board)
+        array << pos
+        return array if blocked_by_enemy?(pos: pos, board: board)
+      end
+    end
+    
+    def left_r_down_b_up(board:)
+      array = []
+      1.upto(8) do |index|
+        pos = to_pos(x: NUM_TO_CHAR[@x - index], y: @y - index)
         return array if blocked_by_team?(pos: pos, board: board)
         array << pos
         return array if blocked_by_enemy?(pos: pos, board: board)
