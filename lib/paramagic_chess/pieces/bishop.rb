@@ -17,8 +17,8 @@ module ParamagicChess
     
     def move_to(pos:, board:)
       update_moves(board: board)
+      return ":#{pos} is an invalid move. Try again." unless @possible_moves.include? pos
       super if @possible_moves.include? pos
-      return "#{pos} is not a valid move."
     end
     
     def update_moves(board:)

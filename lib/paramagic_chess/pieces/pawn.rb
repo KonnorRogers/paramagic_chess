@@ -1,5 +1,7 @@
 module ParamagicChess
   class Pawn < Piece
+    attr_accessor :double_move
+    
     def initialize(pos: nil, side: nil, moved: false)
       super
       @type = :pawn
