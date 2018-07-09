@@ -76,6 +76,23 @@ module ParamagicChess
         expect(board.board[:g7].piece).to eq nil
         expect(board.board[:h8].piece).to eq bishop
       end
+      
+      it 'will not move from starting point' do
+        bishop = board.board[:c8].piece
+        bishop.move_to(board: board, pos: :e3)
+        expect(board.board[:c8].piece).to eq bishop
+      end
+      
+      it 'will move when the pawn is moved' do
+        bishop = board.board[:c8].piece
+        board.board[:d7].piece.move_to(board: board, pos: :d5)
+        bishop.move_to(board: board, pos: :h3)
+        bishop.move_to(board: board, pos: :g2)
+        expect(board.board[:g2].piece).to eq bishop
+        bishop.move_to(board: board, pos: :h1)
+        expect(board.board[:g2].piece).to eq nil
+        expect(board.board[:h1].piece).to eq bishop
+      end
     end
   end
 end

@@ -3,6 +3,7 @@ module ParamagicChess
     let(:rook) { Rook.new(pos: :a2) }
     let(:red_rook) { Rook.new(pos: :a2, side: :red) }
     let(:blue_rook) { Rook.new(pos: :a3, side: :blue) }
+    let(:board) { Board.new }
     
     context '#initialize' do
       it 'creates a rook w/ position given' do
@@ -25,6 +26,52 @@ module ParamagicChess
       
       it "Returns 'Side not set' if no side given" do
         expect(rook.to_s).to eq 'Side not set'
+      end
+    end
+    
+    context '#update_moves(:board)' do
+      it 'does not allow movement from starting point' do
+        rook = board.board[:a8].piece
+        rook.update_moves(board: board)
+        expect(rook.possible_moves).to be_empty
+      end
+      
+      it 'allows movement all the way to :a2 - red' do
+        rook = board.board[:a8].piece
+        board.board[:a7].piece = nil
+        rook.update_moves(board: board)
+        moves = %i{a7 a6 a5 a4 a3 a2}
+        
+        expect(rook.possible_moves).to match_array moves
+      end
+      
+      it 'allows complete horizontal movement - red' do
+        rook = Rook.new(pos: :a6, side: :red)
+        board.board[:a6].piece = rook
+        rook.update_moves(board: board)
+
+        moves = %i{b6 c6 d6 e6 f6 g6 h6 a2 a3 a4 a5}
+
+        expect(rook.possible_moves).to match_array moves
+      end
+      
+      it 'allows movement all the way to :a2 - blue' do
+        rook = board.board[:a1].piece
+        board.board[:a2].piece = nil
+        rook.update_moves(board: board)
+        moves = %i{a7 a6 a5 a4 a3 a2}
+        
+        expect(rook.possible_moves).to match_array moves
+      end
+      
+      it 'allows complete horizontal movement - blue' do
+        rook = Rook.new(pos: :a3, side: :blue)
+        board.board[:a3].piece = rook
+        rook.update_moves(board: board)
+
+        moves = %i{b3 c3 d3 e3 f3 g3 h3 a4 a5 a6 a7}
+
+        expect(rook.possible_moves).to match_array moves
       end
     end
   end

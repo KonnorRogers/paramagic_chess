@@ -88,7 +88,7 @@ module ParamagicChess
         array
       end
       
-      def left_red_down_blue_up(board:, piece: piece)
+      def left_red_down_blue_up(board:, piece:)
         x = CHAR_TO_NUM[piece.x]
         array = []
         1.upto(8) do |index|
@@ -100,6 +100,43 @@ module ParamagicChess
         end
         
         array
+      end
+    end
+    
+    class Straight < Move
+      MOVES = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+      
+      def possible_moves(board:, piece:)
+        ary = []
+        x = CHAR_TO_NUM[piece.x]
+        
+        MOVES.each do |move|
+          1.upto(8) do |index|
+            new_coord = make_new_coord(piece: piece, index: index, move: move, x: x)
+            break if out_of_bounds?(x: x, y: new_coord[1].to_i)
+            break if blocked_by_team?(pos: new_coord, board: board, piece: piece)
+            ary << new_coord
+            break if blocked_by_enemy?(pos: new_coord, board: board, piece: piece)
+          end
+        end
+        ary
+      end
+      
+      def make_new_coord(piece:, index:, move:, x: nil)
+        
+        case move[1]
+        when 1
+          return to_pos(x: piece.x, y: piece.y + index)
+        when -1
+          return to_pos(x: piece.x, y: piece.y - index)
+        end
+        
+        case move[0]
+        when 1
+          return to_pos(x: NUM_TO_CHAR[x + index], y: piece.y)
+        when -1
+          return to_pos(x: NUM_TO_CHAR[x - index], y: piece.y)
+        end
       end
     end
   end

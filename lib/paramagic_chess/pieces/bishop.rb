@@ -1,11 +1,10 @@
 module ParamagicChess
   class Bishop < Piece
-    # MOVE_SET = Moves::Diagonal.new
+    MOVE_SET = Moves::Diagonal.new
     
     def initialize(pos: nil, side: nil, moved: false)
       super
       @type = :bishop
-      @move_set = Moves::Diagonal.new
     end
 
     def to_s
@@ -23,7 +22,7 @@ module ParamagicChess
     
     def update_moves(board:)
       @possible_moves = []
-      @possible_moves.concat(@move_set.possible_moves(board: board, piece: self))
+      @possible_moves.concat(MOVE_SET.possible_moves(board: board, piece: self))
     end
   end
 end
