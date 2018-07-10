@@ -74,5 +74,24 @@ module ParamagicChess
         expect(rook.possible_moves).to match_array moves
       end
     end
+    
+    context '#move_to(pos:, board:)' do
+      it 'will not move from starting point' do
+        rook = board.board[:a8].piece
+        rook.move_to(board: board, pos: :a6)
+        expect(rook.pos).to eq :a8
+        expect(board.board[:a8].piece).to eq rook
+      end
+      
+      it 'will move if the pawn is gone.' do
+        rook = board.board[:a8].piece
+        board.board[:a7].piece = nil
+        rook.move_to(board: board, pos: :a2)
+        expect(board.board[:a2].piece).to eq rook
+        rook.move_to(board: board, pos: :b2)
+        expect(board.board[:a2].piece).to eq nil
+        expect(board.board[:b2].piece).to eq rook
+      end
+    end
   end
 end

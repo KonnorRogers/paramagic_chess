@@ -5,6 +5,7 @@ module ParamagicChess
     class Move
       MAX_INDEX = ParamagicChess::Board::MAX_INDEX
       MIN_INDEX = ParamagicChess::Board::MIN_INDEX
+      
       def to_pos(x:, y:)
         (x.to_s + y.to_s).to_sym
       end
@@ -29,6 +30,26 @@ module ParamagicChess
         return true if x > MAX_INDEX || x < MIN_INDEX
         return true if y > MAX_INDEX || y < MIN_INDEX
         false
+      end
+    end
+    
+    class L_Move < Move
+      MOVES = [[2, 1], [2, -1], [-2, 1], [-2, -1],
+               [1, 2], [1, -2], [-1, 2], [-1, -2]]
+              
+      def possible_moves(board:, piece:)
+        x = CHAR_TO_NUM[piece.x]
+        moves = []
+        MOVES.each do |move|
+          new_x = x + move[0]
+          new_y = piece.y + move[1]
+          next if out_of_bounds?(x: new_x, y: new_y)
+          new_coord = to_pos(x: NUM_TO_CHAR[new_x], y: new_y)
+          next if blocked_by_team?(board: board, pos: new_coord, piece: piece)
+          moves << new_coord
+        end
+        
+        moves
       end
     end
     
@@ -121,6 +142,8 @@ module ParamagicChess
         end
         ary
       end
+      
+      private
       
       def make_new_coord(piece:, index:, move:, x: nil)
         
