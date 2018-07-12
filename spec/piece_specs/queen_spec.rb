@@ -3,6 +3,7 @@ module ParamagicChess
     let(:queen) { Queen.new(pos: :a2) }
     let(:red_queen) { Queen.new(pos: :a3, side: :red) }
     let(:blue_queen) { Queen.new(pos: :a4, side: :blue) }
+    let(:board) { Board.new }
     
     context '#initialize' do
       it 'creates a queen w/ position given' do
