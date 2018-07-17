@@ -4,7 +4,8 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
 
 This a game of chess created as the final project of TheOdinProject. The rules used are based off of Wikipedia's ruleset to
 include en_passant, castling, as well as saving and loading. The game is to be played in a terminal. Tested w/ Ruby 2.4. Tested on
-XTerm as well as Cloud9 terminal. Game also includes saving / loading as well as RSpec testing.
+XTerm as well as Cloud9 terminal. Game also includes saving / loading as well as RSpec testing. The only dependencies are 
+Bundler, RSpec & Rake which are all part of keeping the same environment across different development platforms.
 
 ## Installation
 
