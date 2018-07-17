@@ -8,23 +8,7 @@ module ParamagicChess
     end
     
     def add_players
-      
-    end
-    
-    def play
-      greeting_message
-      # loop do
-        
-      # end
-    end
-    
-    def check
-    end
-    
-    def greeting_message(player1: nil, player2: nil, computer: nil)
-      system 'clear'
-      puts "Welcome to ParamagicChess. Theres nothing magical here \n
-            Just Chess. Please enter your name: \n"
+      puts "What is your name? \n"
       player1 ||= gets.chomp
       @players << Player.new(player1)
       
@@ -38,6 +22,23 @@ module ParamagicChess
         player2 ||= gets.chomp
         @players << Player.new(player2)
       end
+    end
+    
+    def play
+      greeting_message
+      add_players
+      # loop do
+        
+      # end
+    end
+    
+    def check
+    end
+    
+    def greeting_message
+      system 'clear'
+      puts "Welcome to ParamagicChess. Theres nothing magical here \n
+            Just Chess."
     end
     
     private
