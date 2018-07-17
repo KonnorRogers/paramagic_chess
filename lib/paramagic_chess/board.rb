@@ -10,6 +10,10 @@ module ParamagicChess
       @removed_blue_pieces = []
       @removed_red_pieces = []
     end
+    
+    def get_piece(pos:)
+      @board[pos].piece
+    end
 
     def print_board
       system 'clear'
