@@ -12,7 +12,7 @@ module ParamagicChess
     end
 
     def print_board
-      system 'clear'
+      # system 'clear'
       index = 0
       print "\t    A   B   C   D   E   F   G   H"
 
