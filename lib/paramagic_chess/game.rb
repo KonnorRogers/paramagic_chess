@@ -7,7 +7,7 @@ module ParamagicChess
       @players = []
     end
     
-    def add_players
+    def add_players(player1: nil, player2: nil, computer: nil)
       puts "What is your name? \n"
       player1 ||= gets.chomp
       @players << Player.new(player1)
