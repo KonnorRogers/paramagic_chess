@@ -21,7 +21,7 @@ module ParamagicChess
         move.possible_moves(board: board, piece: self)
       end
       
-      @possible_moves.concat(moves)
+      @possible_moves.concat(moves.flatten)
     end
     
     def move_to(board:, pos:)

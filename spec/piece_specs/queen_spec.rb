@@ -28,5 +28,23 @@ module ParamagicChess
         expect(queen.to_s).to eq 'Side not set'
       end
     end
+    
+    context '#update_moves(board:)' do
+      it 'returns an empty string from start' do
+        queen = board.board[:d8].piece
+        queen.update_moves(board: board)
+        expect(queen.possible_moves).to be_empty
+      end
+      
+      it 'returns all moves from center' do
+        queen = Queen.new(side: :red, pos: :d5)
+        board.board[:d5].piece = queen
+        queen.update_moves(board: board)
+        moves = %i{d6 d4 d3 d2 c6 e6 a5 b5 c5 e5 f5 g5 h5 c4
+                    b3 a2 e4 f3 g2
+        }
+        expect(queen.possible_moves).to match_array moves
+      end
+    end
   end
 end
