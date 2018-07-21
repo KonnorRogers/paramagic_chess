@@ -1,7 +1,6 @@
 # Initial require for the classes that inherit piece to be able to inherit
 # Piece IE: Rook < Piece
-require "paramagic_chess/pieces/piece"
-
+require_relative '../lib/paramagic_chess/pieces/piece.rb'
 # Expands the path of this particular file
 lib_path = File.expand_path(File.dirname(__FILE__))
 # Once expanded, it then finds the contents in the directory & iterates through
