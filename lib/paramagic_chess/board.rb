@@ -11,7 +11,7 @@ module ParamagicChess
       @removed_red_pieces = []
     end
     
-    def get_piece(pos:)
+    def piece(pos:)
       @board[pos].piece
     end
 
