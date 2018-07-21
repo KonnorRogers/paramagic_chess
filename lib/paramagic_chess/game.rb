@@ -2,12 +2,13 @@ module ParamagicChess
   class Game
     SAFE_WORDS = [:save, :load, :castle, :exit]
     
-    attr_reader :board, :players
+    attr_accessor :players
+    attr_reader :board
     
     def initialize
       @board = Board.new
       @players = []
-      @turn == :red
+      @turn = :red
     end
     
     # player1, player2, and input all added for testing purposes
@@ -25,13 +26,12 @@ module ParamagicChess
       loop do
         print_game
         take_turn
-        break
       end
     end
     
     def randomize_sides
       @players.shuffle!
-      @players[0].side = :red && @players[0].turn = true
+      @players[0].side = :red
       @players[1].side = :blue
     end
     
@@ -54,7 +54,48 @@ module ParamagicChess
       @players[1]
     end
     
+    def get_input(input: nil)
+      input ||= gets.chomp
+      # checks for safewords
+      send((input + '_game')) if SAFE_WORDS.include?(input.to_sym)
+      
+      input = input.split(' to ')
+      
+      return if good_input(input: input).nil?
+      
+      [input[0].to_sym, input[1].to_sym]
+    end
+    
+    def update_pieces(player: get_player_turn)
+      player.pieces = []
+      @board.board.each do |_coord, tile|
+        next if tile.piece.nil?
+        player.pieces << tile.piece if tile.piece.side == player.side
+      end
+    end
+    
     private
+    
+    def good_input(input:)
+      #checks for if to is included
+      unless input.length == 2 
+        puts 'Please follow the example of a2 to a4.'
+        return nil
+      end
+      # checks for letters
+      return nil unless CHAR_TO_NUM.include?(input[0][0].to_sym)
+      return nil unless CHAR_TO_NUM.include?(input[1][0].to_sym)
+      
+      # checks for board size
+      return nil if input[0][1].to_i < 1 || input[1][1].to_i < 1
+      return nil if input[0][1].to_i > 8 || input[1][1].to_i > 8
+      
+      input
+    end
+    
+    def exit_game
+      exit!
+    end
     
     def save_game
     end
@@ -77,15 +118,19 @@ module ParamagicChess
     end
     
     def take_turn
+      # p @turn
       player = get_player_turn
-      reset_pawn_double_moves(side: player.side)
+      # p player
+      @board.reset_pawn_double_move(side: player.side)
       
+      get_input
       swap_turn
+      
     end
     
     def get_player_turn
-      return player1 if @turn == :red
-      return player2 if @turn == :blue
+      return player_1 if @turn == :red
+      return player_2 if @turn == :blue
     end
     
     def swap_turn
@@ -114,10 +159,6 @@ module ParamagicChess
     end
     
     def castle
-    end
-    
-    def input(input: gets.chomp)
-      SAFE_WORDS.include?(input.to_sym)
     end
   end
 end

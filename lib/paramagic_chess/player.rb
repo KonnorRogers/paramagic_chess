@@ -1,11 +1,11 @@
 module ParamagicChess
   class Player
-    attr_accessor :side, :name, :turn
+    attr_accessor :side, :name, :pieces
     
-    def initialize(name:)
-      @side = nil
+    def initialize(name:, side: nil)
+      @side = side
       @name = name
-      @turn = false
+      @pieces = []
     end
   end
 end

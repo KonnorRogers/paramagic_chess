@@ -41,4 +41,4 @@ module ParamagicChess
 
 end
 
-# ParamagicChess::Game.new.play
+ParamagicChess::Game.new.play
