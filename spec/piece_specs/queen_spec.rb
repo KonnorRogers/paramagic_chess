@@ -63,6 +63,8 @@ module ParamagicChess
         expect(board.piece(pos: :e2)).to eq queen
         expect(board.piece(pos: :e8)).to eq nil
       end
+    end
+    
     context '#move_to(board:, pos:)' do
       it 'will not move from starting point' do
         queen = board.board[:e8].piece
