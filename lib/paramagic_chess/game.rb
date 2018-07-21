@@ -20,9 +20,9 @@ module ParamagicChess
       add_players
       randomize_sides
       
-      # loop do
+      loop do
         
-      # end
+      end
     end
     
     def randomize_sides
@@ -37,6 +37,11 @@ module ParamagicChess
             Just Chess."
       puts "If you would like to start from a previously
             saved game, type 'load'"
+    end
+    
+    def game_over?
+      return true if check_mate?
+      false
     end
     
     private
@@ -60,7 +65,10 @@ module ParamagicChess
       end
     end
     
-    def check_mate
+    def check?
+    end
+    
+    def check_mate?
     end
     
     def castle
