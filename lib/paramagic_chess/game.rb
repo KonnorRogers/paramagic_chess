@@ -7,7 +7,7 @@ module ParamagicChess
     def initialize
       @board = Board.new
       @players = []
-      @turn = :red
+      @turn == :red
     end
     
     # player1, player2, and input all added for testing purposes
@@ -24,6 +24,7 @@ module ParamagicChess
       
       loop do
         print_game
+        take_turn
         break
       end
     end
@@ -60,10 +61,10 @@ module ParamagicChess
     
     def load_game(input: nil)
       loop do 
-        input ||= gets.chomp.downcase.to_sym
+        input = gets.chomp.downcase.to_sym unless input == :y || input == :n
         return if input == :n
         break if input == :y
-        puts 'Would you like to load a previous? (Y/N)'
+        puts 'Would you like to load a previous game? (Y/N)'
       end
     end
     
@@ -72,20 +73,28 @@ module ParamagicChess
       @board.print_board
       puts "safe words are: #{Game::SAFE_WORDS}"
       puts "To move a piece, enter the piece coordinate followed by destination"
-      puts "IE: a2 to a4"
+      puts "IE: a2 to a4; f7 to f5"
     end
     
     def take_turn
-      player = player1 if @turn == player1.side
-      player = player2 if @turn == player2.side
+      player = get_player_turn
       
+      swap_turn
+    end
+    
+    def get_player_turn
+      return player1 if @turn == :red
+      return player2 if @turn == :blue
+    end
+    
+    def swap_turn
       @turn = :red if @turn == :blue
       @turn = :blue if @turn == :red
-      
     end
     
     def add_player(name: nil)
-      puts "What is your name? \n"
+      puts "What is your name?" if @players.empty?
+      puts "What is player2's name?" unless @players.empty?
       name ||= gets.chomp
       @players << Player.new(name: name)
     end
@@ -93,7 +102,7 @@ module ParamagicChess
     def add_computer_or_player(player: nil, input: nil)
       loop do
         puts "Would you like to play against a computer? (Y/N)"
-        input ||= gets.chomp.to_sym
+        input = gets.chomp.to_sym unless input == :y || input == :n
         # Adds a computer
         # To be implemented later
         break if input == :y
