@@ -7,21 +7,10 @@ module ParamagicChess
       @players = []
     end
     
-    def add_players(player1: nil, player2: nil, computer: nil)
-      puts "What is your name? \n"
-      player1 ||= gets.chomp
-      @players << Player.new(player1)
+    def add_players(player1: nil, player2: nil, input: nil)
+      add_player_one(player1)
       
-      puts "Will you play against a computer or another player? (Y/N) \n"
-      computer ||= gets.chomp.downcase.to_sym
-      if computer == :y
-        # @players << Computer.new
-        # TODO: Add computer / AI
-      elsif computer == :n
-        puts "What is the name of the other player? \n"
-        player2 ||= gets.chomp
-        @players << Player.new(player2)
-      end
+      add_computer_or_player(player2: player2, input: input)
     end
     
     def play
@@ -42,6 +31,28 @@ module ParamagicChess
     end
     
     private
+    
+    def add_player(name: nil)
+      puts "What is your name? \n"
+      name ||= gets.chomp
+      @players << Player.new(name)
+    end
+    
+    def add_computer_or_player(player: nil, input: nil)
+      loop do
+        input ||= gets.chomp.to_sym
+        if input == :y
+          # Adds a computer
+          # To be implemented later
+          break
+        elsif input == :n
+          add_player(name: player)
+          break
+        else
+          puts "Please enter Y/N to play against a computer"
+        end
+      end
+    end
     
     def check_mate
     end
