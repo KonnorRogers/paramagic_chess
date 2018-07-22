@@ -106,10 +106,10 @@ module ParamagicChess
     
     def load_game(input: nil)
       loop do 
+        puts 'Would you like to load a previous game? (Y/N)'
         input = gets.chomp.downcase.to_sym unless input == :y || input == :n
         return if input == :n
         break if input == :y
-        puts 'Would you like to load a previous game? (Y/N)'
       end
     end
     
@@ -124,6 +124,8 @@ module ParamagicChess
     def take_turn
       player = get_player_turn
       @board.reset_pawn_double_move(side: player.side)
+      # p @board.removed_red_pieces
+      # p @board.removed_blue_pieces
       puts "\nIt is your turn #{player.name}"
       puts "You are #{player.side}"
       

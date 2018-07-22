@@ -191,6 +191,23 @@ module ParamagicChess
         red_pawn.move_to(pos: :b3, board: board)
         expect(board.board[:b4].piece).to eq nil
       end
+      
+      it 'should not remove both pieces' do 
+        red_pawn = board.board[:b7].piece
+        red_pawn.move_to(pos: :b5, board: board)
+        blue_pawn = board.board[:a2].piece
+        blue_pawn.move_to(pos: :a4, board: board)
+        red_pawn.move_to(pos: :b4, board: board)
+        blue_rook = board.board[:a1].piece
+        blue_rook.move_to(pos: :a3, board: board)
+        blue_pawn.double_move = false
+        red_pawn.move_to(pos: :a3, board: board)
+        board.print_board
+        expect(board.board[:a3].piece).to eq red_pawn
+        expect(board.board[:a4].piece).to eq blue_pawn
+        
+        
+      end
     end
   end
 end

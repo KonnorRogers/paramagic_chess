@@ -15,7 +15,7 @@ module ParamagicChess
     def reset_pawn_double_move(side:)
       @board.each do |_coord, tile|
         next if tile.piece.nil?
-        if tile.piece.side == side && tile.piece.type == side
+        if tile.piece.side == side && tile.piece.type == :pawn
           tile.piece.double_move = false
         end
       end
