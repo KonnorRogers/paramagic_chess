@@ -12,14 +12,14 @@ module ParamagicChess
     end
     
     # player1, player2, and input all added for testing purposes
-    def add_players(player1: nil, player2: nil, input: nil)
+    def add_players(player1: 'konnor', player2: 'evelyn', input: :n)
       add_player(name: player1)
       add_computer_or_player(player: player2, input: input)
     end
     
     def play
       greeting_message
-      load_game
+      # load_game
       add_players
       randomize_sides
       
@@ -118,12 +118,15 @@ module ParamagicChess
     end
     
     def take_turn
-      # p @turn
       player = get_player_turn
-      # p player
       @board.reset_pawn_double_move(side: player.side)
+      puts "\nIt is your turn #{player.name}"
+      puts "You are #{player.side}"
+      input = get_input
+      moving_piece = @board.piece(pos: input[0])
+      end_pos = @board.tile(pos: input[1])
       
-      get_input
+      moving_piece.move_to(pos: end_pos)
       swap_turn
       
     end
@@ -134,8 +137,8 @@ module ParamagicChess
     end
     
     def swap_turn
-      @turn = :red if @turn == :blue
-      @turn = :blue if @turn == :red
+      return @turn = :red if @turn == :blue
+      @turn = :blue
     end
     
     def add_player(name: nil)

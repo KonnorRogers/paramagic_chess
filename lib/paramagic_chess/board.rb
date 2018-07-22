@@ -21,6 +21,10 @@ module ParamagicChess
       end
     end
     
+    def tile(pos:)
+      @board[pos]
+    end
+    
     def piece(pos:)
       @board[pos].piece
     end
