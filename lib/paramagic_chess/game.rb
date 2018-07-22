@@ -77,6 +77,9 @@ module ParamagicChess
     
     private
     
+    def won?
+    end
+    
     def good_input(input:)
       #checks for if to is included
       unless input.length == 2 
