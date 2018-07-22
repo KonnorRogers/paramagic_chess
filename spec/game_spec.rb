@@ -12,7 +12,7 @@ module ParamagicChess
       end
       
       it 'has an array of safe words' do
-        safe_words = %i{save load castle exit}
+        safe_words = %i{save load castle_right castle_left exit}
         expect(Game::SAFE_WORDS).to match_array safe_words
       end
     end

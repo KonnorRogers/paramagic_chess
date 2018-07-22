@@ -41,4 +41,8 @@ module ParamagicChess
 
 end
 
+# leave the code below commented to run the testing suite
+# uncomment to play the game
+# run ruby /path/to/paramagic_chess/lib/paramagic_chess.rb
+# 
 ParamagicChess::Game.new.play

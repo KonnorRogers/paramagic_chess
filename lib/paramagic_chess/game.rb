@@ -1,6 +1,6 @@
 module ParamagicChess
   class Game
-    SAFE_WORDS = [:save, :load, :castle, :exit]
+    SAFE_WORDS = [:save, :load, :castle_right, :castle_left, :exit]
     
     attr_accessor :players
     attr_reader :board
@@ -25,6 +25,7 @@ module ParamagicChess
       
       loop do
         print_game
+        update_pieces
         take_turn
       end
     end
@@ -110,7 +111,7 @@ module ParamagicChess
     end
     
     def print_game
-      system 'clear'
+      # system 'clear'
       @board.print_board
       puts "safe words are: #{Game::SAFE_WORDS}"
       puts "To move a piece, enter the piece coordinate followed by destination"
@@ -122,13 +123,27 @@ module ParamagicChess
       @board.reset_pawn_double_move(side: player.side)
       puts "\nIt is your turn #{player.name}"
       puts "You are #{player.side}"
-      input = get_input
-      moving_piece = @board.piece(pos: input[0])
-      end_pos = @board.tile(pos: input[1])
       
-      moving_piece.move_to(pos: end_pos)
+      move_piece(player: player)
       swap_turn
       
+    end
+    
+    def move_piece(player:, input: nil)
+      loop do
+        input = get_input
+        # p input
+        next if input.nil?
+        
+        moving_piece = @board.piece(pos: input[0])
+        if moving_piece.nil? || !(player.pieces.include?(moving_piece))
+          puts 'Please enter a valid piece to move'
+          next
+        end
+        end_pos = input[1]
+        moving_piece.move_to(pos: end_pos, board: @board)
+        break
+      end
     end
     
     def get_player_turn
