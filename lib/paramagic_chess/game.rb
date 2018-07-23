@@ -123,6 +123,7 @@ module ParamagicChess
     
     def take_turn
       player = get_player_turn
+      # puts player.side
       @board.reset_pawn_double_move(side: player.side)
       # p @board.removed_red_pieces
       # p @board.removed_blue_pieces

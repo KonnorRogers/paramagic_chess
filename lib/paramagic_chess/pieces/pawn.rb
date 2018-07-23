@@ -5,7 +5,7 @@ module ParamagicChess
     def initialize(pos: nil, side: nil, moved: false)
       super
       @type = :pawn
-      @double_move = false
+      @double_move = nil
     end
 
     def to_s
@@ -23,10 +23,10 @@ module ParamagicChess
 
     def move_to(pos:, board: Board.new, input: nil)
       start_position = @pos
+      
       red = red_en_passant(board: board) if @side == :red
-      # p red
       blue = blue_en_passant(board: board) if @side == :blue
-      # p blue
+      
       update_moves(board: board)
       unless @possible_moves.include? pos
         return ":#{pos} is an invalid move. Try again."
@@ -34,19 +34,31 @@ module ParamagicChess
 
       super
 
-      # if @side == :red && red
-      #   pos_plus_one = to_pos(x: x_coord(pos: pos), y: (y_coord(pos: pos) + 1))
-      #   remove_piece(pos: pos_plus_one, board: board)
-      # elsif @side == :blue && blue
-      #   pos_minus_one = to_pos(x: x_coord(pos: pos), y: (y_coord(pos: pos) - 1))
-      #   remove_piece(pos: pos_minus_one, board: board)
-      # end
-
       promote_to(pos: pos, input: input, board: board) if elgible_for_promotion?
-
-
-      @double_move = red_moved_twice?(start: start_position, end_pos: pos) if @side == :red && @moved == false
-      @double_move = blue_moved_twice?(start: start_position, end_pos: pos) if @side == :blue && @moved == false
+      
+      if @double_move == true
+        if @side == :red && red
+          # pos plus 1
+          pp_one = to_pos(x: x_coord(pos: pos), y: (y_coord(pos: pos) + 1))
+          
+          if !board.board[pp_one].piece.nil? && board.board[pp_one].piece.type == :pawn
+            if board.board[pp_one].piece.double_move == true
+              remove_piece(pos: pp_one, board: board) if board.board[pp_one].piece.double_move == true
+            end
+          end
+        elsif @side == :blue && blue
+          # pos minus 1
+          pm_one = to_pos(x: x_coord(pos: pos), y: (y_coord(pos: pos) - 1))
+          if !board.board[pm_one].piece.nil? && board.board[pm_one].piece.type == :pawn
+            if board.board[pm_one].piece.double_move == true
+              remove_piece(pos: pm_one, board: board)
+            end
+          end
+        end
+      end
+      
+      @double_move ||= red_moved_twice?(start: start_position, end_pos: pos) if @side == :red
+      @double_move ||= blue_moved_twice?(start: start_position, end_pos: pos) if @side == :blue
     end
 
     def double_move?

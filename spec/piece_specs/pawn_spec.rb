@@ -202,7 +202,6 @@ module ParamagicChess
         blue_rook.move_to(pos: :a3, board: board)
         blue_pawn.double_move = false
         red_pawn.move_to(pos: :a3, board: board)
-        board.print_board
         expect(board.board[:a3].piece).to eq red_pawn
         expect(board.board[:a4].piece).to eq blue_pawn
         
