@@ -18,10 +18,10 @@ module ParamagicChess
     def update_moves(board:)
       @possible_moves = []
       moves = MOVE_SET.map do |move|
-        move.possible_moves(board: board, piece: self)s
-    end
+        move.possible_moves(board: board, piece: self)
+      end
 
-      @possible_moves.concat(moves)
+      @possible_moves.concat(moves.flatten)
     end
 
     def move_to(board:, pos:)

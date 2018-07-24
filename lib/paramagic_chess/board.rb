@@ -10,6 +10,20 @@ module ParamagicChess
       @removed_blue_pieces = []
       @removed_red_pieces = []
     end
+    
+    # required for evaluation of en_passant
+    def reset_pawn_double_move(side:)
+      @board.each do |_coord, tile|
+        next if tile.piece.nil?
+        if tile.piece.side == side && tile.piece.type == side
+          tile.piece.double_move = false
+        end
+      end
+    end
+    
+    def piece(pos:)
+      @board[pos].piece
+    end
 
     def print_board
       # system 'clear'
