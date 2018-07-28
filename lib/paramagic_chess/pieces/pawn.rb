@@ -59,6 +59,7 @@ module ParamagicChess
       
       @double_move ||= red_moved_twice?(start: start_position, end_pos: pos) if @side == :red
       @double_move ||= blue_moved_twice?(start: start_position, end_pos: pos) if @side == :blue
+      true
     end
 
     def double_move?

@@ -36,7 +36,10 @@ module ParamagicChess
     end
 
     def move_to(pos:, board: Board.new, input: nil)
-      return ":#{pos} is an invalid move. Try again." unless valid_move?(pos: pos)
+      unless valid_move?(pos: pos)
+        puts ":#{pos} is an invalid move. Try again." 
+        return nil
+      end
 
       # sets initial spot to nil
       board.board[@pos].piece = nil
@@ -49,6 +52,7 @@ module ParamagicChess
       board.board[pos].piece = self
       # Super method to be called, so as not to rewrite for every class
       # Update possible moves is up to the class
+      true
     end
 
     def remove_piece(pos:, board:)
