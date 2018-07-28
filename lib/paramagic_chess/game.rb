@@ -138,16 +138,19 @@ module ParamagicChess
     def move_piece(player:, input: nil)
       loop do
         input = get_input
-        # p input
+        # if sanitized input return nil, invalid input, repeat
         next if input.nil?
         
         moving_piece = @board.piece(pos: input[0])
+        # checks to make sure its a valid piece
         if moving_piece.nil? || !(player.pieces.include?(moving_piece))
           puts 'Please enter a valid piece to move'
           next
         end
         end_pos = input[1]
-        moving_piece.move_to(pos: end_pos, board: @board)
+        move = moving_piece.move_to(pos: end_pos, board: @board)
+        # if the move is not valid will repeat loop
+        next if move.nil?
         break
       end
     end
