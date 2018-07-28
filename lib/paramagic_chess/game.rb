@@ -71,7 +71,6 @@ module ParamagicChess
       player.pieces = []
       @board.board.each do |_coord, tile|
         next if tile.piece.nil?
-        p tile.piece if tile.piece.type == :pawn && player.side == tile.piece.side
         player.pieces << tile.piece if tile.piece.side == player.side
       end
     end
