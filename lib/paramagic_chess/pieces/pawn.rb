@@ -37,23 +37,21 @@ module ParamagicChess
 
       promote_to(pos: pos, input: input, board: board) if elgible_for_promotion?
       
-      if @double_move == true
-        if @side == :red && red
-          # pos plus 1
-          pp_one = to_pos(x: x_coord(pos: pos), y: (y_coord(pos: pos) + 1))
-          
-          if !board.board[pp_one].piece.nil? && board.board[pp_one].piece.type == :pawn
-            if board.board[pp_one].piece.double_move == true
-              remove_piece(pos: pp_one, board: board) if board.board[pp_one].piece.double_move == true
-            end
+      if @side == :red && red
+        # pos plus 1
+        pp_one = to_pos(x: x_coord(pos: pos), y: (y_coord(pos: pos) + 1))
+        
+        if !board.board[pp_one].piece.nil? && board.board[pp_one].piece.type == :pawn
+          if board.board[pp_one].piece.double_move == true
+            remove_piece(pos: pp_one, board: board) if board.board[pp_one].piece.double_move == true
           end
-        elsif @side == :blue && blue
-          # pos minus 1
-          pm_one = to_pos(x: x_coord(pos: pos), y: (y_coord(pos: pos) - 1))
-          if !board.board[pm_one].piece.nil? && board.board[pm_one].piece.type == :pawn
-            if board.board[pm_one].piece.double_move == true
-              remove_piece(pos: pm_one, board: board)
-            end
+        end
+      elsif @side == :blue && blue
+        # pos minus 1
+        pm_one = to_pos(x: x_coord(pos: pos), y: (y_coord(pos: pos) - 1))
+        if !board.board[pm_one].piece.nil? && board.board[pm_one].piece.type == :pawn
+          if board.board[pm_one].piece.double_move == true
+            remove_piece(pos: pm_one, board: board)
           end
         end
       end
