@@ -1,6 +1,10 @@
+require 'yaml'
+
 module ParamagicChess
   class Game
     SAFE_WORDS = [:save, :load, :castle_right, :castle_left, :exit]
+    FILENAME = "saved_game.yaml"
+    DIRNAME = "saved_game/"
     
     attr_accessor :players
     attr_reader :board
@@ -56,9 +60,9 @@ module ParamagicChess
     end
     
     def get_input(input: nil)
-      input ||= gets.chomp
+      input ||= gets.chomp.downcase
       # checks for safewords
-      send((input + '_game')) if SAFE_WORDS.include?(input.to_sym)
+      return send((input + '_game')) if SAFE_WORDS.include?(input.to_sym)
       
       input = input.split(' to ')
       
@@ -78,6 +82,9 @@ module ParamagicChess
     private
     
     def won?
+      return player_2 if player_1.check_mate?
+      return player_1 if player_2.check_mate?
+      false
     end
     
     def good_input(input:)
@@ -102,15 +109,23 @@ module ParamagicChess
     end
     
     def save_game
+      Dir.mkdir(DIRNAME) unless Dir.exist?(DIRNAME)
+      Dir.chdir(DIRNAME) do
+        file = File.new(FILENAME, 'w') unless File.exist?(FILENAME)
+        YAML.dump(self, file)
+      end
+      exit_game
     end
     
     def load_game(input: nil)
-      loop do 
+      loop do
         puts 'Would you like to load a previous game? (Y/N)'
         input = gets.chomp.downcase.to_sym unless input == :y || input == :n
         return if input == :n
         break if input == :y
       end
+      
+      YAML.load(File.new(DIRNAME + FILENAME, 'r')).play
     end
     
     def print_game
@@ -123,10 +138,9 @@ module ParamagicChess
     
     def take_turn
       player = get_player_turn
-      # puts player.side
+      
       @board.reset_pawn_double_move(side: player.side)
-      # p @board.removed_red_pieces
-      # p @board.removed_blue_pieces
+      
       puts "\nIt is your turn #{player.name}"
       puts "You are #{player.side}"
       
@@ -145,6 +159,11 @@ module ParamagicChess
         # checks to make sure its a valid piece
         if moving_piece.nil? || !(player.pieces.include?(moving_piece))
           puts 'Please enter a valid piece to move'
+          next
+        end
+        
+        if player.check? && moving_piece.type != :king
+          puts 'You are in check. Please move your king.'
           next
         end
         end_pos = input[1]
@@ -185,7 +204,14 @@ module ParamagicChess
       end
     end
     
-    def castle
+    def castle_right_game
+      player = get_player_turn
+      swap_turn
+    end
+    
+    def castle_left_game
+      player = get_player_turn
+      swap_turn
     end
   end
 end

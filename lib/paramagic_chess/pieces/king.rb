@@ -19,6 +19,11 @@ module ParamagicChess
       @possible_moves.concat(MOVE_SET.possible_moves(board: board, piece: self))
     end
     
+    def has_no_moves?
+      return true if @possible_moves.empty?
+      false
+    end
+    
     def move_to(board:, pos:)
       update_moves(board: board)
       unless @possible_moves.include? pos
