@@ -155,7 +155,7 @@ module ParamagicChess
         error = red_pawn.move_to(pos: :b6, board: board)
         expect(red_pawn.pos).to eq :a7
         expect(board.board[:a7].piece.type).to eq :pawn
-        expect(error).to eq ':b6 is an invalid move. Try again.'
+        expect(error).to eq nil
       end
 
       it 'Allows the ability to promote' do

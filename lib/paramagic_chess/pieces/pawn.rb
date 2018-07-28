@@ -29,7 +29,8 @@ module ParamagicChess
       
       update_moves(board: board)
       unless @possible_moves.include? pos
-        return ":#{pos} is an invalid move. Try again."
+        puts ":#{pos} is an invalid move. Try again."
+        return nil
       end
 
       super
