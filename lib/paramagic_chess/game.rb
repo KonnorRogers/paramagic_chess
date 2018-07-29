@@ -109,8 +109,10 @@ module ParamagicChess
     end
     
     def save_game
-      Dir.mkdir(DIRNAME) unless Dir.exist?(DIRNAME)
-      Dir.chdir(DIRNAME) do
+      dir_path = File.expand_path(File.dirname(__FILE__)).split("lib")[0] + DIRNAME
+      Dir.mkdir(dir_path) unless Dir.exist?(dir_path)
+      
+      Dir.chdir(dir_path) do
         file = File.new(FILENAME, 'w') unless File.exist?(FILENAME)
         YAML.dump(self, file)
       end
@@ -125,7 +127,21 @@ module ParamagicChess
         break if input == :y
       end
       
-      YAML.load(File.new(DIRNAME + FILENAME, 'r')).play
+      dir_path = File.expand_path(File.dirname(__FILE__)).split("lib").first
+      load_path = Dir[dir_path + DIRNAME + FILENAME].first
+      
+      # Ensures the file exists
+      if load_path.nil?
+        puts "You do not have any saved games."
+        return
+      end
+      # Makes sure the file being loaded has proper YAML
+      begin
+        Psych.load_file(File.new(load_path, 'r')).play
+      rescue Psych::SyntaxError => ex
+        ex.file
+        ex.message
+      end
     end
     
     def print_game
