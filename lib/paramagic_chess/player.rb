@@ -12,6 +12,10 @@ module ParamagicChess
       @check = false
     end
     
+    def get_king
+      @pieces.select { |piece| piece.type == :king } 
+    end
+    
     def check_mate?
       @check_mate
     end

@@ -5,6 +5,14 @@ module ParamagicChess
     def initialize(pos: nil, side: nil, moved: false)
       super
       @type = :king
+      @check = false
+      @check_mate = false
+    end
+    
+    def other_side
+      return :blue if @side == :red
+      return :red if @side == :blue
+      nil
     end
 
     def to_s
@@ -20,7 +28,7 @@ module ParamagicChess
     end
     
     def has_no_moves?
-      return true if @possible_moves.empty?
+      return true if @check == true && @possible_moves.empty?
       false
     end
     
@@ -30,8 +38,21 @@ module ParamagicChess
         puts ":#{pos} is an invalid move. Try again."
         return nil
       end
-      super if @possible_moves.include? pos
+      if @possible_moves.include? pos && !can_be_captured?(board: board, pos: pos)
+        super
+      end
       true
+    end
+    
+    def can_be_captured?(board:, pos:)
+      board.board.each do |_coord, tile|
+        next if tile.nil?
+        piece = tile.piece
+        next if piece.side == @side
+        piece.update_moves(board: board)
+        return true if piece.possible_moves.include?(pos)
+      end
+      false
     end
   end
 end
