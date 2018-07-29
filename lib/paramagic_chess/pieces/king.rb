@@ -1,6 +1,8 @@
 module ParamagicChess
   class King < Piece
     MOVE_SET = Box.new
+    
+    attr_reader :check, :check_mate
 
     def initialize(pos: nil, side: nil, moved: false)
       super
@@ -12,8 +14,17 @@ module ParamagicChess
     def get_pieces_attacking_king(board:)
       pieces = []
       board.each do |_coord, tile|
-      
+        next if tile.piece.nil?
+        piece = tile.piece
+        # checks that it is from a different side
+        next if piece.side == @side
+        piece.update_moves(board: board)
+        if piece.possible_moves.include?(pos)
+          pieces << piece
+        end
       end
+      
+      pieces
     end
     
     def check_mate?(board:)
