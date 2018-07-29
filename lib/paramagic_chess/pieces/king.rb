@@ -9,6 +9,21 @@ module ParamagicChess
       @check_mate = false
     end
     
+    def get_pieces_attacking_king(board:)
+      pieces = []
+      board.each do |_coord, tile|
+      
+      end
+    end
+    
+    def check_mate?(board:)
+      update_moves(board: board)
+      if can_be_captured(board: board, pos: @pos) && @possible_moves.empty?
+        @check_mate = true
+        return true
+      end
+    end
+    
     def other_side
       return :blue if @side == :red
       return :red if @side == :blue
@@ -28,7 +43,10 @@ module ParamagicChess
     end
     
     def has_no_moves?
-      return true if @check == true && @possible_moves.empty?
+      if @check == true && @possible_moves.empty?
+        @check_mate = true
+        return true
+      end
       false
     end
     
@@ -38,7 +56,12 @@ module ParamagicChess
         puts ":#{pos} is an invalid move. Try again."
         return nil
       end
-      if @possible_moves.include? pos && !can_be_captured?(board: board, pos: pos)
+      
+      if @possible_moves.include? pos
+        if can_be_captured?(board: board, pos: pos)
+          puts "Your king will be captured if you move there."
+          return nil
+        end
         super
       end
       true
@@ -46,11 +69,13 @@ module ParamagicChess
     
     def can_be_captured?(board:, pos:)
       board.board.each do |_coord, tile|
-        next if tile.nil?
+        next if tile.piece.nil?
         piece = tile.piece
         next if piece.side == @side
         piece.update_moves(board: board)
-        return true if piece.possible_moves.include?(pos)
+        if piece.possible_moves.include?(pos)
+          return true
+        end
       end
       false
     end

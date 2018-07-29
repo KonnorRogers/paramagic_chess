@@ -113,7 +113,7 @@ module ParamagicChess
       Dir.mkdir(dir_path) unless Dir.exist?(dir_path)
       
       Dir.chdir(dir_path) do
-        file = File.new(FILENAME, 'w') unless File.exist?(FILENAME)
+        file = File.new(FILENAME, 'w')
         YAML.dump(self, file)
       end
       exit_game
