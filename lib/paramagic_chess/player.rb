@@ -1,7 +1,7 @@
 module ParamagicChess
   class Player
     attr_accessor :side, :name, :pieces
-    attr_writer :check, :check_mate
+    attr_reader :check, :check_mate
     
     
     def initialize(name:, side: nil)
@@ -13,15 +13,26 @@ module ParamagicChess
     end
     
     def get_king
-      @pieces.select { |piece| piece.type == :king } 
+      @pieces.select { |piece| piece.type == :king && piece.side == @side } 
+    end
+    
+    def find_king(board:, side: @side)
+      board.board.each do |_coord, tile| 
+        next if tile.piece.nil?
+        if tile.piece.type == :king && tile.piece.side == side
+          return tile.piece
+        end
+      end
     end
     
     def check_mate?
-      @check_mate
+      return @check_mate = true if get_king.check_mate? == true
+      false
     end
     
     def check?
-      @check
+      return @check = true if get_king.check? == true
+      false
     end
   end
 end

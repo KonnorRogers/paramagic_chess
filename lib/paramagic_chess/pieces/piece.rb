@@ -11,6 +11,7 @@ module ParamagicChess
       @side = side
       @moved = moved
       @possible_moves = []
+      @starting_pos = @pos
     end
 
     # updates position, x & y values
@@ -42,28 +43,61 @@ module ParamagicChess
       end
 
       # sets initial spot to nil
+      start_pos = @pos
+      moving = board.board[@pos].piece
+      side = moving.side
+      
       board.board[@pos].piece = nil
       update_position(pos: pos)
-      @moved = true if @moved == false
       
-      remove_piece(pos: pos, board: board) if board.board[pos].contains_red_piece? && @side == :blue
-      remove_piece(pos: pos, board: board) if board.board[pos].contains_blue_piece? && @side == :red
+      removed = remove_piece(pos: pos, board: board)
+      # p removed
 
       board.board[pos].piece = self
+      
+      # checks if it puts you in check
+      king = board.find_king(side: side)
+      if king.check?(board: board)
+        reset_to_previous_state(board: board, removed: removed, start_pos: start_pos)
+        puts "That will put your king in check!"
+        return nil
+      end
       # Super method to be called, so as not to rewrite for every class
       # Update possible moves is up to the class
+      @moved = true if @moved == false
       true
+    end
+    
+    def reset_to_previous_state(board:, removed:, start_pos:)
+      # handles removed pieces
+      # must check to see that a piece was removed
+      unless removed.nil?
+        board.board[removed.pos].piece = removed
+        board.removed_red_pieces.pop if removed.side == :red
+        board.removed_blue_pieces.pop if removed.side == :blue
+      end
+      # handles moving piece
+      p start_pos
+      moving_piece if board.board[start_pos].piece
+      p moving_piece
+      moving_piece.update_position(pos: start_pos)
     end
 
     def remove_piece(pos:, board:)
-      if board.board[pos].contains_red_piece?
+      removed_piece = nil
+      if board.board[pos].contains_red_piece? && @side == :blue
         board.removed_red_pieces << board.board[pos].piece
-      elsif board.board[pos].contains_blue_piece?
+        removed_piece = board.board[pos].piece
+      elsif board.board[pos].contains_blue_piece? && @side == :red
         board.removed_blue_pieces << board.board[pos].piece
+        removed_piece = board.board[pos].piece
       end
       
       board.board[pos].piece = nil
+      removed_piece
     end
+    
+    
 
     def moved?
       @moved

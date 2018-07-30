@@ -22,20 +22,28 @@ module ParamagicChess
     end
 
     def move_to(pos:, board: Board.new, input: nil)
-      start_position = @pos
-      
-      red = red_en_passant(board: board) if @side == :red
-      blue = blue_en_passant(board: board) if @side == :blue
-      
       update_moves(board: board)
       unless @possible_moves.include? pos
         puts ":#{pos} is an invalid move. Try again."
         return nil
       end
-
+      
+      do_en_passant(board: board, pos: pos)
+      
       super
 
       promote_to(pos: pos, input: input, board: board) if elgible_for_promotion?
+      
+      true
+    end
+
+    def double_move?
+      @double_move
+    end
+    
+    def do_en_passant(pos:, board:)
+      red = red_en_passant(board: board) if @side == :red
+      blue = blue_en_passant(board: board) if @side == :blue
       
       if @side == :red && red
         # pos plus 1
@@ -56,13 +64,9 @@ module ParamagicChess
         end
       end
       
-      @double_move ||= red_moved_twice?(start: start_position, end_pos: pos) if @side == :red
-      @double_move ||= blue_moved_twice?(start: start_position, end_pos: pos) if @side == :blue
-      true
-    end
+      @double_move = red_moved_twice?(start: @starting_pos, end_pos: pos) if @side == :red
+      @double_move = blue_moved_twice?(start: @starting_pos, end_pos: pos) if @side == :blue
 
-    def double_move?
-      @double_move
     end
 
     private

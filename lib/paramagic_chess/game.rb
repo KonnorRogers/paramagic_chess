@@ -31,7 +31,10 @@ module ParamagicChess
         print_game
         update_pieces
         take_turn
+        break if game_over?
       end
+      
+      
     end
     
     def randomize_sides
@@ -47,7 +50,11 @@ module ParamagicChess
     end
     
     def game_over?
-      return true if check_mate?
+      if player_1.check_mate == true || player_2.check_mate == true
+        puts "CONGRATULATIONS! #{winner.name}, you have won!"
+        puts "Sorry, #{loser.name} you have lost."
+        return true
+      end
       false
     end
     
@@ -81,9 +88,15 @@ module ParamagicChess
     
     private
     
-    def won?
-      return player_2 if player_1.check_mate?
-      return player_1 if player_2.check_mate?
+    def winner
+      return player_2 if player_1.check_mate == true
+      return player_1 if player_2.check_mate == true
+      false
+    end
+    
+    def loser
+      return player_2 if winner == player_1
+      return player_1 if winner == player_2
       false
     end
     
@@ -178,12 +191,9 @@ module ParamagicChess
           next
         end
         
-        if player.check? && moving_piece.type != :king
-          puts 'You are in check. Please move your king.'
-          next
-        end
         end_pos = input[1]
         move = moving_piece.move_to(pos: end_pos, board: @board)
+        next if move == :check
         # if the move is not valid will repeat loop
         next if move.nil?
         break

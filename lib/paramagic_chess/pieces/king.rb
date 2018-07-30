@@ -11,34 +11,49 @@ module ParamagicChess
       @check_mate = false
     end
     
-    def get_pieces_attacking_king(board:)
-      pieces = []
-      board.each do |_coord, tile|
+    def positions_attacking_king(board:)
+      positions = []
+      board.each do |coord, tile|
         next if tile.piece.nil?
         piece = tile.piece
         # checks that it is from a different side
         next if piece.side == @side
         piece.update_moves(board: board)
         if piece.possible_moves.include?(pos)
-          pieces << piece
+          positions << coord
+        end
+      end
+      # returns array of pieces attacking the king
+      positions
+    end
+    
+    def cannot_save?(board:)
+      threats = positions_attacking_king(board: board)
+      board.each do |coord, tile|
+        next if tile.piece.nil?
+        piece = tile.piece
+        next if piece.side != @side
+        piece.update_moves(board: board)
+        threats.each do |pos|
+          return false if piece.possible_moves.include?(pos)
         end
       end
       
-      pieces
+      true
     end
     
     def check_mate?(board:)
-      update_moves(board: board)
-      if can_be_captured(board: board, pos: @pos) && @possible_moves.empty?
-        @check_mate = true
-        return true
+      # will be called part of check? && cannot_save?
+      # update_moves(board: board)
+      if check?(board: board, pos: @pos) && has_no_moves?
+        if cannot_save? == true
+          @check_mate = true
+          return true
+        end
       end
-    end
-    
-    def other_side
-      return :blue if @side == :red
-      return :red if @side == :blue
-      nil
+      
+      @check_mate = false
+      false
     end
 
     def to_s
@@ -55,7 +70,6 @@ module ParamagicChess
     
     def has_no_moves?
       if @check == true && @possible_moves.empty?
-        @check_mate = true
         return true
       end
       false
@@ -69,25 +83,28 @@ module ParamagicChess
       end
       
       if @possible_moves.include? pos
-        if can_be_captured?(board: board, pos: pos)
+        if check?(board: board, pos: pos)
           puts "Your king will be captured if you move there."
           return nil
+        else
+          super
         end
-        super
       end
       true
     end
     
-    def can_be_captured?(board:, pos:)
+    def check?(board:, pos: @pos)
       board.board.each do |_coord, tile|
         next if tile.piece.nil?
         piece = tile.piece
         next if piece.side == @side
         piece.update_moves(board: board)
         if piece.possible_moves.include?(pos)
+          @check = true
           return true
         end
       end
+      @check = false
       false
     end
   end
