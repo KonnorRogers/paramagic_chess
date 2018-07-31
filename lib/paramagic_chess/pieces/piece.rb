@@ -11,7 +11,6 @@ module ParamagicChess
       @side = side
       @moved = moved
       @possible_moves = []
-      @starting_pos = @pos
     end
 
     # updates position, x & y values
@@ -41,24 +40,20 @@ module ParamagicChess
         puts ":#{pos} is an invalid move. Try again." 
         return nil
       end
-
-      # sets initial spot to nil
       start_pos = @pos
-      moving = board.board[@pos].piece
-      side = moving.side
       
+      # sets initial spot to nil
       board.board[@pos].piece = nil
       update_position(pos: pos)
       
+      # keep a log of the removed piece to check if that side will now be in check
       removed = remove_piece(pos: pos, board: board)
-      # p removed
-
       board.board[pos].piece = self
       
       # checks if it puts you in check
-      king = board.find_king(side: side)
+      king = board.find_king(side: @side)
       if king.check?(board: board)
-        reset_to_previous_state(board: board, removed: removed, start_pos: start_pos)
+        reset_to_previous_state(board: board, removed: removed, start_pos: start_pos, moving_pos: pos)
         puts "That will put your king in check!"
         return nil
       end
@@ -68,19 +63,19 @@ module ParamagicChess
       true
     end
     
-    def reset_to_previous_state(board:, removed:, start_pos:)
+    def reset_to_previous_state(board:, removed:, start_pos:, moving_pos:)
       # handles removed pieces
       # must check to see that a piece was removed
-      unless removed.nil?
+      if removed.nil?
+        board.board[moving_pos].piece = nil
+      else
         board.board[removed.pos].piece = removed
         board.removed_red_pieces.pop if removed.side == :red
         board.removed_blue_pieces.pop if removed.side == :blue
       end
-      # handles moving piece
-      p start_pos
-      moving_piece if board.board[start_pos].piece
-      p moving_piece
-      moving_piece.update_position(pos: start_pos)
+      
+      update_position(pos: start_pos)
+      board.board[start_pos].piece = self
     end
 
     def remove_piece(pos:, board:)
@@ -97,7 +92,11 @@ module ParamagicChess
       removed_piece
     end
     
-    
+    def opposite_side(side:)
+      return :blue if side == :red
+      return :red if side == :blue
+      nil
+    end
 
     def moved?
       @moved
