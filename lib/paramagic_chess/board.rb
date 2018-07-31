@@ -75,9 +75,9 @@ module ParamagicChess
           tile.piece = Knight.new(pos: key)
         when :c, :f
           tile.piece = Bishop.new(pos: key)
-        when :d
-          tile.piece = King.new(pos: key)
         when :e
+          tile.piece = King.new(pos: key)
+        when :d
           tile.piece = Queen.new(pos: key)
         end
       end

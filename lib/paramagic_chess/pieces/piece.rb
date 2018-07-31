@@ -4,13 +4,14 @@ module ParamagicChess
   class Piece
     include Moves
     attr_accessor :side, :possible_moves, :type
-    attr_reader :x, :y, :pos, :moved
+    attr_reader :x, :y, :pos, :moved, :_test
 
-    def initialize(pos: nil, side: nil, moved: false)
+    def initialize(pos: nil, side: nil, moved: false, _test: false)
       update_position(pos: pos)
       @side = side
       @moved = moved
       @possible_moves = []
+      @starting_pos = pos
     end
 
     # updates position, x & y values
@@ -52,7 +53,7 @@ module ParamagicChess
       
       # checks if it puts you in check
       king = board.find_king(side: @side)
-      if king.check?(board: board)
+      if @_test == false && king.check?(board: board)
         reset_to_previous_state(board: board, removed: removed, start_pos: start_pos, moving_pos: pos)
         puts "That will put your king in check!"
         return nil

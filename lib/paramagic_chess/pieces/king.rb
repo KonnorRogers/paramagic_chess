@@ -107,5 +107,47 @@ module ParamagicChess
       @check = false
       false
     end
+    
+    def rooks(board:)
+      rook_array = []
+      board.board.each do |_coord, tile|
+        next if tile.piece.nil?
+        next if tile.piece.type != :rook
+        next if tile.piece.side != @side
+        
+        rook_array << tile.piece
+      end
+      
+      rook_array
+    end
+    
+    def rook_right(board:)
+      # :e => 5, 5 + 3 = 8, 8 => :h
+      # h1 for blue, h8 for red
+      x_coord = CHAR_TO_NUM[@x] + 3
+      my_rooks.each do |rook|
+        return rook if rook.moved? == false && rook.x == x_coord 
+      end
+    end
+    
+    def rook_left(board:)
+      
+    end
+    
+    def can_castle?
+    # The king and the chosen rook are on the player's first rank.[3]
+    # Neither the king nor the chosen rook has previously moved.
+    # There are no pieces between the king and the chosen rook.
+    # The king is not currently in check.
+    # The king does not pass through a square that is attacked by an enemy piece.[4]
+    # The king does not end up in check. (True of any legal move.)
+    end
+    
+    def castle_right
+      
+    end
+    
+    def castle_left
+    end
   end
 end

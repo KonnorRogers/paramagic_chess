@@ -1,6 +1,6 @@
 module ParamagicChess
   RSpec.describe Piece do
-    let(:piece) { Piece.new(pos: :a2) }
+    let(:piece) { Piece.new(pos: :a2, _test: true) }
 
     context '#initialize' do
 
