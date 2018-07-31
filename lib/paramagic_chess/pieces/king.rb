@@ -125,29 +125,117 @@ module ParamagicChess
       # :e => 5, 5 + 3 = 8, 8 => :h
       # h1 for blue, h8 for red
       x_coord = CHAR_TO_NUM[@x] + 3
-      my_rooks.each do |rook|
-        return rook if rook.moved? == false && rook.x == x_coord 
+      rooks(board: board).each do |rook|
+        return rook if rook.moved? == false && rook.x == NUM_TO_CHAR[x_coord]
       end
+      nil
     end
     
     def rook_left(board:)
+      x_coord = CHAR_TO_NUM[@x] - 4
+      rooks(board: board).each do |rook|
+        return rook if rook.moved? == false && rook.x == NUM_TO_CHAR[x_coord]
+      end
+      nil
+    end
+    
+    def can_castle?(board:, direction:)
+      # +Neither the king nor the chosen rook has previously moved.
+      rook_method_name = ("rook_" + direction.to_s).to_sym
+      rook = send(rook_method_name, board: board)
+      return false if @moved == true || rook.moved? == true
+      # +The king is not currently in check.
+      return false if @check == true
       
+      if direction == :right
+        # There are no pieces between the king and the chosen rook.
+        return false if tiles_contain_a_piece?(tiles_array: right_tiles(board: board))
+        # The king does not pass through a square that is attacked by an enemy piece.[4]
+        return false if any_pieces_attacking_path?(board: board, tiles_array: right_tiles(board: board))
+        # The king does not end up in check. (True of any legal move.)
+        return false if end_path_results_in_check?(board: board, direction: :right)
+      elsif direction == :left
+        # There are no pieces between the king and the chosen rook.
+        return false if tiles_contain_a_piece?(tiles_array: left_tiles(board: board))
+        # The king does not pass through a square that is attacked by an enemy piece.[4]
+        return false if any_pieces_attacking_path?(board: board, tiles_array: left_tiles(board: board))
+        # The king does not end up in check. (True of any legal move.)
+        return false if end_path_results_in_check?(board: board, direction: :left)
+      else
+        puts "direction of castle not given. Please enter a direction to castle."
+        return false
+      end
+      true
     end
     
-    def can_castle?
-    # The king and the chosen rook are on the player's first rank.[3]
-    # Neither the king nor the chosen rook has previously moved.
-    # There are no pieces between the king and the chosen rook.
-    # The king is not currently in check.
-    # The king does not pass through a square that is attacked by an enemy piece.[4]
-    # The king does not end up in check. (True of any legal move.)
-    end
+    private
     
-    def castle_right
+    def end_path_results_in_check?(board:, direction:)
+      end_x = CHAR_TO_NUM[@x]
       
+      end_x += 2 if direction == :right
+      end_x -= 2 if direction == :left
+      
+      end_pos = to_pos(x: NUM_TO_CHAR[end_x], y: @y)
+      
+      board.board.each do |_coord, tile|
+        next if tile.piece.nil?
+        next if tile.side == @side
+        tile.piece.update_moves(board: board)
+        return true if tile.piece.possible_moves.include?(end_pos)
+      end
+      false
     end
     
-    def castle_left
+    def any_pieces_attacking_path?(board:, tiles_array:)
+      board.board.each do |_coord, tile|
+        # checks if it has a piece
+        next if tile.piece.nil?
+        # checks to see if its a friendly
+        next if tile.piece.side == @side
+        
+        # runs through the tile array to see if its position is contained as part of another piece
+        # of the opposite side
+        tiles_array.each do |defending_tile|
+          tile.piece.update_moves(board: board)
+          if tile.piece.possible_moves.include?(defending_tile.position)
+            return true
+          end
+        end
+      end
+      
+      false
+    end
+    
+    def tiles_contain_a_piece?(tiles_array:)
+      tiles_array.any? { |tile| tile.contains_piece? }
+    end
+    
+    def right_tiles(board:)
+      tiles = []
+      acceptable_coords = %i{f g}
+      board.board.each do |coord, tile|
+        next if coord[1].to_i != @y
+        coord_x = coord[0].to_sym
+        
+        next unless acceptable_coords.include?(coord_x)
+        tiles << tile
+      end
+      tiles
+    end
+    
+    def left_tiles(board:)
+      tiles = []
+      acceptable_coords = %i{d c b}
+      board.board.each do |coord, tile|
+        next if coord[1].to_i != @y
+        coord_x = coord[0].to_sym
+        next unless acceptable_coords.include?(coord_x)
+        
+        tiles << tile
+      end
+      
+      tiles
     end
   end
 end

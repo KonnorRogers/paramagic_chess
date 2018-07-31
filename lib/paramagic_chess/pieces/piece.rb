@@ -12,6 +12,7 @@ module ParamagicChess
       @moved = moved
       @possible_moves = []
       @starting_pos = pos
+      @_test = _test
     end
 
     # updates position, x & y values

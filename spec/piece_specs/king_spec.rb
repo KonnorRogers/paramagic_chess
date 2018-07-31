@@ -46,7 +46,7 @@ module ParamagicChess
       it 'returns possible moves when couple pieces removed' do
         king = board.board[:e8].piece
         board.board[:f7].piece = nil
-        board.board[:c7].piece = nil
+        board.board[:d7].piece = nil
         board.board[:e7].piece = nil
         king.update_moves(board: board)
         expect(king.possible_moves).to match_array %i{d7 f7 e7}
@@ -111,6 +111,106 @@ module ParamagicChess
         blue_right_rook = board.board[:h1].piece 
         
         expect(blue_king.rook_right(board: board)).to eq blue_right_rook
+      end
+    end
+    
+    context '#rook_left(board:)' do
+      it 'returns the rook to the left IF is at starting position for red & has not moved' do
+        red_king = board.board[:e8].piece
+        red_left_rook = board.board[:a8].piece 
+        
+        expect(red_king.rook_left(board: board)).to eq red_left_rook
+      end
+      
+      it 'returns the rook to the left IF it is at starting position for blue & has not moved' do
+        blue_king = board.board[:e1].piece
+        blue_left_rook = board.board[:a1].piece 
+        
+        expect(blue_king.rook_left(board: board)).to eq blue_left_rook
+      end
+    end
+    
+    context '#can_castle?(board:, direction:)' do
+      it 'will return false if the king has moved' do
+        blue_king = board.board[:e1].piece
+        board.board[:d1].piece = nil
+        blue_king.move_to(board: board, pos: :d1)
+        expect(blue_king.can_castle?(board: board, direction: :right)).to eq false
+      end
+      
+      it 'will return false if the king is in check' do
+        blue_king = board.board[:e1].piece
+        board.board[:d1].piece = Queen.new(pos: :d1, side: :red)
+        blue_king.check?(board: board)
+        expect(blue_king.can_castle?(board: board, direction: :right)).to eq false
+      end
+      
+      it 'will return true if the king has not moved && not in check' do
+        blue_king = board.board[:e1].piece
+        board.board[:f1].piece = nil
+        board.board[:g1].piece = nil
+        expect(blue_king.can_castle?(board: board, direction: :right)).to eq true
+      end
+      
+      context 'direction == :right' do
+        it 'will return true if no pieces between them && no pieces attacking' do
+          red_king = board.board[:e8].piece
+          board.board[:f8].piece = nil
+          board.board[:g8].piece = nil
+          expect(red_king.can_castle?(board: board, direction: :right)).to eq true
+        end
+      
+        it 'will return false if there is a piece in the way' do
+          red_king = board.board[:e8].piece
+          expect(red_king.can_castle?(board: board, direction: :right)).to eq false
+        end
+        
+        it 'will return false if the king is crossing tiles that the opponent can move to' do
+          blue_king = board.board[:e8].piece
+          board.board[:f8].piece = nil
+          board.board[:g8].piece = nil
+          board.board[:g7].piece = Queen.new(pos: :g7, side: :blue)
+          expect(blue_king.can_castle?(board: board, direction: :right)).to eq false
+        end
+        
+        it 'will return false if the end path results in check' do
+          blue_king = board.board[:e8].piece
+          board.board[:f8].piece = nil
+          board.board[:g8].piece = nil
+          board.board[:g7].piece = Queen.new(pos: :g7, side: :blue)
+          expect(blue_king.can_castle?(board: board, direction: :right)).to eq false
+        end
+      end
+      
+      context 'direction == :left' do
+        it 'will return true if no pieces between them && no pieces attacking' do
+          red_king = board.board[:e8].piece
+          board.board[:d8].piece = nil
+          board.board[:c8].piece = nil
+          board.board[:b8].piece = nil
+          expect(red_king.can_castle?(board: board, direction: :left)).to eq true
+        end
+      
+        it 'will return false if there is a piece in the way' do
+          red_king = board.board[:e8].piece
+          expect(red_king.can_castle?(board: board, direction: :left)).to eq false
+        end
+        
+        it 'will return false if the king is crossing tiles that the opponent can move to' do
+          blue_king = board.board[:e8].piece
+          board.board[:b8].piece = nil
+          board.board[:c8].piece = nil
+          board.board[:b7].piece = Queen.new(pos: :d7, side: :blue)
+          expect(blue_king.can_castle?(board: board, direction: :left)).to eq false
+        end
+        
+        it 'will return false if the end path results in check' do
+          blue_king = board.board[:e8].piece
+          board.board[:d8].piece = nil
+          board.board[:b8].piece = nil
+          board.board[:c7].piece = Queen.new(pos: :c7, side: :blue)
+          expect(blue_king.can_castle?(board: board, direction: :left)).to eq false
+        end
       end
     end
   end
