@@ -193,7 +193,6 @@ module ParamagicChess
         
         end_pos = input[1]
         move = moving_piece.move_to(pos: end_pos, board: @board)
-        next if move == :check
         # if the move is not valid will repeat loop
         next if move.nil?
         break
