@@ -155,21 +155,6 @@ module ParamagicChess
       # The king does not pass through a square that is attacked by an enemy piece.[4]
       return false if any_pieces_attacking_path?(board: board, tiles_array: tiles)
       
-      # if direction == :right
-      #   # There are no pieces between the king and the chosen rook.
-      #   return false if tiles_contain_a_piece?(tiles_array: right_tiles(board: board))
-      #   # The king does not pass through a square that is attacked by an enemy piece.[4]
-      #   return false if any_pieces_attacking_path?(board: board, tiles_array: right_tiles(board: board))
-      # elsif direction == :left
-      #   # There are no pieces between the king and the chosen rook.
-      #   return false if tiles_contain_a_piece?(tiles_array: left_tiles(board: board))
-      #   # The king does not pass through a square that is attacked by an enemy piece.[4]
-      #   return false if any_pieces_attacking_path?(board: board, tiles_array: left_tiles(board: board))
-      # else
-      #   puts "direction of castle not given. Please enter a direction to castle."
-      #   return false
-      # end
-      
       # The king does not end up in check. (True of any legal move.)
       return false if end_path_results_in_check?(board: board, direction: direction)
       
