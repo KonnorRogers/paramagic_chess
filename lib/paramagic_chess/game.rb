@@ -5,6 +5,7 @@ module ParamagicChess
     SAFE_WORDS = [:save, :load, :castle, :exit]
     DIRNAME = "saved_games/"
     DIRPATH = File.expand_path(File.dirname(__FILE__)).split("lib").first + DIRNAME
+    LOAD_PATH = Dir[DIRPATH + "*.yaml"]
     
     attr_accessor :players
     attr_reader :board
@@ -28,10 +29,10 @@ module ParamagicChess
       randomize_sides
       
       loop do
-        print_game
         update_pieces
         take_turn
         break if game_over?
+        system 'clear'
       end
       
       
@@ -127,6 +128,16 @@ module ParamagicChess
       puts 'What would you like to name your file?'
       file_name = gets.chomp.downcase.to_s + ".yaml"
       Dir.chdir(DIRPATH) do
+        if LOAD_PATH.include?(DIRPATH + file_name)
+          puts "\nA file with that name already exists."
+          loop do
+            puts 'Would you like to overwrite it? (Y/N)'
+            input = gets.chomp.to_sym
+            break if input == :y
+            puts "File not saved.\n"
+            return nil if input == :n
+          end
+        end
         file = File.new(file_name, 'w')
         YAML.dump(self, file)
       end
@@ -134,25 +145,16 @@ module ParamagicChess
     end
     
     def load_game(input: nil)
-      # loop do
-      #   puts 'Would you like to load a previous game? (Y/N)'
-      #   input = gets.chomp.downcase.to_sym unless input == :y || input == :n
-      #   return if input == :n
-      #   break if input == :y
-      # end
-      
-      
-      load_path = Dir[DIRPATH + "*.yaml"]
-      # Ensures they have save files
-      if load_path.empty?
+      # Ensures the player has save files
+      if LOAD_PATH.empty?
         puts "You do not have any saved games."
-        return
+        return nil
       end
       puts 'You have the following save games:'
-      load_path.each { |file| puts File.basename(file, ".yaml") }
+      LOAD_PATH.each { |file| puts File.basename(file, ".yaml") }
       
       puts "\nWhich file would you like to load?"
-      file_name = nil
+      file_name = ''
       loop do
         file_name = gets.chomp + ".yaml"
         break if load_path.include?(DIRPATH + file_name)
@@ -191,6 +193,7 @@ module ParamagicChess
     
     def move_piece(player:, input: nil)
       loop do
+        print_game
         input = get_input
         # if sanitized input return nil, invalid input, repeat
         next if input.nil?

@@ -570,7 +570,7 @@ board: !ruby/object:ParamagicChess::Board
 players:
 - !ruby/object:ParamagicChess::Player
   side: :red
-  name: konnor
+  name: evelyn
   pieces:
   - *1
   - *2
@@ -593,7 +593,7 @@ players:
   has_castled: false
 - !ruby/object:ParamagicChess::Player
   side: :blue
-  name: evelyn
+  name: konnor
   pieces: []
   check_mate: false
   check: false
