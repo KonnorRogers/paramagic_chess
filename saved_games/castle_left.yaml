@@ -19,6 +19,7 @@ board: !ruby/object:ParamagicChess::Board
         side: :blue
         moved: false
         possible_moves:
+        - :d2
         - :c3
         - :a3
         starting_pos: :b1
@@ -33,7 +34,12 @@ board: !ruby/object:ParamagicChess::Board
       piece: &19 !ruby/object:ParamagicChess::Bishop
         side: :blue
         moved: false
-        possible_moves: []
+        possible_moves:
+        - :d2
+        - :e3
+        - :f4
+        - :g5
+        - :h6
         starting_pos: :c1
         _test: false
         type: :bishop
@@ -43,23 +49,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :c1
     :d1: !ruby/object:ParamagicChess::Tile
-      piece: &20 !ruby/object:ParamagicChess::Queen
-        side: :blue
-        moved: false
-        possible_moves:
-        - :e2
-        - :f3
-        - :g4
-        - :h5
-        - :c2
-        - :b3
-        - :a4
-        starting_pos: :d1
-        _test: false
-        type: :queen
-        x: :d
-        y: 1
-        pos: :d1
+      piece: 
       background: :black
       position: :d1
     :e1: !ruby/object:ParamagicChess::Tile
@@ -71,6 +61,7 @@ board: !ruby/object:ParamagicChess::Board
         moved: false
         possible_moves:
         - :e2
+        - :d2
         starting_pos: :e1
         _test: false
         type: :king
@@ -167,7 +158,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :black
       position: :e2
     :f2: !ruby/object:ParamagicChess::Tile
-      piece: &28 !ruby/object:ParamagicChess::Pawn
+      piece: &27 !ruby/object:ParamagicChess::Pawn
         x: :f
         y: 2
         pos: :f2
@@ -183,7 +174,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :f2
     :g2: !ruby/object:ParamagicChess::Tile
-      piece: &29 !ruby/object:ParamagicChess::Pawn
+      piece: &28 !ruby/object:ParamagicChess::Pawn
         x: :g
         y: 2
         pos: :g2
@@ -200,7 +191,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :black
       position: :g2
     :h2: !ruby/object:ParamagicChess::Tile
-      piece: &30 !ruby/object:ParamagicChess::Pawn
+      piece: &29 !ruby/object:ParamagicChess::Pawn
         x: :h
         y: 2
         pos: :h2
@@ -247,10 +238,6 @@ board: !ruby/object:ParamagicChess::Board
         moved: true
         possible_moves:
         - :g4
-        - :f5
-        - :e6
-        - :d7
-        - :c8
         - :g2
         starting_pos: :c8
         _test: false
@@ -269,7 +256,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :b4
     :c4: !ruby/object:ParamagicChess::Tile
-      piece: &31 !ruby/object:ParamagicChess::Pawn
+      piece: &30 !ruby/object:ParamagicChess::Pawn
         x: :c
         y: 4
         pos: :c4
@@ -284,19 +271,18 @@ board: !ruby/object:ParamagicChess::Board
       background: :black
       position: :c4
     :d4: !ruby/object:ParamagicChess::Tile
-      piece: &27 !ruby/object:ParamagicChess::Pawn
+      piece: &31 !ruby/object:ParamagicChess::Pawn
         x: :d
         y: 4
         pos: :d4
         side: :blue
         moved: true
         possible_moves:
-        - :d3
-        - :d4
+        - :d5
         starting_pos: :d2
         _test: false
         type: :pawn
-        double_move: true
+        double_move: false
       background: :white
       position: :d4
     :e4: !ruby/object:ParamagicChess::Tile
@@ -319,7 +305,25 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :f4
     :g4: !ruby/object:ParamagicChess::Tile
-      piece: 
+      piece: &20 !ruby/object:ParamagicChess::Queen
+        side: :blue
+        moved: true
+        possible_moves:
+        - :d2
+        - :d3
+        - :e2
+        - :f3
+        - :g4
+        - :h5
+        - :c2
+        - :b3
+        - :a4
+        starting_pos: :d1
+        _test: false
+        type: :queen
+        x: :g
+        y: 4
+        pos: :g4
       background: :black
       position: :g4
     :h4: !ruby/object:ParamagicChess::Tile
@@ -373,6 +377,7 @@ board: !ruby/object:ParamagicChess::Board
         possible_moves:
         - :e5
         - :a5
+        - :d8
         - :d4
         - :b8
         - :b4
@@ -462,11 +467,25 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :c7
     :d7: !ruby/object:ParamagicChess::Tile
-      piece: 
+      piece: &7 !ruby/object:ParamagicChess::Queen
+        side: :red
+        moved: true
+        possible_moves:
+        - :d8
+        - :e6
+        - :f5
+        - :g4
+        - :c8
+        starting_pos: :d8
+        _test: false
+        type: :queen
+        x: :d
+        y: 7
+        pos: :d7
       background: :black
       position: :d7
     :e7: !ruby/object:ParamagicChess::Tile
-      piece: &7 !ruby/object:ParamagicChess::Pawn
+      piece: &8 !ruby/object:ParamagicChess::Pawn
         x: :e
         y: 7
         pos: :e7
@@ -482,7 +501,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :e7
     :f7: !ruby/object:ParamagicChess::Tile
-      piece: &8 !ruby/object:ParamagicChess::Pawn
+      piece: &9 !ruby/object:ParamagicChess::Pawn
         x: :f
         y: 7
         pos: :f7
@@ -498,7 +517,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :black
       position: :f7
     :g7: !ruby/object:ParamagicChess::Tile
-      piece: &9 !ruby/object:ParamagicChess::Pawn
+      piece: &10 !ruby/object:ParamagicChess::Pawn
         x: :g
         y: 7
         pos: :g7
@@ -514,7 +533,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :g7
     :h7: !ruby/object:ParamagicChess::Tile
-      piece: &10 !ruby/object:ParamagicChess::Pawn
+      piece: &11 !ruby/object:ParamagicChess::Pawn
         x: :h
         y: 7
         pos: :h7
@@ -530,12 +549,13 @@ board: !ruby/object:ParamagicChess::Board
       background: :black
       position: :h7
     :a8: !ruby/object:ParamagicChess::Tile
-      piece: &11 !ruby/object:ParamagicChess::Rook
+      piece: &12 !ruby/object:ParamagicChess::Rook
         side: :red
         moved: false
         possible_moves:
         - :b8
         - :c8
+        - :d8
         starting_pos: :a8
         _test: false
         type: :rook
@@ -553,19 +573,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :black
       position: :c8
     :d8: !ruby/object:ParamagicChess::Tile
-      piece: &12 !ruby/object:ParamagicChess::Queen
-        side: :red
-        moved: false
-        possible_moves:
-        - :d7
-        - :c8
-        - :b8
-        starting_pos: :d8
-        _test: false
-        type: :queen
-        x: :d
-        y: 8
-        pos: :d8
+      piece: 
       background: :white
       position: :d8
     :e8: !ruby/object:ParamagicChess::Tile
@@ -576,7 +584,7 @@ board: !ruby/object:ParamagicChess::Board
         side: :red
         moved: false
         possible_moves:
-        - :d7
+        - :d8
         starting_pos: :e8
         _test: false
         type: :king
@@ -630,7 +638,7 @@ board: !ruby/object:ParamagicChess::Board
 players:
 - !ruby/object:ParamagicChess::Player
   side: :red
-  name: konnor
+  name: evelyn
   pieces:
   - *1
   - *2
@@ -685,6 +693,36 @@ players:
   side: :blue
   name: evelyn
   pieces: []
+  check_mate: false
+  check: false
+  has_castled: false
+- !ruby/object:ParamagicChess::Player
+  side: 
+  name: konnor
+  pieces: []
+  check_mate: false
+  check: false
+  has_castled: false
+- !ruby/object:ParamagicChess::Player
+  side: :red
+  name: konnor
+  pieces:
+  - *1
+  - *2
+  - *3
+  - *4
+  - *5
+  - *6
+  - *8
+  - *9
+  - *10
+  - *11
+  - *12
+  - *7
+  - *13
+  - *14
+  - *15
+  - *16
   check_mate: false
   check: false
   has_castled: false

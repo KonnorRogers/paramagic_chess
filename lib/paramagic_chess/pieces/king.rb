@@ -140,7 +140,7 @@ module ParamagicChess
     end
     
     def castle(board:, direction:)
-      if can_castle?(board: board, direction: direction)
+      if can_castle?(board: board, direction: direction) == false
         puts "Unable to castle to the #{direction}"
         return nil
       end
@@ -180,7 +180,7 @@ module ParamagicChess
     end
     
     def can_castle?(board:, direction:)
-      if direction != :right || direction != :left
+      if direction != :right && direction != :left
         puts 'Direction must be either right or left.'
         return false
       end
@@ -189,19 +189,23 @@ module ParamagicChess
       
       # +Neither the king nor the chosen rook has previously moved.
       return false if @moved == true || rook.moved? == true
+      # puts "made it past moved"
       # +The king is not currently in check.
       return false if @check == true
+      # puts "made it past chess"
       
       tiles = send("#{direction}_tiles".to_sym, board: board)
       
       # There are no pieces between the king and the chosen rook.
+      # p tile_contains_a_piece?(tiles_array: tiles)
       return false if tiles_contain_a_piece?(tiles_array: tiles)
+      # puts "made it past tiles contain a piece"
       # The king does not pass through a square that is attacked by an enemy piece.[4]
       return false if any_pieces_attacking_path?(board: board, tiles_array: tiles)
-      
+      # puts "made it past any pieces attacking path"
       # The king does not end up in check. (True of any legal move.)
       return false if end_path_results_in_check?(board: board, direction: direction)
-      
+      # puts "made it past end path results in check"
       true
     end
     
