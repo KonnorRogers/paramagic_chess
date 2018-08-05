@@ -2,7 +2,7 @@ require 'yaml'
 
 module ParamagicChess
   class Game
-    SAFE_WORDS = [:save, :load, :castle_right, :castle_left, :exit]
+    SAFE_WORDS = [:save, :load, :castle, :exit]
     FILENAME = "saved_game.yaml"
     DIRNAME = "saved_game/"
     
@@ -183,6 +183,7 @@ module ParamagicChess
         input = get_input
         # if sanitized input return nil, invalid input, repeat
         next if input.nil?
+        break if input == :castled
         
         moving_piece = @board.piece(pos: input[0])
         # checks to make sure its a valid piece
@@ -230,10 +231,21 @@ module ParamagicChess
     end
     
     def castle_game(direction: nil)
+      player = get_player_turn
+      if player.has_castled?
+        puts 'You already castled once!'
+        return nil
+      end
+      
       puts "Which direction would you like to castle? left or right?"
       direction = gets.chomp.downcase.to_sym
-      king = get_player_turn.get_king(board: @board)
-      king.castle(direction: direction)
+      king = player.get_king
+      castled = king.castle(direction: direction, board: @board)
+      
+      return nil if castled.nil?
+      
+      player.has_castled = true
+      :castled
     end
   end
 end

@@ -140,15 +140,27 @@ module ParamagicChess
     end
     
     def castle(board:, direction:)
-      return nil if can_castle?(board: board, direction: direction)
-      
+      if can_castle?(board: board, direction: direction)
+        puts "Unable to castle to the #{direction}"
+        return nil
+      end
       rook = send("rook_#{direction}".to_sym, board: board)
+      rook_start_pos = rook.pos
+      king_start_pos = self.pos
       update_king_and_rook_pos(board: board, direction: direction, rook: rook)
       
+      # updates new positions
       board.board[rook.pos].piece = rook
       board.board[self.pos].piece = self
+      
+      # deletes old positions
+      board.board[rook_start_pos].piece = nil
+      board.board[king_start_pos].piece = nil
+      
+      # sets them to moved
       rook.moved = true
       @moved = true
+      # true
     end
   
     def update_king_and_rook_pos(board:, direction:, rook:)
@@ -157,13 +169,14 @@ module ParamagicChess
       
       king_x = move_x(amount: amount, x: @x).to_s
       # takes the string and converts it to sym
-      king_end_pos = (king_x + @y).to_sym
-      king.update_position(king_end_pos)
+      king_end_pos = (king_x + @y.to_s).to_sym
+      update_position(pos: king_end_pos)
       
+      amount -= 1 if direction == :left
       # opposite direction of king
       rook_x = move_x(amount: -(amount), x: rook.x)
-      rook_end_pos = (rook_x + rook.y).to_sym
-      rook.update_position(rook_end_pos)
+      rook_end_pos = (rook_x.to_s + rook.y.to_s).to_sym
+      rook.update_position(pos: rook_end_pos)
     end
     
     def can_castle?(board:, direction:)

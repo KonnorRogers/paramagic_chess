@@ -3,8 +3,8 @@ require_relative "../moves.rb"
 module ParamagicChess
   class Piece
     include Moves
-    attr_accessor :side, :possible_moves, :type
-    attr_reader :x, :y, :pos, :moved, :_test
+    attr_accessor :side, :possible_moves, :type, :moved
+    attr_reader :x, :y, :pos, :_test
 
     def initialize(pos: nil, side: nil, moved: false, _test: false)
       update_position(pos: pos)
@@ -17,8 +17,9 @@ module ParamagicChess
     
     # returns the symbol of the x_value when moved
     def move_x(amount:, x:)
-      return nil if x + amount > Board::MAX_INDEX || x + amount < Board::MIN_INDEX
-      NUM_TO_CHAR[CHAR_TO_NUM[x] + amount]
+      final = CHAR_TO_NUM[x].to_i + amount
+      return nil if final > Board::MAX_INDEX || final < Board::MIN_INDEX
+      NUM_TO_CHAR[final]
     end
 
     # updates position, x & y values

@@ -18,7 +18,7 @@ module ParamagicChess
     end
     
     def get_king
-      @pieces.select { |piece| piece.type == :king && piece.side == @side } 
+      @pieces.each { |piece| return piece if piece.type == :king && piece.side == @side } 
     end
     
     def find_king(board:, side: @side)
