@@ -18,7 +18,11 @@ module ParamagicChess
     end
     
     def get_king
-      @pieces.each { |piece| return piece if piece.type == :king && piece.side == @side } 
+      @pieces.each { |piece| return piece if piece.type == :king && piece.side == @side }
+    end
+    
+    def get_other_king
+      @pieces.each { |piece| return piece if piece.type == :king && piece.side != @side }
     end
     
     def find_king(board:, side: @side)
@@ -30,13 +34,16 @@ module ParamagicChess
       end
     end
     
-    def check_mate?
-      return @check_mate = true if get_king.check_mate? == true
+    def check_mate?(board:)
+      return @check_mate = true if get_king.check_mate?(board: board) == true
       false
     end
     
-    def check?
-      return @check = true if get_king.check? == true
+    def check?(board:)
+      if get_king.check?(board: board) == true
+        puts 'You are in check.'
+        return @check = true
+      end
       false
     end
   end

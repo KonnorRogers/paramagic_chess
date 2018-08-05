@@ -260,6 +260,9 @@ board: !ruby/object:ParamagicChess::Board
         possible_moves:
         - :g4
         - :f5
+        - :e6
+        - :d7
+        - :c8
         - :g2
         starting_pos: :c8
         _test: false
@@ -282,7 +285,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :black
       position: :c4
     :d4: !ruby/object:ParamagicChess::Tile
-      piece: &32 !ruby/object:ParamagicChess::Pawn
+      piece: &31 !ruby/object:ParamagicChess::Pawn
         x: :d
         y: 4
         pos: :d4
@@ -342,33 +345,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :e5
     :f5: !ruby/object:ParamagicChess::Tile
-      piece: &31 !ruby/object:ParamagicChess::Queen
-        side: :blue
-        moved: true
-        possible_moves:
-        - :f6
-        - :f7
-        - :f4
-        - :f3
-        - :g5
-        - :h5
-        - :e5
-        - :d5
-        - :g6
-        - :h7
-        - :g4
-        - :h3
-        - :e6
-        - :d7
-        - :c8
-        - :e4
-        - :d3
-        starting_pos: :d1
-        _test: false
-        type: :queen
-        x: :f
-        y: 5
-        pos: :f5
+      piece: 
       background: :black
       position: :f5
     :g5: !ruby/object:ParamagicChess::Tile
@@ -415,8 +392,6 @@ board: !ruby/object:ParamagicChess::Board
         - :d8
         - :e6
         - :f6
-        - :g6
-        - :h6
         - :e5
         - :f4
         - :g3
@@ -441,7 +416,18 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :f6
     :g6: !ruby/object:ParamagicChess::Tile
-      piece: 
+      piece: &5 !ruby/object:ParamagicChess::Pawn
+        x: :g
+        y: 6
+        pos: :g6
+        side: :red
+        moved: true
+        possible_moves:
+        - :g5
+        starting_pos: :g7
+        _test: false
+        type: :pawn
+        double_move: false
       background: :black
       position: :g6
     :h6: !ruby/object:ParamagicChess::Tile
@@ -449,7 +435,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :h6
     :a7: !ruby/object:ParamagicChess::Tile
-      piece: &5 !ruby/object:ParamagicChess::Pawn
+      piece: &6 !ruby/object:ParamagicChess::Pawn
         x: :a
         y: 7
         pos: :a7
@@ -465,7 +451,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :a7
     :b7: !ruby/object:ParamagicChess::Tile
-      piece: &6 !ruby/object:ParamagicChess::Pawn
+      piece: &7 !ruby/object:ParamagicChess::Pawn
         x: :b
         y: 7
         pos: :b7
@@ -481,7 +467,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :black
       position: :b7
     :c7: !ruby/object:ParamagicChess::Tile
-      piece: &7 !ruby/object:ParamagicChess::Pawn
+      piece: &8 !ruby/object:ParamagicChess::Pawn
         x: :c
         y: 7
         pos: :c7
@@ -499,7 +485,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :black
       position: :d7
     :e7: !ruby/object:ParamagicChess::Tile
-      piece: &8 !ruby/object:ParamagicChess::Pawn
+      piece: &9 !ruby/object:ParamagicChess::Pawn
         x: :e
         y: 7
         pos: :e7
@@ -515,7 +501,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :e7
     :f7: !ruby/object:ParamagicChess::Tile
-      piece: &9 !ruby/object:ParamagicChess::Pawn
+      piece: &10 !ruby/object:ParamagicChess::Pawn
         x: :f
         y: 7
         pos: :f7
@@ -523,6 +509,7 @@ board: !ruby/object:ParamagicChess::Board
         moved: false
         possible_moves:
         - :f6
+        - :f5
         starting_pos: :f7
         _test: false
         type: :pawn
@@ -530,19 +517,7 @@ board: !ruby/object:ParamagicChess::Board
       background: :black
       position: :f7
     :g7: !ruby/object:ParamagicChess::Tile
-      piece: &10 !ruby/object:ParamagicChess::Pawn
-        x: :g
-        y: 7
-        pos: :g7
-        side: :red
-        moved: false
-        possible_moves:
-        - :g6
-        - :g5
-        starting_pos: :g7
-        _test: false
-        type: :pawn
-        double_move: false
+      piece: 
       background: :white
       position: :g7
     :h7: !ruby/object:ParamagicChess::Tile
@@ -568,7 +543,6 @@ board: !ruby/object:ParamagicChess::Board
         possible_moves:
         - :b8
         - :c8
-        - :d8
         starting_pos: :a8
         _test: false
         type: :rook
@@ -582,7 +556,27 @@ board: !ruby/object:ParamagicChess::Board
       background: :white
       position: :b8
     :c8: !ruby/object:ParamagicChess::Tile
-      piece: 
+      piece: &32 !ruby/object:ParamagicChess::Queen
+        side: :blue
+        moved: true
+        possible_moves:
+        - :c7
+        - :d8
+        - :e8
+        - :b8
+        - :a8
+        - :d7
+        - :e6
+        - :f5
+        - :g4
+        - :h3
+        - :b7
+        starting_pos: :d1
+        _test: false
+        type: :queen
+        x: :c
+        y: 8
+        pos: :c8
       background: :black
       position: :c8
     :d8: !ruby/object:ParamagicChess::Tile
@@ -602,7 +596,7 @@ board: !ruby/object:ParamagicChess::Board
         starting_pos: :e8
         _test: false
         type: :king
-        check: false
+        check: true
         check_mate: false
       background: :black
       position: :e8
@@ -610,7 +604,9 @@ board: !ruby/object:ParamagicChess::Board
       piece: &14 !ruby/object:ParamagicChess::Bishop
         side: :red
         moved: false
-        possible_moves: []
+        possible_moves:
+        - :g7
+        - :h6
         starting_pos: :f8
         _test: false
         type: :bishop
@@ -693,6 +689,52 @@ players:
   - *30
   - *31
   - *32
+  check_mate: false
+  check: false
+  has_castled: false
+- !ruby/object:ParamagicChess::Player
+  side: :red
+  name: konnor
+  pieces:
+  - *1
+  - *2
+  - *3
+  - *4
+  - *6
+  - *7
+  - *8
+  - *9
+  - *10
+  - *5
+  - *11
+  - *12
+  - *13
+  - *14
+  - *15
+  - *16
+  check_mate: false
+  check: false
+  has_castled: false
+- !ruby/object:ParamagicChess::Player
+  side: :blue
+  name: evelyn
+  pieces:
+  - *17
+  - *18
+  - *19
+  - *20
+  - *21
+  - *22
+  - *23
+  - *24
+  - *25
+  - *26
+  - *27
+  - *28
+  - *29
+  - *30
+  - *32
+  - *31
   check_mate: false
   check: false
   has_castled: false

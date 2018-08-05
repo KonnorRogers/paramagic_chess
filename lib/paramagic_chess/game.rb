@@ -25,17 +25,17 @@ module ParamagicChess
     def play
       greeting_message
       # load_game
-      add_players
-      randomize_sides
+      if @players.empty?
+        add_players
+        randomize_sides
+      end
       
       loop do
         update_pieces
+        
         take_turn
         break if game_over?
-        system 'clear'
       end
-      
-      
     end
     
     def randomize_sides
@@ -51,7 +51,11 @@ module ParamagicChess
     end
     
     def game_over?
-      if player_1.check_mate == true || player_2.check_mate == true
+      update_pieces(player: player_1)
+      update_pieces(player: player_2)
+      p1 = true if player_1.check_mate?(board: @board) == true
+      p2 = true if player_2.check_mate?(board: @board) == true
+      if p1 == true || p2 == true
         puts "CONGRATULATIONS! #{winner.name}, you have won!"
         puts "Sorry, #{loser.name} you have lost."
         return true
@@ -88,6 +92,10 @@ module ParamagicChess
     end
     
     private
+    
+    def check?(player: get_player_turn)
+      player.check?(board: @board)
+    end
     
     def winner
       return player_2 if player_1.check_mate == true
@@ -138,7 +146,7 @@ module ParamagicChess
             return nil if input == :n
           end
         end
-        file = File.new(file_name, 'w')
+        file = File.new(file_name, 'w+')
         YAML.dump(self, file)
       end
       exit_game
@@ -157,13 +165,13 @@ module ParamagicChess
       file_name = ''
       loop do
         file_name = gets.chomp + ".yaml"
-        break if load_path.include?(DIRPATH + file_name)
+        break if LOAD_PATH.include?(DIRPATH + file_name)
         puts 'Unable to locate that file. Please try again.'
       end
       
       # Makes sure the file being loaded has proper YAML
       begin
-        Psych.load_file(File.new(DIRPATH + file_name, 'r')).play
+        Psych.load_file(File.new(DIRPATH + file_name, 'r+')).play
       rescue Psych::SyntaxError => ex
         ex.file
         ex.message
@@ -173,27 +181,31 @@ module ParamagicChess
     def print_game
       # system 'clear'
       @board.print_board
-      puts "safe words are: #{Game::SAFE_WORDS}"
+      puts "\nsafe words are: #{Game::SAFE_WORDS}"
       puts "To move a piece, enter the piece coordinate followed by destination"
       puts "IE: a2 to a4; f7 to f5"
+    end
+    
+    def print_turn
+      player = get_player_turn
+      puts "\nIt is your turn #{player.name}"
+      puts "You are #{player.side}"
+      check?(player: player)
     end
     
     def take_turn
       player = get_player_turn
       
       @board.reset_pawn_double_move(side: player.side)
-      
-      puts "\nIt is your turn #{player.name}"
-      puts "You are #{player.side}"
-      
       move_piece(player: player)
       swap_turn
       
     end
     
     def move_piece(player:, input: nil)
+      print_game
       loop do
-        print_game
+        print_turn
         input = get_input
         # if sanitized input return nil, invalid input, repeat
         next if input.nil?
@@ -225,8 +237,8 @@ module ParamagicChess
     end
     
     def add_player(name: nil)
-      puts "What is your name?" if @players.empty?
-      puts "What is player2's name?" unless @players.empty?
+      puts "What is your name?" if @players.size < 1
+      puts "What is player2's name?" if @players.size == 1
       name ||= gets.chomp
       @players << Player.new(name: name)
     end
@@ -251,9 +263,15 @@ module ParamagicChess
         return nil
       end
       
+      king = player.get_king
+      castle_left = king.can_castle?(board: @board, direction: :left)
+      castle_right = king.can_castle?(board: @board, direction: :left)
+      if castle_left == false || castle_right == false
+        puts 'You cannot castle right now'
+        return nil
+      end
       puts "Which direction would you like to castle? left or right?"
       direction = gets.chomp.downcase.to_sym
-      king = player.get_king
       castled = king.castle(direction: direction, board: @board)
       
       return nil if castled.nil?
