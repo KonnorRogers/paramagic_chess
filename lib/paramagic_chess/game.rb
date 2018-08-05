@@ -3,8 +3,7 @@ require 'yaml'
 module ParamagicChess
   class Game
     SAFE_WORDS = [:save, :load, :castle, :exit]
-    FILENAME = "saved_game.yaml"
-    DIRNAME = "saved_game/"
+    DIRNAME = "saved_games/"
     
     attr_accessor :players
     attr_reader :board
@@ -125,8 +124,10 @@ module ParamagicChess
       dir_path = File.expand_path(File.dirname(__FILE__)).split("lib")[0] + DIRNAME
       Dir.mkdir(dir_path) unless Dir.exist?(dir_path)
       
+      puts 'What would you like to name your file?'
+      file_name = gets.chomp.downcase.to_s + ".yaml"
       Dir.chdir(dir_path) do
-        file = File.new(FILENAME, 'w')
+        file = File.new(file_name, 'w')
         YAML.dump(self, file)
       end
       exit_game
@@ -140,14 +141,18 @@ module ParamagicChess
         break if input == :y
       end
       
-      dir_path = File.expand_path(File.dirname(__FILE__)).split("lib").first
-      load_path = Dir[dir_path + DIRNAME + FILENAME].first
       
+      dir_path = File.expand_path(File.dirname(__FILE__)).split("lib").first
+      load_path = Dir[dir_path + DIRNAME + "*.yaml"]
+      load_path.each { |file| puts file }
       # Ensures the file exists
-      if load_path.nil?
+      if load_path.empty?
         puts "You do not have any saved games."
         return
       end
+      
+      # puts 'Which file would you like to load?'
+      
       # Makes sure the file being loaded has proper YAML
       begin
         Psych.load_file(File.new(load_path, 'r')).play
