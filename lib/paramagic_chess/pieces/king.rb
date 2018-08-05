@@ -13,7 +13,7 @@ module ParamagicChess
     
     def positions_attacking_king(board:)
       positions = []
-      board.each do |coord, tile|
+      board.board.each do |coord, tile|
         next if tile.piece.nil?
         piece = tile.piece
         # checks that it is from a different side
@@ -29,10 +29,10 @@ module ParamagicChess
     
     def cannot_save?(board:)
       threats = positions_attacking_king(board: board)
-      board.each do |coord, tile|
+      board.board.each do |coord, tile|
         next if tile.piece.nil?
         piece = tile.piece
-        next if piece.side != @side
+        next if piece.side == @side
         piece.update_moves(board: board)
         threats.each do |pos|
           return false if piece.possible_moves.include?(pos)
@@ -44,12 +44,10 @@ module ParamagicChess
     
     def check_mate?(board:)
       # will be called part of check? && cannot_save?
-      # update_moves(board: board)
-      if check?(board: board, pos: @pos) && has_no_moves?
-        if cannot_save? == true
-          @check_mate = true
-          return true
-        end
+      update_moves(board: board)
+      if check?(board: board, pos: @pos) == true && cannot_save?(board: board) == true
+        @check_mate = true
+        return true
       end
       
       @check_mate = false
@@ -68,12 +66,12 @@ module ParamagicChess
       @possible_moves.concat(MOVE_SET.possible_moves(board: board, piece: self))
     end
     
-    def has_no_moves?
-      if @check == true && @possible_moves.empty?
-        return true
-      end
-      false
-    end
+    # def has_no_moves?
+    #   if @check == true && @possible_moves.empty?
+    #     return true
+    #   end
+    #   false
+    # end
     
     def move_to(board:, pos:)
       update_moves(board: board)

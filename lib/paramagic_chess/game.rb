@@ -31,11 +31,12 @@ module ParamagicChess
       end
       
       loop do
-        update_pieces
-        
-        take_turn
         break if game_over?
+        update_pieces
+        take_turn
       end
+      
+      exit_game
     end
     
     def randomize_sides
@@ -51,6 +52,7 @@ module ParamagicChess
     end
     
     def game_over?
+      # puts 'are we being evaluated?'
       update_pieces(player: player_1)
       update_pieces(player: player_2)
       p1 = true if player_1.check_mate?(board: @board) == true
