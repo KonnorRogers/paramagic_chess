@@ -4,6 +4,7 @@ module ParamagicChess
   class Game
     SAFE_WORDS = [:save, :load, :castle, :exit]
     DIRNAME = "saved_games/"
+    DIRPATH = File.expand_path(File.dirname(__FILE__)).split("lib").first + DIRNAME
     
     attr_accessor :players
     attr_reader :board
@@ -121,12 +122,11 @@ module ParamagicChess
     end
     
     def save_game
-      dir_path = File.expand_path(File.dirname(__FILE__)).split("lib")[0] + DIRNAME
-      Dir.mkdir(dir_path) unless Dir.exist?(dir_path)
+      Dir.mkdir(DIRPATH) unless Dir.exist?(DIRPATH)
       
       puts 'What would you like to name your file?'
       file_name = gets.chomp.downcase.to_s + ".yaml"
-      Dir.chdir(dir_path) do
+      Dir.chdir(DIRPATH) do
         file = File.new(file_name, 'w')
         YAML.dump(self, file)
       end
@@ -134,28 +134,34 @@ module ParamagicChess
     end
     
     def load_game(input: nil)
-      loop do
-        puts 'Would you like to load a previous game? (Y/N)'
-        input = gets.chomp.downcase.to_sym unless input == :y || input == :n
-        return if input == :n
-        break if input == :y
-      end
+      # loop do
+      #   puts 'Would you like to load a previous game? (Y/N)'
+      #   input = gets.chomp.downcase.to_sym unless input == :y || input == :n
+      #   return if input == :n
+      #   break if input == :y
+      # end
       
       
-      dir_path = File.expand_path(File.dirname(__FILE__)).split("lib").first
-      load_path = Dir[dir_path + DIRNAME + "*.yaml"]
-      load_path.each { |file| puts file }
-      # Ensures the file exists
+      load_path = Dir[DIRPATH + "*.yaml"]
+      # Ensures they have save files
       if load_path.empty?
         puts "You do not have any saved games."
         return
       end
+      puts 'You have the following save games:'
+      load_path.each { |file| puts File.basename(file, ".yaml") }
       
-      # puts 'Which file would you like to load?'
+      puts "\nWhich file would you like to load?"
+      file_name = nil
+      loop do
+        file_name = gets.chomp + ".yaml"
+        break if load_path.include?(DIRPATH + file_name)
+        puts 'Unable to locate that file. Please try again.'
+      end
       
       # Makes sure the file being loaded has proper YAML
       begin
-        Psych.load_file(File.new(load_path, 'r')).play
+        Psych.load_file(File.new(DIRPATH + file_name, 'r')).play
       rescue Psych::SyntaxError => ex
         ex.file
         ex.message
