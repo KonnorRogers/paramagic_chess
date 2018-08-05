@@ -69,7 +69,7 @@ module ParamagicChess
     def get_input(input: nil)
       input ||= gets.chomp.downcase
       # checks for safewords
-      return send((input + '_game')) if SAFE_WORDS.include?(input.to_sym)
+      return send((input + "_game").to_sym) if SAFE_WORDS.include?(input.to_sym)
       
       input = input.split(' to ')
       
@@ -229,14 +229,11 @@ module ParamagicChess
       end
     end
     
-    def castle_right_game
-      player = get_player_turn
-      swap_turn
-    end
-    
-    def castle_left_game
-      player = get_player_turn
-      swap_turn
+    def castle_game(direction: nil)
+      puts "Which direction would you like to castle? left or right?"
+      direction = gets.chomp.downcase.to_sym
+      king = get_player_turn.get_king(board: @board)
+      king.castle(direction: direction)
     end
   end
 end

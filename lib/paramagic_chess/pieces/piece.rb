@@ -14,6 +14,12 @@ module ParamagicChess
       @starting_pos = pos
       @_test = _test
     end
+    
+    # returns the symbol of the x_value when moved
+    def move_x(amount:, x:)
+      return nil if x + amount > Board::MAX_INDEX || x + amount < Board::MIN_INDEX
+      NUM_TO_CHAR[CHAR_TO_NUM[x] + amount]
+    end
 
     # updates position, x & y values
     def update_position(pos:)

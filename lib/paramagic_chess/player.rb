@@ -1,6 +1,6 @@
 module ParamagicChess
   class Player
-    attr_accessor :side, :name, :pieces
+    attr_accessor :side, :name, :pieces, :has_castled
     attr_reader :check, :check_mate
     
     
@@ -10,6 +10,11 @@ module ParamagicChess
       @pieces = []
       @check_mate = false
       @check = false
+      @has_castled = false
+    end
+    
+    def has_castled?
+      @has_castled
     end
     
     def get_king
