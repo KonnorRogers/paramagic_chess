@@ -20,8 +20,7 @@ module ParamagicChess
         puts ":#{pos} is an invalid move. Try again."
         return nil
       end
-      super if @possible_moves.include? pos
-      true
+      super
     end
     
     def update_moves(board:)

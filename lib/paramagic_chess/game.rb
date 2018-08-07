@@ -14,18 +14,19 @@ module ParamagicChess
       @board = Board.new
       @players = []
       @turn = :red
+      @game_started = false
     end
     
     # player1, player2, and input all added for testing purposes
-    def add_players(player1: 'konnor', player2: 'evelyn', input: :n)
+    def add_players(player1: nil, player2: nil, input: :n)
       add_player(name: player1)
       add_computer_or_player(player: player2, input: input)
     end
     
     def play
       greeting_message
-      # load_game
-      if @players.empty?
+      if @game_started == false
+        return if load_game == :loaded
         add_players
         randomize_sides
       end
@@ -36,7 +37,7 @@ module ParamagicChess
         take_turn
       end
       
-      exit_game
+      # exit_game
     end
     
     def randomize_sides
@@ -46,7 +47,7 @@ module ParamagicChess
     end
     
     def greeting_message
-      system 'clear'
+      # system 'clear'
       print "Welcome to ParamagicChess. Theres nothing magical here Just Chess. \n"
       puts 'Would you like to load a previous game? (Y/N)'
     end
@@ -133,6 +134,7 @@ module ParamagicChess
     end
     
     def save_game
+      @game_started = true
       Dir.mkdir(DIRPATH) unless Dir.exist?(DIRPATH)
       
       puts 'What would you like to name your file?'
@@ -155,6 +157,12 @@ module ParamagicChess
     end
     
     def load_game(input: nil)
+      loop do
+        input ||= gets.chomp.downcase.to_sym
+        break if input == :y
+        return nil if input == :n
+        puts 'please enter Y or N to load a game.'
+      end
       # Ensures the player has save files
       if LOAD_PATH.empty?
         puts "You do not have any saved games."
@@ -174,10 +182,13 @@ module ParamagicChess
       # Makes sure the file being loaded has proper YAML
       begin
         Psych.load_file(File.new(DIRPATH + file_name, 'r+')).play
+        return :success
       rescue Psych::SyntaxError => ex
         ex.file
         ex.message
+        nil
       end
+      nil
     end
     
     def print_game
@@ -198,8 +209,8 @@ module ParamagicChess
     def take_turn
       player = get_player_turn
       
-      @board.reset_pawn_double_move(side: player.side)
       move_piece(player: player)
+      @board.reset_pawn_double_move(side: player.side)
       swap_turn
       
     end
@@ -239,7 +250,7 @@ module ParamagicChess
     end
     
     def add_player(name: nil)
-      puts "What is your name?" if @players.size < 1
+      puts "What is your name?" if @players.empty?
       puts "What is player2's name?" if @players.size == 1
       name ||= gets.chomp
       @players << Player.new(name: name)

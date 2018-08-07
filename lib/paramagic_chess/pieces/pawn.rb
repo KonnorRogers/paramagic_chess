@@ -30,7 +30,8 @@ module ParamagicChess
       
       do_en_passant(board: board, pos: pos)
       
-      super
+      good_move = super
+      return nil if good_move.nil?
 
       promote_to(pos: pos, input: input, board: board) if elgible_for_promotion?
       

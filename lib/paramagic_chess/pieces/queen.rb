@@ -31,11 +31,7 @@ module ParamagicChess
         return nil
       end
       
-      if @possible_moves.include? pos
-        move = super
-        return nil if move.nil?
-      end
-      true
+      super
     end
   end
 end

@@ -61,10 +61,11 @@ module ParamagicChess
       
       # checks if it puts you in check
       king = board.find_king(side: @side)
-      if @_test == false && king.check?(board: board)
+      if @_test == false && king.check?(board: board) == true
         reset_to_previous_state(board: board, removed: removed, start_pos: start_pos, moving_pos: pos)
         puts "That will put your king in check!"
         return nil
+        #returns nil meaning a player will not take a turn
       end
       # Super method to be called, so as not to rewrite for every class
       # Update possible moves is up to the class
@@ -85,6 +86,7 @@ module ParamagicChess
       
       update_position(pos: start_pos)
       board.board[start_pos].piece = self
+      nil
     end
 
     def remove_piece(pos:, board:)
