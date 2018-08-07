@@ -69,12 +69,8 @@ module ParamagicChess
     end
     
     def has_no_moves?(board:)
-      if @check == true
-        @possible_moves.each do |pos|
-          return true if check?(board: board, pos: pos) == true
-        end
-      end
-      false
+      return false if @possible_moves.any? { |pos| check?(pos: pos, board: board) == false }
+      true
     end
     
     def move_to(board:, pos:)
