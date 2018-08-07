@@ -46,7 +46,7 @@ module ParamagicChess
       # will be called part of check? && cannot_save?
       update_moves(board: board)
       if check?(board: board, pos: @pos) == true && cannot_save?(board: board) == true
-        if has_no_moves? == true
+        if has_no_moves?(board: board) == true
           @check_mate = true
           return true
         end
@@ -68,9 +68,11 @@ module ParamagicChess
       @possible_moves.concat(MOVE_SET.possible_moves(board: board, piece: self))
     end
     
-    def has_no_moves?
-      if @check == true && @possible_moves.empty?
-        return true
+    def has_no_moves?(board:)
+      if @check == true
+        @possible_moves.each do |pos|
+          return true if check?(board: board, pos: pos) == true
+        end
       end
       false
     end
