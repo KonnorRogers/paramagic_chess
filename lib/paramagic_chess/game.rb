@@ -278,8 +278,8 @@ module ParamagicChess
       
       king = player.get_king
       castle_left = king.can_castle?(board: @board, direction: :left)
-      castle_right = king.can_castle?(board: @board, direction: :left)
-      if castle_left == false || castle_right == false
+      castle_right = king.can_castle?(board: @board, direction: :right)
+      if castle_left == false && castle_right == false
         puts 'You cannot castle right now'
         return nil
       end
