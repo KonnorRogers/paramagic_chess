@@ -31,7 +31,7 @@ module ParamagicChess
     
     context '#update_moves(board:)' do
       it 'will return a blank array from starting point' do
-        queen = board.board[:e8].piece
+        queen = board.board[:d8].piece
         queen.update_moves(board: board)
         expect(queen.possible_moves).to be_empty
       end
@@ -50,18 +50,18 @@ module ParamagicChess
     
     context '#move_to(:board)' do
       it 'will not move from start' do
-        queen = board.piece(pos: :e8)
-        queen.move_to(pos: :e6, board: board)
-        expect(board.piece(pos: :e8)).to eq queen
-        expect(board.piece(pos: :e6)).to eq nil
+        queen = board.piece(pos: :d8)
+        queen.move_to(pos: :d6, board: board)
+        expect(board.piece(pos: :d8)).to eq queen
+        expect(board.piece(pos: :d6)).to eq nil
       end
       
       it 'will move if the pawn in front is moved' do
-        queen = board.piece(pos: :e8)
-        board.board[:e7].piece = nil
-        queen.move_to(pos: :e2, board: board)
-        expect(board.piece(pos: :e2)).to eq queen
-        expect(board.piece(pos: :e8)).to eq nil
+        queen = board.piece(pos: :d8)
+        board.board[:d7].piece = nil
+        queen.move_to(pos: :d2, board: board)
+        expect(board.piece(pos: :d2)).to eq queen
+        expect(board.piece(pos: :d8)).to eq nil
       end
     end
   end

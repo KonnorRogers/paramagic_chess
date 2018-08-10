@@ -56,7 +56,7 @@ module ParamagicChess
       
       it 'returns an invalid move' do
         knight = board.board[:b8].piece
-        expect(knight.move_to(pos: :a8, board: board)).to eq ":a8 is an invalid move. Try again."
+        expect(knight.move_to(pos: :a8, board: board)).to eq nil
       end
     end
   end

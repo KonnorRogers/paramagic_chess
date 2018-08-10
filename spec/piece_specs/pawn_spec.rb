@@ -155,7 +155,7 @@ module ParamagicChess
         error = red_pawn.move_to(pos: :b6, board: board)
         expect(red_pawn.pos).to eq :a7
         expect(board.board[:a7].piece.type).to eq :pawn
-        expect(error).to eq ':b6 is an invalid move. Try again.'
+        expect(error).to eq nil
       end
 
       it 'Allows the ability to promote' do
@@ -190,6 +190,22 @@ module ParamagicChess
         board.board[:b2].piece.move_to(pos: :b4, board: board)
         red_pawn.move_to(pos: :b3, board: board)
         expect(board.board[:b4].piece).to eq nil
+      end
+      
+      it 'should not remove both pieces' do 
+        red_pawn = board.board[:b7].piece
+        red_pawn.move_to(pos: :b5, board: board)
+        blue_pawn = board.board[:a2].piece
+        blue_pawn.move_to(pos: :a4, board: board)
+        red_pawn.move_to(pos: :b4, board: board)
+        blue_rook = board.board[:a1].piece
+        blue_rook.move_to(pos: :a3, board: board)
+        blue_pawn.double_move = false
+        red_pawn.move_to(pos: :a3, board: board)
+        expect(board.board[:a3].piece).to eq red_pawn
+        expect(board.board[:a4].piece).to eq blue_pawn
+        
+        
       end
     end
   end
