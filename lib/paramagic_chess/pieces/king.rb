@@ -192,7 +192,7 @@ module ParamagicChess
       tiles = send("#{direction}_tiles".to_sym, board: board)
       
       # There are no pieces between the king and the chosen rook.
-      # p tile_contains_a_piece?(tiles_array: tiles)
+      # p tiles_contain_a_piece?(tiles_array: tiles)
       return false if tiles_contain_a_piece?(tiles_array: tiles)
       # puts "made it past tiles contain a piece"
       # The king does not pass through a square that is attacked by an enemy piece.[4]

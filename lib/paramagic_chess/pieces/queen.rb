@@ -1,6 +1,6 @@
 module ParamagicChess
   class Queen < Piece
-    MOVE_SET = [Moves::Straight.new, Moves::Diagonal.new].freeze
+    MOVE_SET = [Moves::Straight.new, Moves::Diagonal.new]
 
     def initialize(pos: nil, side: nil, moved: false)
       super
@@ -18,7 +18,7 @@ module ParamagicChess
     def update_moves(board:)
       @possible_moves = []
       moves = MOVE_SET.map do |move|
-         move.possible_moves(board: board, piece: self)
+        move.possible_moves(board: board, piece: self)
       end
 
       @possible_moves.concat(moves.flatten)
@@ -30,7 +30,7 @@ module ParamagicChess
         puts ":#{pos} is an invalid move. Try again."
         return nil
       end
-      
+
       super
     end
   end
