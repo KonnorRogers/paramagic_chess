@@ -45,4 +45,4 @@ end
 # uncomment to play the game
 # run ruby /path/to/paramagic_chess/lib/paramagic_chess.rb
 
-# ParamagicChess::Game.new.play
+ParamagicChess::Game.new.play

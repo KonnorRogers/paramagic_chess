@@ -10,7 +10,7 @@ module ParamagicChess
       @removed_blue_pieces = []
       @removed_red_pieces = []
     end
-    
+
     # required for evaluation of en_passant
     def reset_pawn_double_move(side:)
       @board.each do |_coord, tile|
@@ -20,11 +20,11 @@ module ParamagicChess
         end
       end
     end
-    
+
     def tile(pos:)
       @board[pos]
     end
-    
+
     def piece(pos:)
       @board[pos].piece
     end
@@ -32,7 +32,7 @@ module ParamagicChess
     def print_board
       # system 'clear'
       index = 0
-      print "\t    A   B   C   D   E   F   G   H"
+      print "\t    A  B  C  D  E  F  G  H"
 
       @board.each do |_key, value|
         print "\n\t" if index % 8 == 0
