@@ -28,6 +28,15 @@ module ParamagicChess
     def piece(pos:)
       @board[pos].piece
     end
+    
+    def find_king(side:)
+      @board.each do |_coord, tile| 
+        next if tile.piece.nil?
+        if tile.piece.type == :king && tile.piece.side == side
+          return tile.piece
+        end
+      end
+    end
 
     def print_board
       # system 'clear'
@@ -66,9 +75,9 @@ module ParamagicChess
           tile.piece = Knight.new(pos: key)
         when :c, :f
           tile.piece = Bishop.new(pos: key)
-        when :d
-          tile.piece = King.new(pos: key)
         when :e
+          tile.piece = King.new(pos: key)
+        when :d
           tile.piece = Queen.new(pos: key)
         end
       end
