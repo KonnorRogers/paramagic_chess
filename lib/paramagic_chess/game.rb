@@ -192,7 +192,7 @@ module ParamagicChess
     end
 
     def print_game
-      system 'clear'
+      # system 'clear'
       @board.print_board
       puts "\nsafe words are: #{Game::SAFE_WORDS}"
       puts "To move a piece, enter the piece coordinate followed by destination"
@@ -209,15 +209,17 @@ module ParamagicChess
     def take_turn
       player = get_player_turn
 
-      move_piece(player: player)
       @board.reset_pawn_double_move(side: player.side)
+      move_piece(player: player)
       swap_turn
 
     end
 
     def move_piece(player:, input: nil)
       print_game
+      
       loop do
+        p @board.board[:b4]
         print_turn
         input = get_input
         # if sanitized input return nil, invalid input, repeat
