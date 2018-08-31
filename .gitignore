@@ -7,6 +7,6 @@
 /spec/reports/
 /tmp/
 /.vscode/
-
+/saved_games/*
 # rspec failure tracking
 .rspec_status

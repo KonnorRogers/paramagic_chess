@@ -41,7 +41,7 @@ module ParamagicChess
     def print_board
       # system 'clear'
       index = 0
-      print "\t    A   B   C   D   E   F   G   H"
+      print "\t    A  B  C  D  E  F  G  H"
 
       @board.each do |_key, value|
         print "\n\t" if index % 8 == 0

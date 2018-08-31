@@ -208,9 +208,9 @@ module ParamagicChess
 
     def take_turn
       player = get_player_turn
+      @board.reset_pawn_double_move(side: player.side)
 
       move_piece(player: player)
-      @board.reset_pawn_double_move(side: player.side)
       swap_turn
 
     end
