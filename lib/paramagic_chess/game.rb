@@ -47,7 +47,7 @@ module ParamagicChess
     end
 
     def greeting_message
-      # system 'clear'
+      system 'clear'
       print "Welcome to ParamagicChess. Theres nothing magical here Just Chess. \n"
       puts 'Would you like to load a previous game? (Y/N)'
     end
@@ -192,7 +192,7 @@ module ParamagicChess
     end
 
     def print_game
-      # system 'clear'
+      system 'clear'
       @board.print_board
       puts "\nsafe words are: #{Game::SAFE_WORDS}"
       puts "To move a piece, enter the piece coordinate followed by destination"
