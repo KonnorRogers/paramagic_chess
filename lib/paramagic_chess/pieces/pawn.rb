@@ -78,8 +78,11 @@ module ParamagicChess
       false
     end
 
-    def promote_to(pos:, board:, input: gets.chomp.to_sym)
+    def promote_to(pos:, board:, input:)
+      puts "What would you like to promote your pawn to?" if input.nil?
+      input ||= gets.chomp.downcase.to_sym
       return "#{input} is not a promotable piece. Try again." unless PROMOTION_LIST.include? input
+      
       promotion_piece = PROMOTION_LIST[input]
       promotion_piece.update_position(pos: pos)
       promotion_piece.side = @side
