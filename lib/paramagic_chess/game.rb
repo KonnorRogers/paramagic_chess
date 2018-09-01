@@ -76,9 +76,11 @@ module ParamagicChess
     def piece_game(input: nil)
       puts "Enter the coordinates of the piece you wish to know the type of"
       loop do
-        input ||= gets.chomp.downcase.to_sym
-        if !(CHAR_TO_NUM.values.include?(input[0])) && (input[1].to_i < 1 || input[1].to_i > 8)
-          break
+        input ||= gets.chomp.downcase
+        if CHAR_TO_NUM.keys.include?(input[0].to_sym) && !(input[1].to_i < 1 || input[1].to_i > 8)
+          piece = @board.piece(pos: input.to_sym)
+          return puts "No piece found" if piece.nil?
+          return puts piece.type.to_s
         end
         puts "Improper input, please enter the coordinates of the piece whose type you would like to know".red
         input = nil
