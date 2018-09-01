@@ -77,7 +77,7 @@ module ParamagicChess
       puts "Enter the coordinates of the piece you wish to know the type of"
       loop do
         input ||= gets.chomp.downcase.to_sym
-        if !(CHAR_TO_NUM.values.include?(input[0])) && (input[1].to_i < 1 || input[1] > 8)
+        if !(CHAR_TO_NUM.values.include?(input[0])) && (input[1].to_i < 1 || input[1].to_i > 8)
           break
         end
         puts "Improper input, please enter the coordinates of the piece whose type you would like to know".red
