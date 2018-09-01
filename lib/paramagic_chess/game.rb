@@ -2,7 +2,7 @@ require 'yaml'
 
 module ParamagicChess
   class Game
-    SAFE_WORDS = [:save, :load, :castle, :exit]
+    SAFE_WORDS = [:save, :load, :castle, :exit, :piece]
     DIRNAME = "saved_games/"
     DIRPATH = File.expand_path(File.dirname(__FILE__)).split("lib").first + DIRNAME
     LOAD_PATH = Dir[DIRPATH + "*.yaml"]
@@ -71,6 +71,18 @@ module ParamagicChess
 
     def player_2
       @players[1]
+    end
+
+    def piece_game(input: nil)
+      puts "Enter the coordinates of the piece you wish to know the type of"
+      loop do
+        input ||= gets.chomp.downcase.to_sym
+        if !(CHAR_TO_NUM.values.include?(input[0])) && (input[1].to_i < 1 || input[1] > 8)
+          break
+        end
+        puts "Improper input, please enter the coordinates of the piece whose type you would like to know".red
+        input = nil
+      end
     end
 
     def get_input(input: nil)
@@ -161,6 +173,7 @@ module ParamagicChess
         break if input == :y
         return nil if input == :n
         puts 'please enter Y or N to load a game.'
+        input = nil
       end
       # Ensures the player has save files
       if LOAD_PATH.empty?
