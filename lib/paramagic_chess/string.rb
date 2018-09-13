@@ -8,18 +8,18 @@ class String
   end
   
   def white
-    "\e[37m#{self}"
+    "\e[37m#{self} "
   end
   
   def black
-    "\e[30m#{self}"
+    "\e[30m#{self} "
   end
 
   def red
-    "\e[31m #{self} \e[0m"
+    "\e[31m #{self}  \e[0m"
   end
 
   def blue
-    "\e[34m #{self} \e[0m"
+    "\e[34m #{self}  \e[0m"
   end
 end

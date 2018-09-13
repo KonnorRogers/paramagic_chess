@@ -109,10 +109,6 @@ module ParamagicChess
 
     private
 
-    def check?(player: get_player_turn)
-      player.check?(board: @board)
-    end
-
     def winner
       return player_2 if player_1.check_mate == true
       return player_1 if player_2.check_mate == true
@@ -215,9 +211,9 @@ module ParamagicChess
 
     def print_turn
       player = get_player_turn
-      puts "\nIt is your turn #{player.name}".send(player.side)
-      puts "You are #{player.side}".send(player.side)
-      check?(player: player)
+      print "\nIt is your turn #{player.name}".send(player.side)
+      puts "\nYou are #{player.side}".send(player.side)
+      player.check?(board: @board)
     end
 
     def take_turn
