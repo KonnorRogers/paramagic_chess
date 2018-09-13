@@ -2,7 +2,7 @@ require 'yaml'
 
 module ParamagicChess
   class Game
-    SAFE_WORDS = [:save, :load, :castle, :exit, :piece]
+    SAFE_WORDS = [:save, :load, :castle, :exit, :piece_info]
     DIRNAME = "saved_games/"
     DIRPATH = File.expand_path(File.dirname(__FILE__)).split("lib").first + DIRNAME
     LOAD_PATH = Dir[DIRPATH + "*.yaml"]
@@ -73,7 +73,7 @@ module ParamagicChess
       @players[1]
     end
 
-    def piece_game(input: nil)
+    def piece_info_game(input: nil)
       puts "Enter the coordinates of the piece you wish to know the type of"
       loop do
         input ||= gets.chomp.downcase
