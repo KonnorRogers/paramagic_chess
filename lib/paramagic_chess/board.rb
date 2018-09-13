@@ -40,17 +40,25 @@ module ParamagicChess
 
     def print_board
       # system 'clear'
+      grid_letters = "            A   B   C   D   E   F   G   H"
       index = 0
-      print "\t    A  B  C  D  E  F  G  H"
+      print grid_letters
+      grid_num = nil
 
       @board.each do |_key, value|
-        print "\n\t" if index % 8 == 0
-        print "\e[0m #{(index / 8) + 1} " if index % 8 == 0
+        # sets the num between 1 - 8
+        grid_num = index / 8  
+        new_line = index % 8 == 0
+
+        print " #{grid_num}" if new_line && index > 0
+        print "\n\t" if new_line
+        print "\e[0m #{grid_num + 1} " if new_line
         print value.to_s
         index += 1
       end
 
-      puts "\e[0m"
+      puts " #{grid_num + 1}\e[0m"
+      puts grid_letters
     end
 
     private
