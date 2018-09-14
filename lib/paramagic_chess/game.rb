@@ -123,13 +123,14 @@ module ParamagicChess
 
     def good_input(input:)
       #checks for if to is included
+      error_msg = 'Please follow the example of a2 to a4'
       unless input.length == 2
-        puts 'Please follow the example of a2 to a4.'
+        puts error_msg 
         return nil
       end
       # checks for letters
-      return nil unless CHAR_TO_NUM.include?(input[0][0].to_sym)
-      return nil unless CHAR_TO_NUM.include?(input[1][0].to_sym)
+      return puts error_msg unless CHAR_TO_NUM.include?(input[0][0].to_sym)
+      return puts error_msg unless CHAR_TO_NUM.include?(input[1][0].to_sym)
 
       # checks for board size
       return nil if input[0][1].to_i < 1 || input[1][1].to_i < 1

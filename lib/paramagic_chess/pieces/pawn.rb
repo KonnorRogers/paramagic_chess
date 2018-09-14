@@ -22,19 +22,22 @@ module ParamagicChess
     end
 
     def move_to(pos:, board: Board.new, input: nil)
+      puts "test"
       update_moves(board: board)
+      puts "testty"
       unless @possible_moves.include? pos
         puts ":#{pos} is an invalid move. Try again.".highlight
         return nil
       end
-      
+     
+      puts "test 1"
       do_en_passant(board: board, pos: pos)
-      
+      puts "test 2"
       good_move = super
       return nil if good_move.nil?
-
+      puts "test 3"
       promote_to(pos: pos, input: input, board: board) if elgible_for_promotion?
-      
+      puts "test 4" 
       true
     end
 

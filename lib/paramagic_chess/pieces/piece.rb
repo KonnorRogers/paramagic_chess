@@ -46,6 +46,7 @@ module ParamagicChess
 
     def move_to(pos:, board: Board.new, input: nil)
       unless valid_move?(pos: pos)
+        puts "Made it to super method"
         puts ":#{pos} is an invalid move. Try again.".highlight 
         return nil
       end
