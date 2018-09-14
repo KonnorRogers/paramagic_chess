@@ -40,7 +40,11 @@ module ParamagicChess
 
     def print_board
       # system 'clear'
-      grid_letters = "            A   B   C   D   E   F   G   H"
+      # Due to handling of unicode characters, insert a chess piece
+      # called sep to be able to account for wide chars for non mono
+      # spaced fonts.
+      sep = "\e[8m\u256a\e[0m"
+      grid_letters = "\t   #{sep}A#{sep} B#{sep} C#{sep} D#{sep} E#{sep} F#{sep} G#{sep} H"
       index = 0
       print grid_letters
       grid_num = nil
