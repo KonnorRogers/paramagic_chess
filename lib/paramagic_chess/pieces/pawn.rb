@@ -24,7 +24,7 @@ module ParamagicChess
     def move_to(pos:, board: Board.new, input: nil)
       update_moves(board: board)
       unless @possible_moves.include? pos
-        puts ":#{pos} is an invalid move. Try again."
+        puts ":#{pos} is an invalid move. Try again.".highlight
         return nil
       end
       
@@ -79,9 +79,15 @@ module ParamagicChess
     end
 
     def promote_to(pos:, board:, input:)
-      puts "What would you like to promote your pawn to?" if input.nil?
-      input ||= gets.chomp.downcase.to_sym
-      return "#{input} is not a promotable piece. Try again." unless PROMOTION_LIST.include? input
+      if input.nil?
+        puts "What would you like to promote your pawn to?".highlight
+        puts PROMOTION_LIST.keys
+        loop do
+          input = gets.chomp.downcase.to_sym
+          break if PROMOTION_LIST.keys.include?(input)
+          puts "#{input} is not a possible promotion. Try again".highlight
+        end
+      end
       
       promotion_piece = PROMOTION_LIST[input]
       promotion_piece.update_position(pos: pos)

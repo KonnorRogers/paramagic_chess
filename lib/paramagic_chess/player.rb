@@ -36,7 +36,7 @@ module ParamagicChess
     
     def check_mate?(board:)
       if get_king.check_mate?(board: board) == true
-        puts 'Check mate!'
+        puts 'Check mate!'.highlight
         return @check_mate = true
       end
       false
@@ -44,7 +44,7 @@ module ParamagicChess
     
     def check?(board:)
       if get_king.check?(board: board) == true
-        puts 'You are in check.'
+        puts 'You are in check.'.highlight
         return @check = true
       end
       false

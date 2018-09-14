@@ -22,7 +22,7 @@ module ParamagicChess
     def move_to(pos:, board:)
       update_moves(board: board)
       unless @possible_moves.include? pos
-        puts ":#{pos} is an invalid move. Try again."
+        puts ":#{pos} is an invalid move. Try again.".highlight
         return nil
       end
       

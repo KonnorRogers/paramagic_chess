@@ -82,7 +82,7 @@ module ParamagicChess
           return puts "No piece found" if piece.nil?
           return puts piece.type.to_s
         end
-        puts "Improper coords, please enter the coordinates of the piece whose type you would like to know".red
+        puts "#{coords} is not a coordinate. Please enter the coordinates of the piece whose type you would like to know".highlight
         coords = nil
       end
     end
@@ -179,7 +179,7 @@ module ParamagicChess
         return nil
       end
       puts 'You have the following save games:'
-      LOAD_PATH.each { |file| puts File.basename(file, ".yaml").red }
+      LOAD_PATH.each { |file| puts File.basename(file, ".yaml").highlight }
 
       puts "\nWhich file would you like to load?"
       file_name = ''
@@ -237,7 +237,7 @@ module ParamagicChess
         moving_piece = @board.piece(pos: input[0])
         # checks to make sure its a valid piece
         if moving_piece.nil? || !(player.pieces.include?(moving_piece))
-          puts 'Please enter a valid piece to move'.red
+          puts 'Please enter a valid piece to move'.highlight
           next
         end
 
@@ -282,7 +282,7 @@ module ParamagicChess
     def castle_game(direction: nil)
       player = get_player_turn
       if player.has_castled?
-        puts 'You already castled once!'.red
+        puts 'You already castled once!'.highlight
         return nil
       end
 
@@ -290,7 +290,7 @@ module ParamagicChess
       castle_left = king.can_castle?(board: @board, direction: :left)
       castle_right = king.can_castle?(board: @board, direction: :right)
       if castle_left == false && castle_right == false
-        puts 'You cannot castle right now'.red
+        puts 'You cannot castle right now'.highlight
         return nil
       end
       puts "Which direction would you like to castle? left or right?"

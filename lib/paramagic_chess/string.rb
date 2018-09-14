@@ -19,6 +19,9 @@ class String
     "\e[31m #{self} \e[0m"
   end
 
+  def highlight
+    "\e[30;43m#{self}\e[0m"
+  end
   def blue
     "\e[34m #{self} \e[0m"
   end

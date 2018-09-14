@@ -46,7 +46,7 @@ module ParamagicChess
 
     def move_to(pos:, board: Board.new, input: nil)
       unless valid_move?(pos: pos)
-        puts ":#{pos} is an invalid move. Try again." 
+        puts ":#{pos} is an invalid move. Try again.".highlight 
         return nil
       end
       start_pos = @pos
@@ -63,7 +63,7 @@ module ParamagicChess
       king = board.find_king(side: @side)
       if @_test == false && king.check?(board: board) == true
         reset_to_previous_state(board: board, removed: removed, start_pos: start_pos, moving_pos: pos)
-        puts "That will put your king in check!"
+        puts "That will put your king in check!".highlight
         return nil
         #returns nil meaning a player will not take a turn
       end

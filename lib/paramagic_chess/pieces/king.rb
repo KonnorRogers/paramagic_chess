@@ -76,12 +76,12 @@ module ParamagicChess
     def move_to(board:, pos:)
       update_moves(board: board)
       unless @possible_moves.include? pos
-        puts ":#{pos} is an invalid move. Try again."
+        puts ":#{pos} is an invalid move. Try again.".highlight
         return nil
       end
       
       if check?(board: board, pos: pos)
-        puts "Your king will be captured if you move there."
+        puts "Your king will be captured if you move there.".highlight
         return nil
       end
       
@@ -176,7 +176,7 @@ module ParamagicChess
     
     def can_castle?(board:, direction:)
       if direction != :right && direction != :left
-        puts 'Direction must be either right or left.'
+        puts 'Direction must be either right or left.'.highlight
         return false
       end
       # rook_method_name = ("rook_" + direction.to_s).to_sym
