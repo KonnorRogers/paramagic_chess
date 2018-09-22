@@ -11,33 +11,47 @@ module ParamagicChess
     attr_reader :board
 
     def initialize
-      @board = Board.new
-      @players = []
-      @turn = :red
       @game_started = false
     end
 
     # player1, player2, and input all added for testing purposes
     def add_players(player1: nil, player2: nil, input: :n)
+      @players = []
       add_player(name: player1)
       add_computer_or_player(player: player2, input: input)
     end
 
+    def setup_game
+      # Asks the player if he would like to load a previous game
+      return if load_game == :loaded
+      @board = Board.new
+      add_players
+      randomize_sides
+      @turn = :red
+      @game_started = true
+    end
+
+
     def play
       greeting_message
-      if @game_started == false
-        return if load_game == :loaded
-        add_players
-        randomize_sides
-      end
-
+      setup_game if @game_started == false
       loop do
         break if game_over?
         update_pieces
         take_turn
       end
 
-      # exit_game
+      Game.new.play if play_again? == true
+      exit_game
+    end
+
+    def play_again?(input: nil)
+      puts 'would you like to play again?'
+      puts 'type yes to play again, anything else will exit.'
+      input ||= gets.chomp.to_sym
+      return false if input != :yes
+
+      true
     end
 
     def randomize_sides
@@ -58,8 +72,8 @@ module ParamagicChess
       p1 = true if player_1.check_mate?(board: @board) == true
       p2 = true if player_2.check_mate?(board: @board) == true
       if p1 == true || p2 == true
-        puts "CONGRATULATIONS! #{winner.name}, you have won!"
-        puts "Sorry, #{loser.name} you have lost."
+        puts "CONGRATULATIONS! #{winner.name}, you have won!".highlight
+        puts "Sorry, #{loser.name} you have lost.".highlight
         return true
       end
       false
@@ -125,7 +139,7 @@ module ParamagicChess
       #checks for if to is included
       error_msg = 'Please follow the example of a2 to a4'
       unless input.length == 2
-        puts error_msg 
+        puts error_msg
         return nil
       end
       # checks for letters
