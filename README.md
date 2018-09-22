@@ -3,8 +3,8 @@
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/paramagic_chess`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 This a game of chess created as the final project of TheOdinProject. The rules used are based off of Wikipedia's ruleset to
-include en_passant, castling, as well as saving and loading. The game is to be played in a terminal. Tested w/ Ruby 2.4. Tested on
-XTerm as well as Cloud9 terminal. Game also includes saving / loading as well as RSpec testing. The only dependencies are 
+include en_passant, castling, as well as saving and loading. The game is to be played in a terminal. Tested w/ Ruby 2.5.1 on a ubuntu 18.04 / 16.04 machine.
+The game also includes saving / loading as well as RSpec testing. The only dependencies are 
 Bundler, RSpec & Rake which are all part of keeping the same environment across different development platforms.
 
 ## Installation
@@ -25,7 +25,28 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Usage is as follows:
+    git clone https://github.com/ParamagicDev/paramagic_chess.git
+    cd /path/to/paramagic_chess
+    ruby lib/paramagic_chess.rb
+
+A prompt will pop up asking if you would like to load a previous game.
+A game can be saved at any time by typing 'save' into the terminal.
+A prompt will appear as to how you would like to save the game. 
+Games will be saved to a saved_games directory
+
+Pieces are moved via 'a2 to a4'
+typing 'piece_info' will show a prompt which will ask for coordinates of the piece you would like to know about
+There are other safe words which are save, load, castle, & exit
+castle will give you the option to castle right or castle left
+Pieces are only allowed to make legal moves to include en_passant, and cannot make a move which will put them
+in check or checkmate
+
+Tests can be run via navigating to paramagic_chess.rb & commenting out the ParamagicChess::Game.new.play
+And then running '$ rspec' or '$ rake spec'
+
+Computer AI has not been implemented yet. It will be in the future. Will be super simple and will
+just do a random legal move
 
 ## Development
 
