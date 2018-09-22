@@ -6,11 +6,11 @@ class String
   def bg_white
     "\e[47m#{self}\e[0m"
   end
-  
+
   def white
     "\e[37m#{self}"
   end
-  
+
   def black
     "\e[30m#{self}"
   end
@@ -23,6 +23,6 @@ class String
     "\e[30;43m#{self}\e[0m"
   end
   def blue
-    "\e[34m #{self} \e[0m"
+    "\e[35m #{self} \e[0m"
   end
 end

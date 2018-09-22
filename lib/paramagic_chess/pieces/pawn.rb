@@ -1,7 +1,7 @@
 module ParamagicChess
   class Pawn < Piece
     attr_accessor :double_move
-    
+
     def initialize(pos: nil, side: nil, moved: false)
       super
       @type = :pawn
@@ -22,14 +22,12 @@ module ParamagicChess
     end
 
     def move_to(pos:, board: Board.new, input: nil)
-      puts "test"
       update_moves(board: board)
-      puts "testty"
       unless @possible_moves.include? pos
         puts ":#{pos} is an invalid move. Try again.".highlight
         return nil
       end
-     
+
       puts "test 1"
       do_en_passant(board: board, pos: pos)
       puts "test 2"
@@ -37,22 +35,22 @@ module ParamagicChess
       return nil if good_move.nil?
       puts "test 3"
       promote_to(pos: pos, input: input, board: board) if elgible_for_promotion?
-      puts "test 4" 
+      puts "test 4"
       true
     end
 
     def double_move?
       @double_move
     end
-    
+
     def do_en_passant(pos:, board:)
       red = red_en_passant(board: board) if @side == :red
       blue = blue_en_passant(board: board) if @side == :blue
-      
+
       if @side == :red && red
         # pos plus 1
         pp_one = to_pos(x: x_coord(pos: pos), y: (y_coord(pos: pos) + 1))
-        
+
         if !board.board[pp_one].piece.nil? && board.board[pp_one].piece.type == :pawn
           if board.board[pp_one].piece.double_move == true
             remove_piece(pos: pp_one, board: board) if board.board[pp_one].piece.double_move == true
@@ -67,7 +65,7 @@ module ParamagicChess
           end
         end
       end
-      
+
       @double_move = red_moved_twice?(start: @starting_pos, end_pos: pos) if @side == :red
       @double_move = blue_moved_twice?(start: @starting_pos, end_pos: pos) if @side == :blue
 
@@ -91,7 +89,7 @@ module ParamagicChess
           puts "#{input} is not a possible promotion. Try again".highlight
         end
       end
-      
+
       promotion_piece = PROMOTION_LIST[input]
       promotion_piece.update_position(pos: pos)
       promotion_piece.side = @side
