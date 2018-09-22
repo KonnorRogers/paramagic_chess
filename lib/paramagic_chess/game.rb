@@ -285,13 +285,15 @@ module ParamagicChess
       loop do
         puts "Would you like to play against a computer? (Y/N)"
         input = gets.chomp.to_sym unless input == :y || input == :n
-        # Adds a computer
-        # To be implemented later
-        break if input == :y
 
-        add_player(name: player) if input == :n
-        break if input == :n
+        return add_computer if input == :y
+
+        add_player(name: player)
       end
+    end
+
+    def add_computer
+      @players << Computer.new
     end
 
     def castle_game(direction: nil)
