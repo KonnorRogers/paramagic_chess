@@ -10,7 +10,6 @@ Gem::Specification.new do |spec|
   spec.email         = ["konnor5456@gmail.com"]
 
   spec.summary       = %q{Chess game written in ruby}
-  # spec.description   = %q{TODO: Write a longer description or delete this line.}
   spec.homepage      = "https://github.com/ParamagicDev/paramagic_chess"
   spec.license       = "MIT"
 
