@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module ParamagicChess
   RSpec.describe Game do
-    let(:game) { Game.new }
+    let(:game) { Game.new(_test: true) }
 
     context '#initialize' do
       it 'has an array of safe words' do
-        safe_words = %i{save load castle exit piece_info}
+        safe_words = %i[save load castle exit piece_info]
         expect(Game::SAFE_WORDS).to match_array safe_words
       end
     end

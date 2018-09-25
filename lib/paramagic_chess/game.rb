@@ -1,17 +1,20 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
 module ParamagicChess
   class Game
-    SAFE_WORDS = [:save, :load, :castle, :exit, :piece_info]
-    DIRNAME = "saved_games/"
-    DIRPATH = File.expand_path(File.dirname(__FILE__)).split("lib").first + DIRNAME
-    LOAD_PATH = Dir[DIRPATH + "*.yaml"]
+    SAFE_WORDS = %i[save load castle exit piece_info].freeze
+    DIRNAME = 'saved_games/'
+    DIRPATH = __dir__.split('lib').first + DIRNAME
+    LOAD_PATH = Dir[DIRPATH + '*.yaml']
 
     attr_accessor :players
-    attr_reader :board
+    attr_reader :board, :_test
 
-    def initialize
+    def initialize(_test: false)
       @game_started = false
+      @_test = _test
     end
 
     # player1, player2, and input all added for testing purposes
@@ -24,6 +27,7 @@ module ParamagicChess
     def setup_game
       # Asks the player if he would like to load a previous game
       return if load_game == :loaded
+
       @board = Board.new
       add_players
       randomize_sides
@@ -31,12 +35,12 @@ module ParamagicChess
       @game_started = true
     end
 
-
     def play
       greeting_message
       setup_game if @game_started == false
       loop do
         break if game_over?
+
         update_pieces
         take_turn
       end
@@ -88,12 +92,13 @@ module ParamagicChess
     end
 
     def piece_info_game(coords: nil)
-      puts "Enter the coordinates of the piece you wish to know the type of"
+      puts 'Enter the coordinates of the piece you wish to know the type of'
       loop do
         coords ||= gets.chomp.downcase
-        if CHAR_TO_NUM.keys.include?(coords[0].to_sym) && !(coords[1].to_i < 1 || coords[1].to_i > 8)
+        if CHAR_TO_NUM.key?(coords[0].to_sym) && !(coords[1].to_i < 1 || coords[1].to_i > 8)
           piece = @board.piece(pos: coords.to_sym)
-          return puts "No piece found" if piece.nil?
+          return puts 'No piece found' if piece.nil?
+
           return puts piece.type.to_s
         end
         puts "#{coords} is not a coordinate. Please enter the coordinates of the piece whose type you would like to know".highlight
@@ -104,7 +109,7 @@ module ParamagicChess
     def get_input(input: nil)
       input ||= gets.chomp.downcase
       # checks for safewords
-      return send((input + "_game").to_sym) if SAFE_WORDS.include?(input.to_sym)
+      return send((input + '_game').to_sym) if SAFE_WORDS.include?(input.to_sym)
 
       input = input.split(' to ')
 
@@ -117,6 +122,7 @@ module ParamagicChess
       player.pieces = []
       @board.board.each do |_coord, tile|
         next if tile.piece.nil?
+
         player.pieces << tile.piece if tile.piece.side == player.side
       end
     end
@@ -126,17 +132,19 @@ module ParamagicChess
     def winner
       return player_2 if player_1.check_mate == true
       return player_1 if player_2.check_mate == true
+
       false
     end
 
     def loser
       return player_2 if winner == player_1
       return player_1 if winner == player_2
+
       false
     end
 
     def good_input(input:)
-      #checks for if to is included
+      # checks for if to is included
       error_msg = 'Please follow the example of a2 to a4'
       unless input.length == 2
         puts error_msg
@@ -162,7 +170,7 @@ module ParamagicChess
       Dir.mkdir(DIRPATH) unless Dir.exist?(DIRPATH)
 
       puts 'What would you like to name your file?'
-      file_name = gets.chomp.downcase.to_s + ".yaml"
+      file_name = gets.chomp.downcase.to_s + '.yaml'
       Dir.chdir(DIRPATH) do
         if LOAD_PATH.include?(DIRPATH + file_name)
           puts "\nA file with that name already exists."
@@ -170,6 +178,7 @@ module ParamagicChess
             puts 'Would you like to overwrite it? (Y/N)'
             input = gets.chomp.to_sym
             break if input == :y
+
             puts "File not saved.\n"
             return nil if input == :n
           end
@@ -185,22 +194,24 @@ module ParamagicChess
         input ||= gets.chomp.downcase.to_sym
         break if input == :y
         return nil if input == :n
+
         puts 'please enter Y or N to load a game.'
         input = nil
       end
       # Ensures the player has save files
       if LOAD_PATH.empty?
-        puts "You do not have any saved games."
+        puts 'You do not have any saved games.'
         return nil
       end
       puts 'You have the following save games:'
-      LOAD_PATH.each { |file| puts File.basename(file, ".yaml").highlight }
+      LOAD_PATH.each { |file| puts File.basename(file, '.yaml').highlight }
 
       puts "\nWhich file would you like to load?"
       file_name = ''
       loop do
-        file_name = gets.chomp + ".yaml"
+        file_name = gets.chomp + '.yaml'
         break if LOAD_PATH.include?(DIRPATH + file_name)
+
         puts 'Unable to locate that file. Please try again.'
       end
 
@@ -220,8 +231,8 @@ module ParamagicChess
       system 'clear'
       @board.print_board
       puts "\nsafe words are: #{Game::SAFE_WORDS}"
-      puts "To move a piece, enter the piece coordinate followed by destination"
-      puts "IE: a2 to a4; f7 to f5"
+      puts 'To move a piece, enter the piece coordinate followed by destination'
+      puts 'IE: a2 to a4; f7 to f5'
     end
 
     def print_turn
@@ -237,7 +248,6 @@ module ParamagicChess
 
       move_piece(player: player)
       swap_turn
-
     end
 
     def move_piece(player:, input: nil)
@@ -251,7 +261,7 @@ module ParamagicChess
 
         moving_piece = @board.piece(pos: input[0])
         # checks to make sure its a valid piece
-        if moving_piece.nil? || !(player.pieces.include?(moving_piece))
+        if moving_piece.nil? || !player.pieces.include?(moving_piece)
           puts 'Please enter a valid piece to move'.highlight
           next
         end
@@ -260,6 +270,7 @@ module ParamagicChess
         move = moving_piece.move_to(pos: end_pos, board: @board)
         # if the move is not valid will repeat loop
         next if move.nil?
+
         break
       end
     end
@@ -271,25 +282,27 @@ module ParamagicChess
 
     def swap_turn
       return @turn = :red if @turn == :blue
+
       @turn = :blue
     end
 
     def add_player(name: nil)
-      puts "What is your name?" if @players.empty?
+      name ||= "testing" if @_test == true
+      puts 'What is your name?' if @players.empty?
       puts "What is player2's name?" if @players.size == 1
       name ||= gets.chomp
       @players << Player.new(name: name)
     end
 
     def add_computer_or_player(player: nil, input: nil)
-      loop do
-        puts "Would you like to play against a computer? (Y/N)"
-        input = gets.chomp.to_sym unless input == :y || input == :n
+      input ||= :n if @_test == true
 
-        return add_computer if input == :y
-
-        add_player(name: player)
+      unless input == :y || input == :n
+        puts 'Would you like to play against a computer? (Y/N)'
+        input = gets.chomp.to_sym
       end
+      return add_computer if input == :y
+      add_player(name: player)
     end
 
     def add_computer
@@ -310,7 +323,7 @@ module ParamagicChess
         puts 'You cannot castle right now'.highlight
         return nil
       end
-      puts "Which direction would you like to castle? left or right?"
+      puts 'Which direction would you like to castle? left or right?'
       direction ||= gets.chomp.downcase.to_sym
       castled = king.castle(direction: direction, board: @board)
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ParamagicChess
   RSpec.describe Board do
     let(:board) { Board.new }

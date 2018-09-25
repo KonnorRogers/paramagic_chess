@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ParamagicChess
   class Tile
     attr_accessor :background, :piece, :position
@@ -11,27 +13,31 @@ module ParamagicChess
     def piece_type
       return nil if @piece.nil?
       return nil if @piece.type.nil?
+
       @piece.type
     end
-    
+
     def side
       @piece.side
     end
 
     def contains_piece?
       return false if @piece.nil?
+
       true
     end
 
     def contains_blue_piece?
       return false if @piece.nil?
       return true if @piece.side == :blue
+
       false
     end
 
     def contains_red_piece?
       return false if @piece.nil?
       return true if @piece.side == :red
+
       false
     end
 
@@ -40,12 +46,10 @@ module ParamagicChess
       return blank_space.white.bg_white if @background == :white && @piece.nil?
       return blank_space.black.bg_black if @background == :black && @piece.nil?
 
-
       return @piece.to_s.bg_white if @background == :white
       return @piece.to_s.bg_black if @background == :black
 
-      return 'Background not set'
+      'Background not set'
     end
   end
 end
-

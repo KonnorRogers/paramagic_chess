@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ParamagicChess
   RSpec.describe Pawn do
     let(:pawn) { Pawn.new(pos: :a2) }
@@ -100,7 +102,7 @@ module ParamagicChess
         board.board[:c7].piece.move_to(pos: :c5, board: board)
 
         pawn_blue.update_moves(board: board)
-        expect(pawn_blue.possible_moves).to match_array %i{b6 c6 a6}
+        expect(pawn_blue.possible_moves).to match_array %i[b6 c6 a6]
       end
 
       it 'accounts for an en passant on both sides case for red' do
@@ -110,7 +112,7 @@ module ParamagicChess
         board.board[:c2].piece.move_to(pos: :c4, board: board)
 
         pawn_red.update_moves(board: board)
-        expect(pawn_red.possible_moves).to match_array %i{b3 c3 a3}
+        expect(pawn_red.possible_moves).to match_array %i[b3 c3 a3]
       end
 
       it 'accounts for only 1 en passant for blue' do
@@ -119,7 +121,7 @@ module ParamagicChess
         board.board[:a7].piece.move_to(pos: :a5, board: board)
 
         pawn_blue.update_moves(board: board)
-        expect(pawn_blue.possible_moves).to match_array %i{b6 a6}
+        expect(pawn_blue.possible_moves).to match_array %i[b6 a6]
       end
 
       it 'accounts for only 1 en passant for red' do
@@ -128,7 +130,7 @@ module ParamagicChess
         board.board[:a2].piece.move_to(pos: :a4, board: board)
 
         pawn_red.update_moves(board: board)
-        expect(pawn_red.possible_moves).to match_array %i{b3 a3}
+        expect(pawn_red.possible_moves).to match_array %i[b3 a3]
       end
     end
 
@@ -144,7 +146,6 @@ module ParamagicChess
         knight_b6 = Knight.new(pos: :b6, side: :blue)
         board.board[:b6].piece = knight_b6
         red_pawn.move_to(pos: :b6, board: board)
-
 
         expect(red_pawn.pos).to eq :b6
         expect(board.board[:b6].piece).to eq red_pawn
@@ -191,8 +192,8 @@ module ParamagicChess
         red_pawn.move_to(pos: :b3, board: board)
         expect(board.board[:b4].piece).to eq nil
       end
-      
-      it 'should not remove both pieces' do 
+
+      it 'should not remove both pieces' do
         red_pawn = board.board[:b7].piece
         red_pawn.move_to(pos: :b5, board: board)
         blue_pawn = board.board[:a2].piece
@@ -204,8 +205,6 @@ module ParamagicChess
         red_pawn.move_to(pos: :a3, board: board)
         expect(board.board[:a3].piece).to eq red_pawn
         expect(board.board[:a4].piece).to eq blue_pawn
-        
-        
       end
     end
   end

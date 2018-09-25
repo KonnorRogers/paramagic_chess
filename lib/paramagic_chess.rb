@@ -1,14 +1,15 @@
+# frozen_string_literal: true
+
 # Initial require for the classes that inherit piece to be able to inherit
 # Piece IE: Rook < Piece
 require_relative '../lib/paramagic_chess/pieces/piece.rb'
 # Expands the path of this particular file
-lib_path = File.expand_path(File.dirname(__FILE__))
+lib_path = __dir__
 # Once expanded, it then finds the contents in the directory & iterates through
 # The double ** followed by /* allows constant traversal down of directory
-Dir[lib_path + "/paramagic_chess/**/*.rb"].each { |file| require file }
+Dir[lib_path + '/paramagic_chess/**/*.rb'].each { |file| require file }
 
 module ParamagicChess
-
   def self.create_char_to_num_hash
     hash = {}
     ('a'..'h').each_with_index do |letter, index|
@@ -37,8 +38,7 @@ module ParamagicChess
     knight: Knight.new,
     queen: Queen.new,
     rook: Rook.new
-  }
-
+  }.freeze
 end
 
 # leave the code below commented to run the testing suite
@@ -46,4 +46,4 @@ end
 # run ruby /path/to/paramagic_chess/lib/paramagic_chess.rb
 # or uncomment code and run bin/console
 
-ParamagicChess::Game.new.play
+# ParamagicChess::Game.new.play

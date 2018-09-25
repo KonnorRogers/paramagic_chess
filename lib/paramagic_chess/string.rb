@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class String
   def bg_black
     "\e[40m#{self}\e[0m"
@@ -22,6 +24,7 @@ class String
   def highlight
     "\e[30;43m#{self}\e[0m"
   end
+
   def blue
     "\e[35m #{self} \e[0m"
   end

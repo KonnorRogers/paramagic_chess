@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ParamagicChess
   RSpec.describe Tile do
     let(:tile) { Tile.new(position: :a1) }

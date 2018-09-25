@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module ParamagicChess
   class Queen < Piece
-    MOVE_SET = [Moves::Straight.new, Moves::Diagonal.new]
+    MOVE_SET = [Moves::Straight.new, Moves::Diagonal.new].freeze
 
     def initialize(pos: nil, side: nil, moved: false)
       super
@@ -30,7 +32,7 @@ module ParamagicChess
         puts ":#{pos} is an invalid move. Try again.".highlight
         return nil
       end
-      
+
       super
     end
   end

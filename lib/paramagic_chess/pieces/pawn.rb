@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ParamagicChess
   class Pawn < Piece
     attr_accessor :double_move
@@ -13,6 +15,7 @@ module ParamagicChess
       pawn = "\u265f"
       return pawn.blue if @side == :blue
       return pawn.red if @side == :red
+
       'Side not set'
     end
 
@@ -28,14 +31,15 @@ module ParamagicChess
         return nil
       end
 
-      puts "test 1"
+      puts 'test 1'
       do_en_passant(board: board, pos: pos)
-      puts "test 2"
+      puts 'test 2'
       good_move = super
       return nil if good_move.nil?
-      puts "test 3"
+
+      puts 'test 3'
       promote_to(pos: pos, input: input, board: board) if elgible_for_promotion?
-      puts "test 4"
+      puts 'test 4'
       true
     end
 
@@ -68,7 +72,6 @@ module ParamagicChess
 
       @double_move = red_moved_twice?(start: @starting_pos, end_pos: pos) if @side == :red
       @double_move = blue_moved_twice?(start: @starting_pos, end_pos: pos) if @side == :blue
-
     end
 
     private
@@ -76,16 +79,18 @@ module ParamagicChess
     def elgible_for_promotion?
       return true if @side == :red && @y == 1
       return true if @side == :blue && @y == 8
+
       false
     end
 
     def promote_to(pos:, board:, input:)
       if input.nil?
-        puts "What would you like to promote your pawn to?".highlight
+        puts 'What would you like to promote your pawn to?'.highlight
         puts PROMOTION_LIST.keys
         loop do
           input = gets.chomp.downcase.to_sym
-          break if PROMOTION_LIST.keys.include?(input)
+          break if PROMOTION_LIST.key?(input)
+
           puts "#{input} is not a possible promotion. Try again".highlight
         end
       end
@@ -135,11 +140,13 @@ module ParamagicChess
 
     def red_moved_twice?(start:, end_pos:)
       return true if y_coord(pos: start) == y_coord(pos: end_pos) + 2
+
       false
     end
 
     def blue_moved_twice?(start:, end_pos:)
       return true if y_coord(pos: start) == y_coord(pos: end_pos) - 2
+
       false
     end
 
@@ -190,16 +197,19 @@ module ParamagicChess
 
       possible_diagonals.each do |pos|
         next if board.board[pos].nil?
+
         @possible_moves << pos if board.board[pos].contains_red_piece?
 
         next if en_passant.nil?
         next if en_passant[0].nil?
+
         # puts en_passant[0].double_move?
         if y_coord(pos: en_passant[0]) == y_coord(pos: pos) - 1
           @possible_moves << pos if x_coord(pos: en_passant[0]) == x_coord(pos: pos)
         end
 
         next if en_passant[1].nil?
+
         if y_coord(pos: en_passant[1]) == y_coord(pos: pos) - 1
           @possible_moves << pos if x_coord(pos: en_passant[1]) == x_coord(pos: pos)
         end
@@ -219,15 +229,18 @@ module ParamagicChess
 
       possible_diagonals.each do |pos|
         next if board.board[pos].nil?
+
         @possible_moves << pos if board.board[pos].contains_blue_piece?
 
         next if en_passant.nil?
         next if en_passant[0].nil?
+
         if y_coord(pos: en_passant[0]) == y_coord(pos: pos) + 1
           @possible_moves << pos if x_coord(pos: en_passant[0]) == x_coord(pos: pos)
         end
 
         next if en_passant[1].nil?
+
         if y_coord(pos: en_passant[1]) == y_coord(pos: pos) + 1
           @possible_moves << pos if x_coord(pos: en_passant[1]) == x_coord(pos: pos)
         end
@@ -237,6 +250,7 @@ module ParamagicChess
     def positions_not_blocked?(pos1:, pos2:, board:)
       return false if board.board[pos1].contains_piece?
       return false if board.board[pos2].nil? || board.board[pos2].contains_piece?
+
       true
     end
   end

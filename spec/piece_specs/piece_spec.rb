@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 module ParamagicChess
   RSpec.describe Piece do
     let(:piece) { Piece.new(pos: :a2, _test: true) }
 
     context '#initialize' do
-
       it 'initializes w/ 1 arguments given' do
         expect(piece).to be_an_instance_of Piece
       end
@@ -16,7 +17,7 @@ module ParamagicChess
         expect(Piece.new(pos: :a1).possible_moves).to be_an_instance_of Array
       end
     end
-    
+
     context '#to_pos(x:, y:)' do
       it 'turns an x & y value into a valid position' do
         expect(piece.to_pos(x: piece.x, y: piece.y)).to eq :a2
@@ -45,24 +46,24 @@ module ParamagicChess
       it 'returns nil for i1' do
         expect(piece.move_to(pos: :i1)).to eq nil
       end
-      
+
       it 'sets the position of the piece to the :d2' do
         piece.move_to(pos: :d2)
         expect(piece.pos).to eq :d2
       end
-      
+
       it 'updates the x & y coords to the :d & 2' do
         piece.move_to(pos: :d2)
         expect(piece.x).to eq :d
         expect(piece.y).to eq 2
       end
-      
+
       it 'updates @moved to true' do
         expect(piece.moved).to eq false
         piece.move_to(pos: :d2)
         expect(piece.moved).to eq true
       end
-      
+
       # it 'updates the board piece' do
       #   knight = Knight.new
       # end

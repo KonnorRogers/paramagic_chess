@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ParamagicChess
   class Board
     attr_accessor :board, :removed_red_pieces, :removed_blue_pieces
@@ -10,31 +12,30 @@ module ParamagicChess
       @removed_blue_pieces = []
       @removed_red_pieces = []
     end
-    
+
     # required for evaluation of en_passant
     def reset_pawn_double_move(side:)
       @board.each do |_coord, tile|
         next if tile.piece.nil?
+
         if tile.piece.side == side && tile.piece.type == :pawn
           tile.piece.double_move = false
         end
       end
     end
-    
+
     def tile(pos:)
       @board[pos]
     end
-    
+
     def piece(pos:)
       @board[pos].piece
     end
-    
+
     def find_king(side:)
-      @board.each do |_coord, tile| 
+      @board.each do |_coord, tile|
         next if tile.piece.nil?
-        if tile.piece.type == :king && tile.piece.side == side
-          return tile.piece
-        end
+        return tile.piece if tile.piece.type == :king && tile.piece.side == side
       end
     end
 
@@ -51,7 +52,7 @@ module ParamagicChess
 
       @board.each do |_key, value|
         # sets the num between 1 - 8
-        grid_num = index / 8  
+        grid_num = index / 8
         new_line = index % 8 == 0
 
         print " #{grid_num}" if new_line && index > 0
