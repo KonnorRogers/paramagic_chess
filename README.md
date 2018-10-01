@@ -13,6 +13,9 @@ The game also includes saving / loading as well as RSpec testing. The only depen
 Bundler, RSpec, Rubocop & Rake which are all part of keeping the same environment across different development platforms but are not necessary to use this gem. They are for testing purposes only.
 
 This gem has not been pushed to rubygems so as to not add another useless library. This was purely for educational purposes.
+
+<p> Both videos recorded using asciiterminal and caused funky issues with unicode characters for labeling </p>
+
 <p> Video of Gameplay </p>
 <a href="https://asciinema.org/a/203858?speed=2" target="_blank"><img src="https://asciinema.org/a/203858.png" width="300" height="300"/></a>
 
@@ -63,6 +66,9 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
+There are issues I am sure, this was more a proof of concept to show I can create a large project
+Testing was minimal due to time constraints and wanting to move on to writing rails
+If you would like to share or use the code feel free
 
 ## Contributing
 
