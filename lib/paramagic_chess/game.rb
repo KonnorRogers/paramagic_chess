@@ -3,6 +3,7 @@
 require 'yaml'
 
 module ParamagicChess
+  # Main class for paramagic_chess
   class Game
     SAFE_WORDS = %i[save load castle exit piece_info].freeze
     DIRNAME = 'saved_games/'
@@ -18,7 +19,7 @@ module ParamagicChess
     end
 
     # player1, player2, and input all added for testing purposes
-    def add_players(player1: nil, player2: nil, input: :n)
+    def add_players(player1: nil, player2: nil, input: nil)
       @players = []
       add_player(name: player1)
       add_computer_or_player(player: player2, input: input)
@@ -251,6 +252,8 @@ module ParamagicChess
     end
 
     def move_piece(player:, input: nil)
+      make_random_move if player.class == Computer && return
+
       print_game
       loop do
         print_turn
@@ -301,12 +304,22 @@ module ParamagicChess
         puts 'Would you like to play against a computer? (Y/N)'
         input = gets.chomp.to_sym
       end
+
       return add_computer if input == :y
+
       add_player(name: player)
     end
 
     def add_computer
       @players << Computer.new
+    end
+
+    def can_castle?(king:)
+      return true if king.can_castle?(board: @board, direction: :left)
+
+      return true if king.can_castle?(board: @board, direction: :right)
+
+      false
     end
 
     def castle_game(direction: nil)
@@ -317,12 +330,12 @@ module ParamagicChess
       end
 
       king = player.get_king
-      castle_left = king.can_castle?(board: @board, direction: :left)
-      castle_right = king.can_castle?(board: @board, direction: :right)
-      if castle_left == false && castle_right == false
+
+      if can_castle(king: king) == false
         puts 'You cannot castle right now'.highlight
         return nil
       end
+
       puts 'Which direction would you like to castle? left or right?'
       direction ||= gets.chomp.downcase.to_sym
       castled = king.castle(direction: direction, board: @board)

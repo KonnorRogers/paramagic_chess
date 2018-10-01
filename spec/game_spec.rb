@@ -15,7 +15,7 @@ module ParamagicChess
       it 'will add only 1 player if playing against computer' do
         game.add_players(player1: 'konnor', input: :y)
         expect(game.players[0].name).to eq 'konnor'
-        expect(game.players[1]).to eq nil
+        expect(game.players[1].name).to eq 'computer'
       end
 
       it 'will add both players with input of :n' do

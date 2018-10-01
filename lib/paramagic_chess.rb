@@ -8,7 +8,7 @@ lib_path = __dir__
 # Once expanded, it then finds the contents in the directory & iterates through
 # The double ** followed by /* allows constant traversal down of directory
 Dir[lib_path + '/paramagic_chess/**/*.rb'].each { |file| require file }
-
+# gem for chess
 module ParamagicChess
   def self.create_char_to_num_hash
     hash = {}
