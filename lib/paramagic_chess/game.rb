@@ -252,7 +252,7 @@ module ParamagicChess
     end
 
     def move_piece(player:, input: nil)
-      make_random_move if player.class == Computer && return
+      make_random_move(board: @board)  if player.class == Computer && return
 
       print_game
       loop do
