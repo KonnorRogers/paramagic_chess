@@ -13,9 +13,9 @@ The game also includes saving / loading as well as RSpec testing. The only depen
 Bundler, RSpec, Rubocop & Rake which are all part of keeping the same environment across different development platforms but are not necessary to use this gem. They are for testing purposes only.
 
 This gem has not been pushed to rubygems so as to not add another useless library. This was purely for educational purposes
-[![asciicast of gameplay](https://asciinema.org/a/203858.png)](https://asciinema.org/a/203858/?speed=2")
+[![asciicast of gameplay](https://asciinema.org/a/203858.png)](https://asciinema.org/a/203858?speed=2)
 
-[![asciicast of rspec](https://asciinema.org/a/203857.png)](https://asciinema.org/a/203857?speed=2"])
+[![asciicast of rspec](https://asciinema.org/a/203857.png)](https://asciinema.org/a/203857?speed=2])
 
 ## Installation
 
