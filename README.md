@@ -17,6 +17,7 @@ This gem has not been pushed to rubygems so as to not add another useless librar
 
 [![asciicast of rspec](https://asciinema.org/a/203857.png)](https://asciinema.org/a/203857?speed=2])
 
+<script src="https://asciinema.org/a/203858.js" id="asciicast-203858" async data-speed="2"></script>
 ## Installation
 
 Add this line to your application's Gemfile:
