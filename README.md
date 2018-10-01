@@ -12,9 +12,10 @@ The game is to be played in a terminal. Tested w/ Ruby 2.5.1 on a ubuntu 18.04 /
 The game also includes saving / loading as well as RSpec testing. The only dependencies are 
 Bundler, RSpec, Rubocop & Rake which are all part of keeping the same environment across different development platforms but are not necessary to use this gem. They are for testing purposes only.
 
-This gem has not been pushed to rubygems so as to not add another useless library. This was purely for educational purposes
-[![asciicast of gameplay](https://asciinema.org/a/203858.png)](https://asciinema.org/a/203858?speed=2)
+This gem has not been pushed to rubygems so as to not add another useless library. This was purely for educational purposes.
 
+<a href="https://asciinema.org/a/203858?speed=2" target="_blank"><img src="https://asciinema.org/a/203858.png" width="200" height="200"/></a>
+<a href="https://asciinema.org/a/203857?speed=2" target="_blank"><img src="https://asciinema.org/a/203857.png" width="200" height="200" /></a>
 [![asciicast of rspec](https://asciinema.org/a/203857.png)](https://asciinema.org/a/203857?speed=2])
 
 ## Installation
