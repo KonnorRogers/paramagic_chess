@@ -46,5 +46,5 @@ end
 # run ruby /path/to/paramagic_chess/lib/paramagic_chess.rb
 # or uncomment code and run bin/console
 
-# ParamagicChess::Game.new.play
+ParamagicChess::Game.new.play
 
