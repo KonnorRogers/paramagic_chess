@@ -14,9 +14,8 @@ Bundler, RSpec, Rubocop & Rake which are all part of keeping the same environmen
 
 This gem has not been pushed to rubygems so as to not add another useless library. This was purely for educational purposes.
 
-<a href="https://asciinema.org/a/203858?speed=2" target="_blank"><img src="https://asciinema.org/a/203858.png" width="200" height="200"/></a>
-<a href="https://asciinema.org/a/203857?speed=2" target="_blank"><img src="https://asciinema.org/a/203857.png" width="200" height="200" /></a>
-[![asciicast of rspec](https://asciinema.org/a/203857.png)](https://asciinema.org/a/203857?speed=2])
+<a href="https://asciinema.org/a/203858?speed=2" target="_blank"><img src="https://asciinema.org/a/203858.png" width="300" height="300"/></a>
+<a href="https://asciinema.org/a/203857?speed=2" target="_blank"><img src="https://asciinema.org/a/203857.png" width="300" height="300" /></a>
 
 ## Installation
 
