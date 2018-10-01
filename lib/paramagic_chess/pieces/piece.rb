@@ -6,7 +6,7 @@ module ParamagicChess
   class Piece
     include Moves
     attr_accessor :side, :possible_moves, :type, :moved
-    attr_reader :x, :y, :pos, :_test
+    attr_reader :x, :y, :pos, :_test, :starting_pos
 
     def initialize(pos: nil, side: nil, moved: false, _test: false)
       update_position(pos: pos)

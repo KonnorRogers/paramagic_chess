@@ -14,6 +14,10 @@ module ParamagicChess
       @has_castled = false
     end
 
+    def computer?
+      false
+    end
+
     def has_castled?
       @has_castled
     end

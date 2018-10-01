@@ -16,20 +16,24 @@ module ParamagicChess
     def initialize(_test: false)
       @game_started = false
       @_test = _test
+      @players = []
     end
 
     # player1, player2, and input all added for testing purposes
     def add_players(player1: nil, player2: nil, input: nil)
-      @players = []
       add_player(name: player1)
       add_computer_or_player(player: player2, input: input)
+    end
+
+    def add_board
+      @board = Board.new
     end
 
     def setup_game
       # Asks the player if he would like to load a previous game
       return if load_game == :loaded
 
-      @board = Board.new
+      add_board
       add_players
       randomize_sides
       @turn = :red
@@ -84,6 +88,10 @@ module ParamagicChess
       false
     end
 
+    def computer
+      @players.each { |player| return player if player.computer? == true }
+    end
+
     def player_1
       @players[0]
     end
@@ -126,6 +134,10 @@ module ParamagicChess
 
         player.pieces << tile.piece if tile.piece.side == player.side
       end
+    end
+
+    def add_computer(side: nil)
+      @players << Computer.new(side: side)
     end
 
     private
@@ -252,7 +264,10 @@ module ParamagicChess
     end
 
     def move_piece(player:, input: nil)
-      make_random_move(board: @board)  if player.class == Computer && return
+      if player.class == Computer
+        computer.make_random_move(board: @board)
+        return true
+      end
 
       print_game
       loop do
@@ -310,9 +325,6 @@ module ParamagicChess
       add_player(name: player)
     end
 
-    def add_computer
-      @players << Computer.new
-    end
 
     def can_castle?(king:)
       return true if king.can_castle?(board: @board, direction: :left)
