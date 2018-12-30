@@ -37,6 +37,7 @@ And then execute:
 ## Usage
 
 * Usage is as follows
+      
       git clone https://github.com/ParamagicDev/paramagic_chess.git
       cd /path/to/paramagic_chess
       ruby lib/paramagic_chess.rb
