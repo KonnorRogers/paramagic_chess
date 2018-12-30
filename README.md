@@ -32,14 +32,14 @@ gem 'paramagic_chess'
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 ## Usage
 
-Usage is as follows:
-    git clone https://github.com/ParamagicDev/paramagic_chess.git
-    cd /path/to/paramagic_chess
-    ruby lib/paramagic_chess.rb
+* Usage is as follows
+      git clone https://github.com/ParamagicDev/paramagic_chess.git
+      cd /path/to/paramagic_chess
+      ruby lib/paramagic_chess.rb
 
 * A prompt will pop up asking if you would like to load a previous game.
 * A game can be saved at any time by typing 'save' into the terminal.
@@ -56,9 +56,9 @@ Usage is as follows:
 Tests can be run via navigating to paramagic_chess.rb & commenting out the ParamagicChess::Game.new.play
 And then running 
 
-> $ rspec 
-> or 
-> $ rake spec
+    > $ rspec 
+    > or 
+    > $ rake spec
 
 ## Development
 
